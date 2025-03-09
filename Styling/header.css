@@ -1,0 +1,42 @@
+/* Header */
+header {
+    background-color: #c4161c;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2em;
+}
+
+header h1 {
+    color: white;
+    font-size: 25px;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+}
+
+header ul {
+    display: flex;
+    flex-direction: row;
+    gap: 3em;
+}
+
+header ul li {
+    list-style: none;
+    color: white;
+    font-size: 18px;
+}
+
+header ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+header ul li a:hover {
+    color: black;
+    transition: 0.3s;
+}

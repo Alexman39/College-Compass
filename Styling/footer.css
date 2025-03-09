@@ -1,0 +1,82 @@
+/* General Footer Styling */
+.footer {
+    background-color: #c4161c;
+    color: black;
+    padding: 40px 0;
+}
+
+/* Footer Container: Using Flexbox */
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Footer Sections */
+.footer-section {
+    flex: 1;
+    padding: 0 20px;
+}
+
+.footer-section h4 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.footer-section p, .footer-section ul {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.footer-section ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.footer-section a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Social Links */
+.social-links {
+    display: flex;
+    gap: 20px;
+}
+
+.social-links li {
+    list-style: none;
+}
+
+.social-links i {
+    font-size: 30px;
+    color: white;
+}
+
+/* Footer Bottom (for copyright) */
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    border-top: 1px solid #444;
+    padding: 20px 0 0;
+    font-size: 14px;
+    color: white;
+}
+
+.footer-bottom p {
+    margin: 0;
+}

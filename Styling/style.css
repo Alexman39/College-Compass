@@ -1,0 +1,114 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Manrope", sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main Body */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 5em auto;
+    height: 40em;
+}
+
+main h1 {
+    font-size: 5em;
+}
+
+main p {
+    font-size: 4em;
+}
+
+main a {
+    text-decoration: none;
+    color: white;
+    background-color: #000;
+    border-radius: 25px;
+    padding: 0.5em 4em;
+    font-size: 20px;
+    transition: 0.3s;
+}
+
+main a:hover {
+    background-color: #c4161c;
+    transition: 0.3s;
+}
+
+/* Classes*/
+
+.class-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 5em;
+}
+
+.class-container p {
+    font-size: 20px;
+}
+
+.class-header {
+    background-color: #c4161c;
+    width: 100%;
+    text-align: center;
+    color: white;
+    padding-top: 5em;
+    padding-bottom: 5em;
+    margin: 5em auto;
+}
+
+.class-item {
+    width: 70%;
+}
+
+.class-title {
+    width: 100%;
+    padding: 15px;
+    background-color: #c4161c;
+    color: white;
+    text-align: left;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    margin: 5px 0;
+    transition: background-color 0.3s ease;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.class-title i {
+    font-size: 1.5em;
+}
+
+.class-title:hover {
+    background-color: #9f1113;
+}
+
+.class-info {
+    padding: 0 15px;
+    background-color: #f9f9f9;
+    border-left: 4px solid #c4161c;
+    overflow: hidden; /* Hide the content that overflows */
+    height: 0; /* Initially set height to 0 to keep it hidden */
+    transition: height 0.3s ease; /* Add a smooth transition for height */
+}
+
+.class-info p {
+    padding-bottom: 3em;
+}
+
+/* Optional: Add a smoother transition on hover */
+.class-info p {
+    margin: 10px 0;
+}

@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>2ο Σετ Επαναληπτικών Ασκήσεων Java - College Compass</title>
+    <link rel="stylesheet" href="../Styling/exercises.css">
+    <link rel="stylesheet" href="../Styling/header.css">
+    <link rel="stylesheet" href="../Styling/footer.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Montserrat:wght@100;400;900&display=swap"
+          rel="stylesheet">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/a4df1a361f.js" crossorigin="anonymous"></script>
+    <!-- Favicon -->
+    <link rel="icon" href="../images/favicon-16x16.png" sizes="16x16" type="image/x-icon">
+    <link rel="icon" href="../images/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="../images/android-chrome-192x192.png" sizes="192x192" type="image/png">
+</head>
+<body>
+<header>
+    <h1><i class="fa-regular fa-compass"></i> <a href="../index.html">College Compass</a></h1>
+    <ul>
+        <li><a href="../system_modelling.html">Systems Modelling</a></li>
+        <li><a href="../system_network.html">Systems and Networks</a></li>
+        <li><a href="../webTechnologies.html">Web Technologies</a></li>
+    </ul>
+</header>
+
+<main>
+    <h1>2ο Σετ Επαναληπτικών Ασκήσεων στη Java</h1>
+
+    <section class="exercise-container">
+        <div class="exercise">
+            <h3>Ερώτημα 1</h3>
+            <p>Δημιουργήστε μια κλάση με όνομα Vehicle. Η κλάση αυτή πρέπει να έχει:</p>
+            <ul>
+                <li>Ιδιότητες speed (τύπος int) και fuel (τύπος double).</li>
+                <li>Constructor που θα δέχεται ως παραμέτρους την αρχική ταχύτητα και το καύσιμο.</li>
+                <li>Private ιδιότητες και τις αντίστοιχες μεθόδους get και set.</li>
+                <li>Μέθοδο refuel(double amount) που θα προσθέτει την τιμή amount στην ιδιότητα fuel.</li>
+                <li>Μέθοδο printStats() που θα εμφανίζει την ταχύτητα και το καύσιμο του οχήματος.</li>
+            </ul>
+            <p>Δημιουργήστε μια κλάση Car που κληρονομεί την Vehicle. Η κλάση αυτή πρέπει να έχει:</p>
+            <ul>
+                <li>Ιδιότητα brand (τύπος String), που θα δηλώνει τη μάρκα του αυτοκινήτου.</li>
+                <li>Constructor που θα δέχεται ως παραμέτρους τα speed, fuel και brand, και θα καλεί τον constructor της γονικής κλάσης χρησιμοποιώντας super.</li>
+                <li>Μέθοδο accelerate(int increment) που θα αυξάνει την ταχύτητα κατά την τιμή increment, αλλά μόνο εάν υπάρχει καύσιμο (π.χ., fuel > 0).</li>
+                <li>Υπερκαλυμμένη μέθοδο printStats() που θα καλεί τη μέθοδο printStats() της γονικής κλάσης χρησιμοποιώντας super και θα εμφανίζει επιπλέον τη μάρκα του αυτοκινήτου.</li>
+            </ul>
+            <p>Δημιουργήστε μια κλάση ElectricCar που κληρονομεί την Car. Η κλάση αυτή πρέπει να έχει:</p>
+            <ul>
+                <li>Ιδιότητα batteryLevel (τύπος int, από 0 έως 100), που θα δηλώνει το ποσοστό φόρτισης της μπαταρίας.</li>
+                <li>Constructor που θα δέχεται ως παραμέτρους τα speed, fuel, brand και batteryLevel, και θα καλεί τον constructor της γονικής κλάσης χρησιμοποιώντας super.</li>
+                <li>Μέθοδο charge(int percentage) που θα αυξάνει το επίπεδο της μπαταρίας κατά το ποσοστό percentage χωρίς να ξεπερνά το 100.</li>
+                <li>Υπερκαλυμμένη μέθοδο accelerate(int increment) που θα ελέγχει εάν η μπαταρία έχει αρκετή ενέργεια (batteryLevel > 10) πριν αυξήσει την ταχύτητα.</li>
+                <li>Υπερκαλυμμένη μέθοδο printStats() που θα εμφανίζει επιπλέον το επίπεδο της μπαταρίας.</li>
+            </ul>
+            <p>Στην κύρια κλάση App, κάντε τα εξής:</p>
+            <ul>
+                <li>Δημιουργήστε ένα αντικείμενο της Vehicle και καλέστε όλες τις μεθόδους του.</li>
+                <li>Δημιουργήστε ένα αντικείμενο της Car και καλέστε όλες τις μεθόδους του, συμπεριλαμβανομένων και των μεθόδων που κληρονόμησε.</li>
+                <li>Δημιουργήστε ένα αντικείμενο της ElectricCar και καλέστε όλες τις μεθόδους του, επιδεικνύοντας τη χρήση της super για πρόσβαση στις ιδιότητες της γονικής κλάσης.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="exercise-container">
+        <div class="exercise">
+            <h3>Ερώτημα 2</h3>
+            <p>Δημιουργήστε μια κλάση Employee. Η κλάση αυτή πρέπει να έχει:</p>
+            <ul>
+                <li>Ιδιότητες name (τύπος String), salary (τύπος double).</li>
+                <li>Constructor που θα δέχεται ως παραμέτρους το όνομα και τον μισθό.</li>
+                <li>Private ιδιότητες και τις αντίστοιχες μεθόδους get και set.</li>
+                <li>Μέθοδο increaseSalary(double percentage) που θα αυξάνει τον μισθό κατά την τιμή percentage.</li>
+                <li>Μέθοδο printDetails() που θα εμφανίζει το όνομα και τον μισθό του υπαλλήλου.</li>
+            </ul>
+            <p>Δημιουργήστε μια κλάση Manager που κληρονομεί την Employee. Η κλάση αυτή πρέπει να έχει:</p>
+            <ul>
+                <li>Ιδιότητα department (τύπος String), που θα δηλώνει το τμήμα στο οποίο εργάζεται.</li>
+                <li>Constructor που θα δέχεται ως παραμέτρους το name, το salary και το department, και θα καλεί τον constructor της γονικής κλάσης χρησιμοποιώντας super.</li>
+                <li>Υπερκαλυμμένη μέθοδο printDetails() που θα καλεί τη μέθοδο printDetails() της γονικής κλάσης χρησιμοποιώντας super και θα εμφανίζει επιπλέον το τμήμα.</li>
+            </ul>
+            <p>Δημιουργήστε μια κλάση Executive που κληρονομεί την Manager. Η κλάση αυτή πρέπει να έχει:</p>
+            <ul>
+                <li>Ιδιότητα bonus (τύπος double), που θα δηλώνει το μπόνους που λαμβάνει ο διευθυντής.</li>
+                <li>Constructor που θα δέχεται ως παραμέτρους το name, το salary, το department και το bonus, και θα καλεί τον constructor της γονικής κλάσης χρησιμοποιώντας super.</li>
+                <li>Μέθοδο calculateTotalCompensation() που θα επιστρέφει το άθροισμα του μισθού και του μπόνους.</li>
+                <li>Υπερκαλυμμένη μέθοδο printDetails() που θα εμφανίζει το όνομα, τον μισθό, το τμήμα και το συνολικό εισόδημα (μισθός + μπόνους).</li>
+            </ul>
+            <p>Στην κύρια κλάση App, κάντε τα εξής:</p>
+            <ul>
+                <li>Δημιουργήστε ένα αντικείμενο της Employee και καλέστε όλες τις μεθόδους του.</li>
+                <li>Δημιουργήστε ένα αντικείμενο της Manager και καλέστε όλες τις μεθόδους του, συμπεριλαμβανομένων και των μεθόδων που κληρονόμησε.</li>
+                <li>Δημιουργήστε ένα αντικείμενο της Executive και καλέστε όλες τις μεθόδους του, επιδεικνύοντας τη χρήση της super για πρόσβαση στις ιδιότητες της γονικής κλάσης.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="exercise-container">
+        <div class="exercise">
+            <h3>Ερώτημα 3</h3>
+            <p>Δημιουργήστε μια κλάση Shape. Η κλάση αυτή πρέπει να έχει:</p>
+            <ul>
+                <li>Ιδιότητα color (τύπος String), που θα δηλώνει το χρώμα του σχήματος.</li>
+                <li>Constructor που θα δέχεται ως παράμετρο το color.</li>
+                <li>Private ιδιότητα και την αντίστοιχη μέθοδο get και set.</li>
+                <li>Μέθοδο calculateArea() που θα επιστρέφει 0 (double).</li>
+                <li>Μέθοδο printDetails() που θα εμφανίζει το χρώμα του σχήματος.</li>
+            </ul>
+            <p>Δημιουργήστε μια κλάση Rectangle που κληρονομεί την Shape. Η κλάση αυτή πρέπει να έχει:</p>
+            <ul>
+                <li>Ιδιότητες width και height (τύπος double).</li>
+                <li>Constructor που θα δέχεται ως παραμέτρους το color, το width και το height, και θα καλεί τον constructor της γονικής κλάσης χρησιμοποιώντας super.</li>
+                <li>Υπερκαλυμμένη μέθοδο calculateArea() που θα υπολογίζει και θα επιστρέφει το εμβαδόν του ορθογωνίου (πλάτος × ύψος).</li>
+                <li>Υπερκαλυμμένη μέθοδο printDetails() που θα καλεί τη μέθοδο printDetails() της γονικής κλάσης χρησιμοποιώντας super και θα εμφανίζει επιπλέον το πλάτος, το ύψος και το εμβαδόν του ορθογωνίου.</li>
+            </ul>
+            <p>Δημιουργήστε μια κλάση Circle που κληρονομεί την Shape. Η κλάση αυτή πρέπει να έχει:</p>
+            <ul>
+                <li>Ιδιότητα radius (τύπος double), που θα δηλώνει την ακτίνα του κύκλου.</li>
+                <li>Constructor που θα δέχεται ως παραμέτρους το color και το radius, και θα καλεί τον constructor της γονικής κλάσης χρησιμοποιώντας super.</li>
+                <li>Υπερκαλυμμένη μέθοδο calculateArea() που θα υπολογίζει και θα επιστρέφει το εμβαδόν του κύκλου (π.χ., π × ακτίνα × ακτίνα).</li>
+                <li>Υπερκαλυμμένη μέθοδο printDetails() που θα καλεί τη μέθοδο printDetails() της γονικής κλάσης χρησιμοποιώντας super και θα εμφανίζει επιπλέον την ακτίνα και το εμβαδόν του κύκλου.</li>
+            </ul>
+            <p>Στην κύρια κλάση App, κάντε τα εξής:</p>
+            <ul>
+                <li>Δημιουργήστε ένα αντικείμενο της Shape και καλέστε τη μέθοδο printDetails() για να ελέγξετε τη βασική συμπεριφορά της.</li>
+                <li>Δημιουργήστε ένα αντικείμενο της Rectangle, ορίστε τιμές για πλάτος και ύψος και καλέστε τις μεθόδους calculateArea() και printDetails().</li>
+                <li>Δημιουργήστε ένα αντικείμενο της Circle, ορίστε τιμή για την ακτίνα και καλέστε τις μεθόδους calculateArea() και printDetails().</li>
+            </ul>
+        </div>
+    </section>
+
+</main>
+
+<div class="back-btn">
+    <a href="../system_modelling.html#java-revision">Επιστροφή</a>
+</div>
+
+<!-- Footer Section -->
+<footer class="footer">
+    <div class="footer-container">
+        <!-- Contact Section -->
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <p>Email: collegecompass@gmail.com</p>
+        </div>
+
+        <!-- Social Media Section -->
+        <div class="footer-section">
+            <h4>Follow Us</h4>
+            <ul class="social-links">
+                <li><a href="#" target="_blank"><i class="fa-brands fa-square-facebook"></i></a></li>
+                <li><a href="#" target="_blank"><i class="fa-brands fa-square-x-twitter"></i></a></li>
+                <li><a href="#" target="_blank"><i class="fa-brands fa-square-instagram"></i></a></li>
+            </ul>
+        </div>
+
+        <!-- Quick Links Section -->
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul class="quick-links">
+                <li><a href="#">About Us</a></li>
+                <li><a href="../privacy.html">Privacy Policy</a></li>
+                <li><a href="../terms.html">Terms & Conditions</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Copyright Section -->
+    <div class="footer-bottom">
+        <p>&copy; 2025 College Compass. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<script src="../index.js"></script>
+</body>
+</html>

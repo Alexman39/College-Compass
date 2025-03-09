@@ -1,0 +1,82 @@
+body {
+    font-family: "Manrope", sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 5em;
+    text-align: center;
+}
+
+h2 {
+    font-size: 4em;
+}
+
+h3 {
+    font-size: 3em;
+}
+
+h4 {
+    font-size: 2em;
+}
+
+
+main {
+    margin-bottom: 3em;
+}
+
+.exercise-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.exercise {
+    padding-bottom: 3em;
+    border-bottom: 2px solid lightgray;
+    width: 70%;
+}
+
+.exercise p {
+    font-size: 18px;
+}
+
+.exercise li {
+    font-size: 17px;
+}
+
+code {
+    color: #e83e8c;
+}
+
+.exercise-code {
+    background-color: #F5F2F0;
+    padding: 10px;
+    width: 50%;
+    margin: auto;
+    border-radius: 10px;
+}
+
+.back-btn {
+    text-align: center;
+    margin: 5em;
+}
+
+.back-btn a {
+    text-decoration: none;
+    color: white;
+    border-radius: 25px;
+    background-color: black;
+    padding: 0.8em 3em;
+    transition: 0.3s;
+}
+
+.back-btn a:hover {
+    color: white;
+    background-color: #c4161c;
+    transition: 0.3s;
+}

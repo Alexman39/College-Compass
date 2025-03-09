@@ -1,0 +1,183 @@
+body {
+    font-family: "Manrope", sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 5em;
+    text-align: center;
+}
+
+h2 {
+    font-size: 4em;
+}
+
+h3 {
+    font-size: 3em;
+}
+
+h4 {
+    font-size: 2em;
+}
+
+p {
+    font-size: 20px;
+}
+
+/* Main */
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5em;
+}
+
+main p {
+    width: 60%;
+}
+
+.line {
+    width: 60%;
+}
+
+/* Lessons */
+
+.lesson-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.lesson-container p {
+    width: 60%;
+    text-align: left;
+}
+
+
+/* Exercise */
+
+.exercise-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 3em;
+    margin-bottom: 3em;
+    gap: 5em;
+}
+
+.exercise-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.exercise-card:hover {
+    transform: translateY(-10px);
+}
+
+.exercise-card i {
+    font-size: 40px;
+    color: #c4161c;
+}
+
+.exercise-card h3 {
+    font-size: 20px;
+    margin: 15px 0;
+}
+
+.exercise-card p {
+    font-size: 14px;
+    color: #555;
+    width: 100%;
+    margin-bottom: 2em;
+    text-align: center;
+}
+
+.card-link {
+    display: inline-block;
+    margin-top: auto;
+    padding: 10px 20px;
+    background-color: #c4161c;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.card-link:hover {
+    background-color: #9f1113;
+}
+
+/* Section 1 */
+
+.section1-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 60%;
+    margin: auto;
+}
+
+
+.section1-header {
+    text-align: center;
+    width: 100%;
+}
+
+.section1-container img {
+    width: 100%;
+    margin: 2em;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.section1-container ul {
+    width: 100%;
+}
+
+.section1-container li {
+    text-align: left;
+    font-size: 19px;
+}
+
+.section1-container code {
+    background-color: #0f1432;
+    color: white;
+    padding: 2em 5em;
+    border-radius: 10px;
+    text-align: left;
+    font-size: 18px;
+}
+
+.section1-container table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #0f1432;
+    margin-bottom: 3em;
+}
+
+.section1-container table th {
+    border: 1px solid #0f1432;
+}
+
+.section1-container table td {
+    text-align: left;
+    font-size: 19px;
+    border: 1px solid #0f1432;
+    padding: 0.5em;
+}

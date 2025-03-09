@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Information Systems Modelling and Design - College Compass</title>
+    <link rel="stylesheet" href="Styling/system_modelling.css">
+    <link rel="stylesheet" href="Styling/header.css">
+    <link rel="stylesheet" href="Styling/footer.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Montserrat:wght@100;400;900&display=swap"
+          rel="stylesheet">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/a4df1a361f.js" crossorigin="anonymous"></script>
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon-16x16.png" sizes="16x16" type="image/x-icon">
+    <link rel="icon" href="images/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="images/android-chrome-192x192.png" sizes="192x192" type="image/png">
+</head>
+<body>
+<header>
+    <h1><i class="fa-regular fa-compass"></i> <a href="index.html">College Compass</a></h1>
+    <ul>
+        <li><a href="system_modelling.html">Systems Modelling</a></li>
+        <li><a href="system_network.html">Systems and Networks</a></li>
+        <li><a href="webTechnologies.html">Web Technologies</a></li>
+    </ul>
+</header>
+
+<main>
+    <h1>Information Systems Modelling and Design (CN4000_1)</h1>
+    <h2>General</h2>
+    <p>
+        Καλώς ήρθατε στο μάθημα Μοντελοποίησης & Σχεδίασης Συστημάτων! Στην τάξη αυτή, θα εξετάσουμε τον κόσμο της UML
+        (Unified Modeling Language), μιας ισχυρής γλώσσας που χρησιμοποιείται για να απεικονίσουμε το σχέδιο ενός
+        συστήματος. Η UML μας βοηθά να κατανοήσουμε και να επικοινωνήσουμε καλύτερα τα συστατικά και τη δομή των
+        λογισμικών συστημάτων μέσω μιας σειράς στάνταρ διαγραμμάτων.
+        <br><br>
+        Κατά τη διάρκεια του εξαμήνου, θα καλύψουμε διάφορους τύπους διαγραμμάτων UML, με κάθε τύπο να εξυπηρετεί έναν
+        συγκεκριμένο σκοπό και να προσφέρει μοναδικές δυνατότητες. Θα μάθουμε να δημιουργούμε διαγράμματα κλάσεων,
+        διαγράμματα ακολουθίας, διαγράμματα δραστηριοτήτων, και πολλά άλλα, ώστε να μπορέσουμε να αποτυπώσουμε πλήρως τη
+        δομή και τη λειτουργία ενός συστήματος.
+        <br><br>
+        Επιπλέον, η τάξη θα περιλαμβάνει μία μεγάλη εργασία, η οποία θα είναι το επίκεντρο της αξιολόγησης για το
+        μάθημα. Η εργασία αυτή θα μας ζητήσει να εφαρμόσουμε τις γνώσεις που έχουμε αποκτήσει και να δημιουργήσουμε ένα
+        πλήρες σύνολο UML διαγραμμάτων για ένα σύστημα της επιλογής μας. Η εργασία αυτή δεν είναι μόνο μια ευκαιρία να
+        εξασκηθούμε σε όσα μάθαμε, αλλά και να κατανοήσουμε τη σημασία της μοντελοποίησης στη διαδικασία σχεδίασης
+        λογισμικού.
+        <br><br>
+        Ετοιμαστείτε για ένα ταξίδι στον κόσμο της λογισμικής ανάλυσης και σχεδίασης, όπου οι ιδέες σας θα αποκτούν
+        σχήμα μέσω της UML!
+    </p>
+</main>
+
+<hr class="line">
+
+<div class="lesson-container" id="java-revision">
+    <h2>Επανάληψη στη Java</h2>
+    <p>
+        Πριν όμως προχωρήσουμε στην <b>UML</b>, θα πρέπει να βεβαιωθούμε πως είμαστε καλά προετοιμασμένοι και θυμόμαστε
+        όλα
+        όσα μάθαμε το προηγούμενο εξάμηνο. Είναι σημαντικό να έχουμε πλήρη κατανόηση των βασικών εννοιών της <b>Java</b>,
+        καθώς οι δεξιότητες αυτές θα μας βοηθήσουν να κατανοήσουμε καλύτερα την UML και τις εφαρμογές της.
+
+        Επομένως, για όποιον αισθάνεται πως δεν θυμάται καλά ή χρειάζεται μια επανάληψη, καλό θα ήταν να ολοκληρώσει τις
+        επαναληπτικές ασκήσεις που ακολουθούν. Έτσι, θα βεβαιωθεί ότι βρίσκεται σε ένα καλό επίπεδο πριν ξεκινήσει να
+        μαθαίνει την UML και τα συναφή με αυτήν.
+    </p>
+
+    <div class="exercise-container">
+        <div class="exercise-card">
+            <i class="fas fa-pencil-alt"></i>
+            <h3>1η Εργασία Επανάληψης</h3>
+            <p>Ολοκλήρωσε το πρώτο σετ ασκήσεων για να ανανεώσεις τις γνώσεις σου στις βασικές έννοιες της Java.</p>
+            <a href="exercises/exercise-set-1.html" class="card-link">Ξεκίνα τις Ασκήσεις</a>
+        </div>
+
+        <div class="exercise-card">
+            <i class="fas fa-cogs"></i>
+            <h3>2η Εργασία Επανάληψης</h3>
+            <p>Εξασκήσου με το δεύτερο σετ ασκήσεων που εστιάζει σε πιο προχωρημένα θέματα.</p>
+            <a href="exercises/exercise-set-2.html" class="card-link">Ξεκίνα τις Ασκήσεις</a>
+        </div>
+    </div>
+</div>
+
+<hr class="line">
+
+<div class="section1-container" id="section1">
+    <div class="section1-header">
+        <h2>Ενότητα 1η - UML</h2>
+        <p>
+            Τα <b>UML (Unified Modeling Language)</b> Class Diagrams είναι σημαντικά εργαλεία για την κατανόηση και την
+            απεικόνιση
+            της δομής ενός αντικειμενοστραφούς συστήματος <b>(OOP)</b>. Αυτά τα διαγράμματα παρουσιάζουν τις κλάσεις, τα
+            χαρακτηριστικά τους, τις μεθόδους τους και τις σχέσεις μεταξύ των κλάσεων, προσφέροντας μια σαφή εικόνα για το
+            πώς οι διάφορες οντότητες ενός συστήματος συνδέονται και αλληλεπιδρούν μεταξύ τους.
+
+            Τα <b>UML Class Diagrams</b> βοηθούν τους προγραμματιστές να κατανοήσουν τη συνολική αρχιτεκτονική ενός
+            προγράμματος,
+            να οργανώσουν την κωδικοποίηση και να επικοινωνούν αποτελεσματικά με άλλους για τη σχεδίαση και υλοποίηση του
+            συστήματος. Στην επόμενη ενότητα, θα εξετάσουμε βήμα-βήμα πώς να διαβάσουμε και να κατανοήσουμε ένα <b>UML Class
+            Diagram</b> και πώς να το μετατρέψουμε σε πραγματικό κώδικα.
+        </p>
+    </div>
+
+
+    <h4>Τι είναι τα UML Class Diagrams</h4>
+    <p>
+        Τα διαγράμματα κλάσεων UML είναι ένας οπτικός τρόπος παρουσίασης της δομής και των σχέσεων μεταξύ κλάσεων σε ένα
+        αντικειμενοστραφές σύστημα (OOP - Object Oriented Programming).
+    </p>
+    <img src="images/UML1.png" alt="UML Diagram">
+    <p>Όταν βλέπεις ένα UML Class Diagram για πρώτη φορά, ακολουθείς μια συγκεκριμένη σειρά βημάτων για να το
+        κατανοήσεις σωστά και να ξέρεις τι να υλοποιήσεις σε κώδικα.
+    </p>
+
+    <h4>Βήμα 1: Εντοπισμός των Κλάσεων (Classes)</h4>
+    <img src="images/UML2.png" alt="UML Diagram with Classes outlined">
+    <p>
+        Κοίτα τα κουτιά του διαγράμματος, γιατί το καθένα αντιπροσωπεύει μια κλάση:
+    </p>
+    <ul>
+        <li>Τι αντικείμενα περιγράφει το διάγραμμα; (π.χ., User, Product, Order κλπ.)</li>
+        <li>Ποιες είναι οι κύριες οντότητες του συστήματος;</li>
+    </ul>
+    <p>
+        Σε κώδικα Java: Κάθε κλάση θα γίνει ένα class.
+    </p>
+    <code>
+        <pre>
+public class User {
+    // περιεχόμενο...
+}
+        </pre>
+    </code>
+
+    <h4>Βήμα 2: Ανάγνωση των Χαρακτηριστικών (Attributes)</h4>
+    <img src="images/UML2.png" alt="UML Diagram with Attributes outlined">
+    <p>
+        Μέσα σε κάθε κλάση, δες τις μεταβλητές που έχει (χαρακτηριστικά/ attributes):
+    </p>
+    <ul>
+        <li>Ποια είναι τα δεδομένα που αποθηκεύει η κλάση;</li>
+        <li>Ποιοι είναι οι τύποι δεδομένων τους (int, String, double κλπ.);</li>
+        <li>Ποια είναι η ορατότητα (public, private, protected);</li>
+    </ul>
+    <p>
+        Σε κώδικα Java: Κάθε attribute θα γίνει μια μεταβλητή με το σωστό επίπεδο ορατότητας.
+    </p>
+    <code>
+        <pre>
+public class User {
+    private String name;
+    private int age;
+}
+        </pre>
+    </code>
+    <ul>
+        <li>Την ορατότητα (visibility) των χαρακτηριστικών (attributes) και των μεθόδων (methods) προσδιορίζεται από τα
+            σύμβολα που βρίσκονται μπροστά από το όνομα κάθε στοιχείο
+        </li>
+    </ul>
+
+    <h4>Ποια είναι τα επίπεδα ορατότητας;</h4>
+    <table>
+        <tr>
+            <th>Σύμβολο</th>
+            <th>Ορατότητα</th>
+            <th>Περιγραφή</th>
+        </tr>
+        <tr>
+            <th>+</th>
+            <td>Public (Δημόσιο)</td>
+            <td>Προσβάσιμο από όλες τις κλάσεις.</td>
+        </tr>
+        <tr>
+            <th>-</th>
+            <td>Private (Ιδιωτικό)</td>
+            <td>Προσβάσιμο μόνο μέσα στην ίδια κλάση.</td>
+        </tr>
+        <tr>
+            <th>#</th>
+            <td>Protected (Προστατευμένο)</td>
+            <td>Προσβάσιμο μόνο από υποκλάσεις (κληρονομικότητα).</td>
+        </tr>
+        <tr>
+            <th>~</th>
+            <td>Package (Προστασία Πακέτου)</td>
+            <td>Προσβάσιμο μόνο από κλάσεις του ίδιου πακέτου.</td>
+        </tr>
+    </table>
+
+    <h4>Βήμα 3: Ανάγνωση των Μεθόδων (Methods)</h4>
+    <img src="images/UML3.png" alt="UML Diagram with Methods outlined">
+    <p>
+        Οι μέθοδοι περιγράφουν τη συμπεριφορά της κλάσης.:
+    </p>
+    <ul>
+        <li>Ποιες μέθοδοι υπάρχουν;</li>
+        <li>Τι ορίσματα δέχονται και τι επιστρέφουν; Ορίσματα (arguments ή parameters), είναι οι τιμές που λαμβάνουν για
+            να εκτελέσουν κάποια λειτουργία.
+        </li>
+        <li>Είναι δημόσιες (+), ιδιωτικές () ή προστατευμένες (#);</li>
+    </ul>
+    <p>
+        Σε κώδικα Java: Οι μέθοδοι θα γίνουν functions μέσα στην κλάση.
+    </p>
+    <code>
+        <pre>
+public class User {
+    private String name;
+    private int age;
+
+    public void setName(String newName) {
+        this.name = newName;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+        </pre>
+    </code>
+    <h4>
+        Πως ξέρω τι κώδικα θα γράψω μέσα σε μια μέθοδο;
+    </h4>
+    <p>
+        Τα <b>UML διαγράμματα</b> συνήθως δεν δείχνουν τη λειτουργικότητα των μεθόδων, παρά μόνο την δομή τους. Αν και
+        κάποιες
+        μεθόδοι με προφανή ονόματα (όπως getName(int name) ) δίνουν μια ιδέα για το τι κάνουν, τις περισσότερες φορές το
+        διάγραμμα δεν παρέχει πληροφορίες για το πως ακριβώς λειτουργεί μια μέθοδος εσωτερικά. Αυτό σημαίνει ότι η
+        πραγματική λογική της υλοποίησης παραμένει στον προγραμματιστή.
+    </p>
+
+    <h4>Βήμα 4: Ανάλυση των Σχέσεων μεταξύ Κλάσεων</h4>
+    <img src="images/UML4.png" alt="UML Diagram with the connection of classes outlined">
+    <p>
+        Στα UML Class Diagrams, οι σχέσεις μεταξύ κλάσεων δείχνουν πώς συνδέονται και πώς αλληλεπιδρούν μεταξύ τους.
+        Αυτές οι σχέσεις παριστάνονται με γραμμές και ειδικά σύμβολα που δείχνουν τον τύπο της σχέσης.
+    </p>
+    <p>
+        Γενικά, υπάρχουν σχέσεις που περιγράφουν:
+    </p>
+    <ol>
+        <li>Ιδιοκτησία → Μία κλάση περιέχει ή εξαρτάται από μια άλλη.</li>
+        <li>Χρήση → Μία κλάση χρησιμοποιεί μια άλλη, αλλά δεν την «κατέχει».
+        </li>
+        <li>Κληρονομικότητα → Μία κλάση βασίζεται σε μια άλλη για να αποκτήσει χαρακτηριστικά και μεθόδους.</li>
+    </ol>
+    <p>
+        Ανάλογα με τη σχέση, μπορούμε να καταλάβουμε αν μια κλάση μπορεί να υπάρχει ανεξάρτητα ή αν εξαρτάται από κάποια άλλη.<br>
+        Παράδειγμα:
+    </p>
+    <ol>
+        <li>Ένας Χρήστης μπορεί να έχει πολλαπλές Παραγγελίες (ιδιοκτησία).</li>
+        <li>Μια Παραγγελία περιέχει Προϊόντα, αλλά αυτά υπάρχουν και χωρίς την παραγγελία (χρήση).
+        </li>
+        <li>Ένας Διαχειριστής είναι ειδικός τύπος Χρήστη και κληρονομεί τα χαρακτηριστικά του (κληρονομικότητα).</li>
+    </ol>
+    <p>
+        Σε κώδικα Java:
+    </p>
+    <code>
+        <pre>
+// Κληρονομικότητα (Inheritance)
+public class Admin extends User {
+    private String role;
+}
+
+// Συσχέτιση (Association)
+public class Order {
+    private User customer;
+}
+        </pre>
+    </code>
+
+    <h4>Βήμα 5: Υλοποίηση του Κώδικα Βήμα-Βήμα</h4>
+    <p>
+        Τώρα που κατάλαβες τη δομή, μπορείς να ξεκινήσεις να γράφεις τον κώδικα:
+    </p>
+    <ol>
+        <li>Δημιούργησε τις κλάσεις πρώτα.</li>
+        <li>Πρόσθεσε τα attributes με τα σωστά data types.</li>
+        <li>Υλοποίησε τις μεθόδους με βάση τα ονόματα και τις επιστροφές τους.</li>
+        <li>Πρόσθεσε σχέσεις μεταξύ κλάσεων.</li>
+    </ol>
+
+</div>
+
+<!-- Footer Section -->
+<footer class="footer">
+    <div class="footer-container">
+        <!-- Contact Section -->
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <p>Email: collegecompass@gmail.com</p>
+        </div>
+
+        <!-- Social Media Section -->
+        <div class="footer-section">
+            <h4>Follow Us</h4>
+            <ul class="social-links">
+                <li><a href="#" target="_blank"><i class="fa-brands fa-square-facebook"></i></a></li>
+                <li><a href="#" target="_blank"><i class="fa-brands fa-square-x-twitter"></i></a></li>
+                <li><a href="#" target="_blank"><i class="fa-brands fa-square-instagram"></i></a></li>
+            </ul>
+        </div>
+
+        <!-- Quick Links Section -->
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul class="quick-links">
+                <li><a href="#">About Us</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms & Conditions</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Copyright Section -->
+    <div class="footer-bottom">
+        <p>&copy; 2025 College Compass. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<script src="index.js"></script>
+</body>
+</html>
