@@ -96,14 +96,18 @@
         <p>
             Τα <b>UML (Unified Modeling Language)</b> Class Diagrams είναι σημαντικά εργαλεία για την κατανόηση και την
             απεικόνιση
-            της δομής ενός αντικειμενοστραφούς συστήματος <b>(OOP)</b>. Αυτά τα διαγράμματα παρουσιάζουν τις κλάσεις, τα
+            της δομής ενός αντικειμενοστραφούς συστήματος <b>(OOP)</b>.
+            <br><br>
+            Αυτά τα διαγράμματα παρουσιάζουν τις κλάσεις, τα
             χαρακτηριστικά τους, τις μεθόδους τους και τις σχέσεις μεταξύ των κλάσεων, προσφέροντας μια σαφή εικόνα για το
             πώς οι διάφορες οντότητες ενός συστήματος συνδέονται και αλληλεπιδρούν μεταξύ τους.
-
+            <br><br>
             Τα <b>UML Class Diagrams</b> βοηθούν τους προγραμματιστές να κατανοήσουν τη συνολική αρχιτεκτονική ενός
             προγράμματος,
             να οργανώσουν την κωδικοποίηση και να επικοινωνούν αποτελεσματικά με άλλους για τη σχεδίαση και υλοποίηση του
-            συστήματος. Στην επόμενη ενότητα, θα εξετάσουμε βήμα-βήμα πώς να διαβάσουμε και να κατανοήσουμε ένα <b>UML Class
+            συστήματος.
+            <br><br>
+            Στην επόμενη ενότητα, θα εξετάσουμε βήμα-βήμα πώς να διαβάσουμε και να κατανοήσουμε ένα <b>UML Class
             Diagram</b> και πώς να το μετατρέψουμε σε πραγματικό κώδικα.
         </p>
     </div>
@@ -114,13 +118,28 @@
         Τα διαγράμματα κλάσεων UML είναι ένας οπτικός τρόπος παρουσίασης της δομής και των σχέσεων μεταξύ κλάσεων σε ένα
         αντικειμενοστραφές σύστημα (OOP - Object Oriented Programming).
     </p>
-    <img src="images/UML1.png" alt="UML Diagram">
+
+    <div class="image-container">
+        <img src="images/UML1.png" alt="Preview Image" class="thumbnail" onclick="openModal('images/UML1.png')">
+    </div>
+
+    <!-- Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modalImg" class="modal-content">
+    </div>
+
+
     <p>Όταν βλέπεις ένα UML Class Diagram για πρώτη φορά, ακολουθείς μια συγκεκριμένη σειρά βημάτων για να το
         κατανοήσεις σωστά και να ξέρεις τι να υλοποιήσεις σε κώδικα.
     </p>
 
     <h4>Βήμα 1: Εντοπισμός των Κλάσεων (Classes)</h4>
-    <img src="images/UML2.png" alt="UML Diagram with Classes outlined">
+
+    <div class="image-container">
+        <img src="images/UML2.png" alt="Preview Image" class="thumbnail" onclick="openModal('images/UML2.png')">
+    </div>
+
     <p>
         Κοίτα τα κουτιά του διαγράμματος, γιατί το καθένα αντιπροσωπεύει μια κλάση:
     </p>
@@ -140,7 +159,11 @@ public class User {
     </code>
 
     <h4>Βήμα 2: Ανάγνωση των Χαρακτηριστικών (Attributes)</h4>
-    <img src="images/UML2.png" alt="UML Diagram with Attributes outlined">
+
+    <div class="image-container">
+        <img src="images/UML3.png" alt="Preview Image" class="thumbnail" onclick="openModal('images/UML3.png')">
+    </div>
+
     <p>
         Μέσα σε κάθε κλάση, δες τις μεταβλητές που έχει (χαρακτηριστικά/ attributes):
     </p>
@@ -196,7 +219,9 @@ public class User {
     </table>
 
     <h4>Βήμα 3: Ανάγνωση των Μεθόδων (Methods)</h4>
-    <img src="images/UML3.png" alt="UML Diagram with Methods outlined">
+    <div class="image-container">
+        <img src="images/UML4.png" alt="Preview Image" class="thumbnail" onclick="openModal('images/UML4.png')">
+    </div>
     <p>
         Οι μέθοδοι περιγράφουν τη συμπεριφορά της κλάσης.:
     </p>
@@ -238,7 +263,11 @@ public class User {
     </p>
 
     <h4>Βήμα 4: Ανάλυση των Σχέσεων μεταξύ Κλάσεων</h4>
-    <img src="images/UML4.png" alt="UML Diagram with the connection of classes outlined">
+
+    <div class="image-container">
+        <img src="images/UML5.png" alt="Preview Image" class="thumbnail" onclick="openModal('images/UML5.png')">
+    </div>
+
     <p>
         Στα UML Class Diagrams, οι σχέσεις μεταξύ κλάσεων δείχνουν πώς συνδέονται και πώς αλληλεπιδρούν μεταξύ τους.
         Αυτές οι σχέσεις παριστάνονται με γραμμές και ειδικά σύμβολα που δείχνουν τον τύπο της σχέσης.
@@ -328,6 +357,6 @@ public class Order {
     </div>
 </footer>
 
-<script src="index.js"></script>
+<script src="images.js"></script>
 </body>
 </html>

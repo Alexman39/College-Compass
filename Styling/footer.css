@@ -80,3 +80,20 @@
 .footer-bottom p {
     margin: 0;
 }
+
+/* 🔹 Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .footer-section {
+        padding: 10px 0;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+}
