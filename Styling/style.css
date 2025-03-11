@@ -9,183 +9,525 @@ body {
     padding: 0;
 }
 
-/* Main Body */
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 5em auto;
-    height: 40em;
-    text-align: center;
+@media screen and (min-width: 1024px) {
+    h1 {
+        font-size: 5em;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 4em;
+    }
+
+    h3 {
+        font-size: 3em;
+    }
+
+    h4 {
+        font-size: 2em;
+    }
+
+    p {
+        font-size: 20px;
+    }
+
+    /* Main */
+
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 5em 0;
+    }
+
+    main h1 {
+        font-size: 5em;
+    }
+
+    main p {
+        font-size: 28px;
+        text-align: center;
+        margin: 2em 1em;
+    }
+
+    main a {
+        font-size: 20px;
+        color: white;
+        background-color: #000;
+        text-decoration: none;
+        border-radius: 25px;
+        transition: 0.3s;
+        padding: 0.5em 2em;
+    }
+
+    main a:hover {
+        background-color: #9f1113;
+        color: white;
+        transition: 0.3s;
+    }
+
+    /* Classes */
+    .class-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 5em;
+    }
+
+    .class-container p {
+        text-align: center;
+    }
+
+    .class-header {
+        background-color: #c4161c;
+        width: 100%;
+        text-align: center;
+        color: white;
+        padding: 5em 0;
+        margin: 5em 0;
+    }
+
+    .class-header h1 {
+        font-size: 3em;
+    }
+
+    .class-header p {
+        font-size: 2em;
+        width: 80%;
+        margin: auto;
+    }
+
+    .class-item {
+        width: 70%;
+    }
+
+    .class-title {
+        width: 100%;
+        padding: 15px;
+        background-color: #c4161c;
+        color: white;
+        text-align: left;
+        font-size: 18px;
+        border: none;
+        cursor: pointer;
+        margin: 5px 0;
+        transition: background-color 0.3s ease;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .class-title h1 {
+        font-size: 36px;
+    }
+
+    .class-title i {
+        font-size: 1.5em;
+    }
+
+    .class-title:hover {
+        background-color: #9f1113;
+    }
+
+    .class-info {
+        padding: 0 15px;
+        background-color: #f9f9f9;
+        border-left: 4px solid #c4161c;
+        overflow: hidden; /* Hide the content that overflows */
+        height: 0; /* Initially set height to 0 to keep it hidden */
+        transition: height 0.3s ease; /* Add a smooth transition for height */
+    }
+
+    .class-info h2 {
+        font-size: 24px;
+    }
+
+    .class-info p {
+        padding-bottom: 3em;
+        text-align: left;
+        font-size: 20px;
+    }
+
+    /* Optional: Add a smoother transition on hover */
+    .class-info p {
+        margin: 10px 0;
+    }
 }
 
-main h1 {
-    font-size: 5em;
-}
-
-main p {
-    font-size: 4em;
-}
-
-main a {
-    text-decoration: none;
-    color: white;
-    background-color: #000;
-    border-radius: 25px;
-    padding: 0.5em 4em;
-    font-size: 20px;
-    transition: 0.3s;
-}
-
-main a:hover {
-    background-color: #c4161c;
-    transition: 0.3s;
-}
-
-/* Classes */
-.class-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 5em;
-    width: 100%;
-}
-
-.class-container p {
-    font-size: 20px;
-    text-align: center;
-}
-
-.class-header {
-    background-color: #c4161c;
-    width: 100%;
-    text-align: center;
-    color: white;
-    padding: 5em 1em;
-    margin: 5em auto;
-}
-
-.class-item {
-    width: 70%;
-}
-
-.class-title {
-    width: 100%;
-    padding: 15px;
-    background-color: #c4161c;
-    color: white;
-    text-align: left;
-    font-size: 18px;
-    border: none;
-    cursor: pointer;
-    margin: 5px 0;
-    transition: background-color 0.3s ease;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.class-title i {
-    font-size: 1.5em;
-}
-
-.class-title:hover {
-    background-color: #9f1113;
-}
-
-.class-info {
-    padding: 0 15px;
-    background-color: #f9f9f9;
-    border-left: 4px solid #c4161c;
-    overflow: hidden; /* Hide the content that overflows */
-    height: 0; /* Initially set height to 0 to keep it hidden */
-    transition: height 0.3s ease; /* Add a smooth transition for height */
-}
-
-.class-info p {
-    padding-bottom: 3em;
-}
-
-/* Optional: Add a smoother transition on hover */
-.class-info p {
-    margin: 10px 0;
-}
 
 /* 🔹 Mobile Responsiveness */
 @media screen and (max-width: 1024px) {
+
+    h1 {
+        font-size: 4em;
+    }
+
+    h2 {
+        font-size: 3em;
+    }
+
+    h3 {
+        font-size: 2.5em;
+    }
+
+    h4 {
+        font-size: 1.8em;
+    }
+
+    /* Main */
+
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 5em 0;
+    }
+
+    main h1 {
+        font-size: 5em;
+    }
+
+    main p {
+        font-size: 32px;
+        text-align: center;
+        margin: 2em 1em;
+    }
+
+    main a {
+        font-size: 1.5em;
+        color: white;
+        background-color: #000;
+        text-decoration: none;
+        border-radius: 25px;
+        transition: 0.3s;
+        padding: 0.5em 3em;
+    }
+
+    main a:hover {
+        background-color: #9f1113;
+        color: white;
+        transition: 0.3s;
+    }
+
+    /* Classes */
+    .class-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 5em;
+    }
+
+    .class-container p {
+        text-align: center;
+    }
+
+    .class-header {
+        background-color: #c4161c;
+        width: 100%;
+        text-align: center;
+        color: white;
+        padding: 5em 0;
+        margin: 5em 0;
+    }
+
+    .class-header p {
+        width: 80%;
+        margin: auto;
+        font-size: 1.5em;
+    }
+
+    .class-item {
+        /*width: 70%;*/
+    }
+
+    .class-title {
+        background-color: #c4161c;
+        color: #FFF;
+        margin: 0.5em 1em;
+        padding: 2em 1em;
+        transition: background-color 0.3s ease;
+    }
+
+    .class-title h1 {
+        text-align: left;
+    }
+
+    .class-title i {
+        font-size: 1.5em;
+    }
+
+    .class-title:hover {
+        background-color: #9f1113;
+    }
+
+    .class-info {
+        padding: 0 15px;
+        margin: auto 1em;
+        background-color: #f9f9f9;
+        border-left: 4px solid #c4161c;
+        overflow: hidden; /* Hide the content that overflows */
+        height: 0; /* Initially set height to 0 to keep it hidden */
+        transition: height 0.3s ease; /* Add a smooth transition for height */
+    }
+
+    .class-info p {
+        padding-bottom: 3em;
+        text-align: left;
+        font-size: 2em;
+    }
+
+    /* Optional: Add a smoother transition on hover */
+    .class-info p {
+        margin: 10px 0;
+    }
+
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 3em;
+    }
+
+    h2 {
+        font-size: 2.5em;
+    }
+
+    h3 {
+        font-size: 2em;
+    }
+
+    h4 {
+        font-size: 1.5em;
+    }
+
+    p {
+        font-size: 18px;
+    }
+
+    /* Main */
+
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 5em 0;
+    }
+
     main h1 {
         font-size: 3em;
     }
 
     main p {
-        font-size: 2em;
+        font-size: 28px;
+        text-align: center;
+        margin: 2em 1em;
     }
 
     main a {
+        color: white;
+        background-color: #000;
+        text-decoration: none;
+        border-radius: 25px;
+        transition: 0.3s;
         padding: 0.5em 2em;
-        font-size: 18px;
     }
 
-    .class-item {
-        width: 90%;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    main {
-        height: auto;
-        padding: 2em 1em;
+    main a:hover {
+        background-color: #9f1113;
+        color: white;
+        transition: 0.3s;
     }
 
-    main h1 {
-        font-size: 2.5em;
+    /* Classes */
+    .class-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 5em;
     }
 
-    main p {
-        font-size: 1.8em;
-    }
-
-    main a {
-        font-size: 16px;
-        padding: 0.5em 1.5em;
+    .class-container p {
+        text-align: center;
     }
 
     .class-header {
-        padding: 3em 0;
+        background-color: #c4161c;
+        width: 100%;
+        text-align: center;
+        color: white;
+        padding: 5em 0;
+        margin: 5em 0;
     }
 
     .class-header p {
-        width: 90%;
+        width: 80%;
         margin: auto;
+        font-size: 1.5em;
+    }
+
+    .class-item {
+        /*width: 70%;*/
     }
 
     .class-title {
-        font-size: 16px;
-        padding: 10px;
+        background-color: #c4161c;
+        color: #FFF;
+        margin: 0.5em 1em;
+        padding: 2em 1em;
+        transition: background-color 0.3s ease;
     }
 
     .class-title i {
-        font-size: 1.2em;
+        font-size: 1.5em;
+    }
+
+    .class-title:hover {
+        background-color: #9f1113;
+    }
+
+    .class-info {
+        padding: 0 15px;
+        background-color: #f9f9f9;
+        border-left: 4px solid #c4161c;
+        overflow: hidden; /* Hide the content that overflows */
+        height: 0; /* Initially set height to 0 to keep it hidden */
+        transition: height 0.3s ease; /* Add a smooth transition for height */
+    }
+
+    .class-info p {
+        padding-bottom: 3em;
+        text-align: left;
+        font-size: 1.5em;
+    }
+
+    /* Optional: Add a smoother transition on hover */
+    .class-info p {
+        margin: 10px 0;
     }
 }
 
 @media screen and (max-width: 480px) {
-    main h1 {
+    h1 {
         font-size: 2em;
     }
 
+    h2 {
+        font-size: 2em;
+    }
+
+    h3 {
+        font-size: 1.8em;
+    }
+
+    h4 {
+        font-size: 1.4em;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    /* Main */
+
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 5em 0;
+    }
+
+    main h1 {
+        font-size: 3em;
+    }
+
     main p {
-        font-size: 1.5em;
+        font-size: 24px;
+        text-align: center;
+        margin: 2em 1em;
+    }
+
+    main a {
+        color: white;
+        background-color: #000;
+        text-decoration: none;
+        border-radius: 25px;
+        transition: 0.3s;
+        padding: 0.5em 2em;
+    }
+
+    main a:hover {
+        background-color: #9f1113;
+        color: white;
+        transition: 0.3s;
+    }
+
+    /* Classes */
+    .class-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 5em;
+    }
+
+    .class-container p {
+        text-align: center;
+    }
+
+    .class-header {
+        background-color: #c4161c;
+        width: 100%;
+        text-align: center;
+        color: white;
+        padding: 5em 0;
+        margin: 5em 0;
+    }
+
+    .class-item {
+        /*width: 70%;*/
     }
 
     .class-title {
-        font-size: 14px;
+        background-color: #c4161c;
+        color: #FFF;
+        margin: 0.5em 0.5em;
+        padding-bottom: 2em;
+        transition: background-color 0.3s ease;
     }
 
     .class-title i {
-        font-size: 1em;
+        font-size: 1.5em;
     }
+
+    .class-title:hover {
+        background-color: #9f1113;
+    }
+
+    .class-info {
+        padding: 0 15px;
+        background-color: #f9f9f9;
+        border-left: 4px solid #c4161c;
+        overflow: hidden; /* Hide the content that overflows */
+        height: 0; /* Initially set height to 0 to keep it hidden */
+        transition: height 0.3s ease; /* Add a smooth transition for height */
+    }
+
+    .class-info p {
+        padding-bottom: 3em;
+        text-align: left;
+        font-size: 20px;
+    }
+
+    /* Optional: Add a smoother transition on hover */
+    .class-info p {
+        margin: 10px 0;
+    }
+
+}
 }
