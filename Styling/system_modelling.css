@@ -193,6 +193,15 @@ th {
     color: white;
 }
 
+/*  Code */
+
+.section1-container code {
+    background-color: #0f1432;
+    color: white;
+    padding: 1em 1em;
+    border-radius: 10px;
+}
+
 /* 🔹 Mobile Responsiveness */
 @media screen and (max-width: 1024px) {
 
@@ -536,6 +545,7 @@ th {
         color: white;
         padding: 1em 1em;
         border-radius: 10px;
+        font-size: 14px;
     }
 
     /* Table */
