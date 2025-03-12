@@ -1,0 +1,586 @@
+body {
+    font-family: "Manrope", sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 5em;
+    text-align: center;
+}
+
+h2 {
+    font-size: 4em;
+}
+
+h3 {
+    font-size: 3em;
+}
+
+h4 {
+    font-size: 2em;
+}
+
+p {
+    font-size: 20px;
+}
+
+/* Main */
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    margin: auto;
+}
+
+.line {
+    margin-top: 5em;
+    width: 60%;
+    border: 1px solid #c4161c;
+}
+
+.lesson-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    margin: auto;
+}
+
+/* Exercise */
+.exercise-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 3em auto;
+    gap: 5em;
+}
+
+.exercise-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.exercise-card:hover {
+    transform: translateY(-10px);
+}
+
+.exercise-card i {
+    font-size: 40px;
+    color: #c4161c;
+}
+
+.exercise-card h3 {
+    font-size: 20px;
+    margin: 15px 0;
+}
+
+.exercise-card p {
+    font-size: 14px;
+    color: #555;
+    width: 100%;
+    margin-bottom: 2em;
+    text-align: center;
+}
+
+.card-link {
+    display: inline-block;
+    margin-top: auto;
+    padding: 10px 20px;
+    background-color: #c4161c;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.card-link:hover {
+    background-color: #9f1113;
+}
+
+/* Section 1 */
+
+.section1-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    margin: auto;
+    padding-bottom: 5em;
+}
+
+/* Thumbnail styles */
+.image-container {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.thumbnail {
+    width: 800px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.thumbnail:hover {
+    transform: scale(1.1);
+}
+
+/* Modal (Popup) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+}
+
+
+/* Default Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+tr {
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #c4161c;
+    color: white;
+}
+
+/*  Code */
+
+.section1-container code {
+    background-color: #0f1432;
+    color: white;
+    padding: 1em 1em;
+    border-radius: 10px;
+}
+
+/* 🔹 Mobile Responsiveness */
+@media screen and (max-width: 1024px) {
+
+    h1 {
+        font-size: 4em;
+    }
+
+    h2 {
+        font-size: 3em;
+    }
+
+    h3 {
+        font-size: 2.5em;
+    }
+
+    h4 {
+        font-size: 1.8em;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        margin: auto;
+    }
+
+    main h1 {
+        text-align: center;
+    }
+
+    .line {
+        width: 80%;
+        border: 1px solid #c4161c;
+    }
+
+    .lesson-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        margin: auto;
+    }
+
+    /* Exercise */
+    .exercise-container {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin: 3em auto;
+        gap: 2em;
+    }
+
+    .exercise-card {
+        display: flex;
+        flex-direction: column;
+        background-color: #f4f4f4;
+        border-radius: 10px;
+        padding: 20px;
+        width: 280px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .exercise-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .card-link {
+        display: inline-block;
+        margin-top: auto;
+        padding: 10px 20px;
+        background-color: #c4161c;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .card-link:hover {
+        background-color: #9f1113;
+    }
+
+    /* Section 1 */
+
+    .section1-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        margin: auto;
+    }
+
+    /* Thumbnail styles */
+    .image-container {
+        margin-top: 2em;
+        margin-bottom: 2em;
+    }
+
+    .thumbnail {
+        width: 500px;
+        cursor: pointer;
+        transition: transform 0.2s;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .thumbnail:hover {
+        transform: scale(1.1);
+    }
+
+    /* Modal (Popup) */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 10px;
+    }
+
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        font-size: 40px;
+        color: white;
+        cursor: pointer;
+    }
+
+    /*  Code */
+
+    .section1-container code {
+        background-color: #0f1432;
+        color: white;
+        padding: 1em 1em;
+        border-radius: 10px;
+    }
+
+    /* Style description text separately */
+    td:last-child {
+        display: block;
+        font-size: 0.9em;
+        color: #666;
+        padding-top: 5px;
+    }
+
+
+}
+
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 3em;
+    }
+
+    h2 {
+        font-size: 2.5em;
+    }
+
+    h3 {
+        font-size: 2em;
+    }
+
+    h4 {
+        font-size: 1.5em;
+    }
+
+    p {
+        font-size: 18px;
+    }
+
+
+
+}
+
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+
+    h3 {
+        font-size: 1.8em;
+    }
+
+    h4 {
+        font-size: 1.4em;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        margin: auto;
+    }
+
+    main h1 {
+        text-align: center;
+    }
+
+    .line {
+        width: 80%;
+        border: 1px solid #c4161c;
+    }
+
+    .lesson-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        margin: auto;
+    }
+
+    /* Exercise */
+    .exercise-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 3em auto;
+        gap: 2em;
+    }
+
+    .exercise-card {
+        display: flex;
+        flex-direction: column;
+        background-color: #f4f4f4;
+        border-radius: 10px;
+        padding: 20px;
+        width: 280px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .exercise-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .card-link {
+        display: inline-block;
+        margin-top: auto;
+        padding: 10px 20px;
+        background-color: #c4161c;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .card-link:hover {
+        background-color: #9f1113;
+    }
+
+    /* Section 1 */
+
+    .section1-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        margin: auto;
+    }
+
+    /* Thumbnail styles */
+    .image-container {
+        margin-top: 2em;
+        margin-bottom: 2em;
+    }
+
+    .thumbnail {
+        width: 300px;
+        cursor: pointer;
+        transition: transform 0.2s;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .thumbnail:hover {
+        transform: scale(1.1);
+    }
+
+    /* Modal (Popup) */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 10px;
+    }
+
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        font-size: 40px;
+        color: white;
+        cursor: pointer;
+    }
+
+    /*  Code */
+
+    .section1-container code {
+        background-color: #0f1432;
+        color: white;
+        padding: 1em 1em;
+        border-radius: 10px;
+        font-size: 14px;
+    }
+
+    /* Table */
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead {
+        display: none; /* Hide table header */
+    }
+
+    tr {
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        background: #fff;
+    }
+
+    th, td {
+        border: none;
+        text-align: left;
+        padding: 5px 10px;
+    }
+
+    th {
+        font-size: 1.2em;
+    }
+
+    /* Style description text separately */
+    td:last-child {
+        display: block;
+        font-size: 0.9em;
+        color: #666;
+        padding-top: 5px;
+    }
+
+}

@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Welcome to the College Compass - College Compass</title>
-    <link rel="stylesheet" href="Styling/style.css">
+    <link rel="stylesheet" href="Styling/webTechnologies.css">
     <link rel="stylesheet" href="Styling/header.css">
     <link rel="stylesheet" href="Styling/footer.css">
     <!-- Google Fonts -->
@@ -30,6 +30,123 @@
         <li><a href="webTechnologies.html">Web Technologies</a></li>
     </ul>
 </header>
+
+<main>
+    <h1>Web Technologies (CN4003_1)</h1>
+    <h2>General</h2>
+    <p>
+        Καλώς ήρθατε στο μάθημα Web Technologies! Στην τάξη αυτή, θα εξερευνήσουμε τον κόσμο των τεχνολογιών του
+        Παγκόσμιου Ιστού (Web Technologies) και τον ρόλο που παίζουν στη δημιουργία σύγχρονων, διαδραστικών και
+        δυναμικών ιστοσελίδων και εφαρμογών. Το Διαδίκτυο έχει γίνει αναπόσπαστο κομμάτι της καθημερινότητάς μας, και οι
+        τεχνολογίες που το υποστηρίζουν εξελίσσονται συνεχώς
+        <br><br>
+        Κατά τη διάρκεια του εξαμήνου, θα καλύψουμε βασικές και προχωρημένες έννοιες που σχετίζονται με την ανάπτυξη
+        ιστοσελίδων, από τις θεμελιώδεις γλώσσες HTML, CSS και JavaScript, μέχρι πιο προχωρημένες τεχνολογίες, όπως
+        frameworks και εργαλεία ανάπτυξης εφαρμογών Ιστού.
+        <br><br>
+        Το μάθημα θα περιλαμβάνει θεωρητικές διαλέξεις και πρακτικές ασκήσεις, ώστε να αποκτήσουμε μια ισχυρή βάση και
+        να αναπτύξουμε πραγματικά έργα. Επιπλέον, θα εργαστούμε σε ένα μεγάλο project, το οποίο θα αποτελέσει μέρος της
+        αξιολόγησής μας. Σε αυτήν την εργασία, θα έχουμε την ευκαιρία να εφαρμόσουμε τις γνώσεις μας και να
+        δημιουργήσουμε μια πλήρη και λειτουργική διαδικτυακή εφαρμογή.
+        <br><br>
+        Ετοιμαστείτε για ένα συναρπαστικό ταξίδι στον κόσμο του Web Development, όπου οι ιδέες σας θα μετατραπούν σε
+        πραγματικές εφαρμογές!
+    </p>
+    <h2>Τι θα μάθουμε;</h2>
+    <ul>
+        <li>HTML (HyperText Markup Language): Η γλώσσα που χρησιμοποιείται για τη δομή του περιεχομένου μιας
+            ιστοσελίδας.
+        </li>
+        <li>CSS (Cascading Style Sheets): Η γλώσσα που χρησιμοποιείται για τη μορφοποίηση και τον σχεδιασμό των
+            ιστοσελίδων.
+        </li>
+        <li>JavaScript: Η γλώσσα προγραμματισμού που προσθέτει διαδραστικότητα στις ιστοσελίδες.</li>
+        <li>Responsive Design: Τεχνικές για τη δημιουργία ιστοσελίδων που προσαρμόζονται σε διαφορετικές οθόνες και
+            συσκευές.
+        </li>
+        <li>Client-Server Architecture: Κατανόηση της επικοινωνίας μεταξύ του προγράμματος περιήγησης και του
+            διακομιστή.
+        </li>
+    </ul>
+</main>
+
+<hr class="line">
+
+<div class="section1-container" id="section1">
+    <h2>Week 1 - HTML</h2>
+
+    <h4>Τι είναι μια ιστοσελίδα;</h4>
+    <p>
+        Μια ιστοσελίδα είναι ένα σύνολο εγγράφων <b>HTML</b> που εμφανίζονται μέσω ενός προγράμματος <b>περιήγησης (browser)</b> όπως
+        το Google Chrome, το Firefox ή το Edge. Οι ιστοσελίδες φιλοξενούνται σε <b>διακομιστές (servers)</b> και είναι
+        προσβάσιμες μέσω των διευθύνσεων <b>URL (Uniform Resource Locator)</b>.
+    </p>
+
+    <h4>Ρόλος της HTML και της CSS</h4>
+    <ul>
+        <li>
+            <p><b>HTML (HyperText Markup Language):</b> Η γλώσσα που χρησιμοποιείται για τη δομή και το περιεχόμενο μιας ιστοσελίδας.</p>
+        </li>
+        <li>
+            <p><b>CSS (Cascading Style Sheets):</b> Η γλώσσα που χρησιμοποιείται για τη μορφοποίηση και την εμφάνιση μιας ιστοσελίδας.</p>
+        </li>
+    </ul>
+
+    <h4>Δομή ενός αρχείου HTML</h4>
+    <p>
+        Κάθε αρχείο HTML ακολουθεί μια συγκεκριμένη δομή. Παρακάτω παρουσιάζεται το βασικό πρότυπο (boilerplate) ενός αρχείου HTML:
+    </p>
+    <code>
+<pre>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;title&gt;Τίτλος της Σελίδας&lt;/title&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Καλώς ήρθατε στην ιστοσελίδα μου!&lt;/h1&gt;
+    &lt;p&gt;Αυτή είναι μια παράγραφος.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+    </code>
+</div>
+
+<hr class="line">
+
+<div class="lesson-container" id="webDev-week1">
+    <h2>Week 1 - Assignment</h2>
+    <p>
+        Παρακάτω θα βρείτε ασκήσεις πάνω σε όλα όσα είδαμε κατά την πρώτη εβδομάδα του μαθήματος. Οι ασκήσεις αυτές θα
+        σας βοηθήσουν να εξασκηθείτε στις βασικές έννοιες της HTML και CSS, ώστε να αποκτήσετε μια καλύτερη κατανόηση
+        της δημιουργίας και διαμόρφωσης ιστοσελίδων.
+    </p>
+
+    <div class="exercise-container">
+        <div class="exercise-card">
+            <i class="fas fa-pencil-alt"></i>
+            <h3>1η Άσκηση Βασικά HTML Tags</h3>
+            <p>Δημιουργήστε μια ιστοσελίδα με θέμα τα είδη video games.</p>
+            <a href="exercises/webTechnologies/week1_exercise1.html" class="card-link">Ξεκίνα την Άσκηση</a>
+        </div>
+
+        <div class="exercise-card">
+            <i class="fas fa-cogs"></i>
+            <h3>2η Άσκηση Βασικά HTML Tags</h3>
+            <p>Κατασκευάστε μια ιστοσελίδα αφιερωμένη στην αγαπημένη σας ποδοσφαιρική ομάδα.</p>
+            <a href="exercises/webTechnologies/week1_exercise2.html" class="card-link">Ξεκίνα την Άσκηση</a>
+        </div>
+
+        <div class="exercise-card">
+            <i class="fa-brands fa-creative-commons-nd"></i>
+            <h3>3η Άσκηση Βασικά HTML Tags</h3>
+            <p>Δημιουργήστε μια ιστοσελίδα συνταγών.</p>
+            <a href="exercises/webTechnologies/week1_exercise3.html" class="card-link">Ξεκίνα την Άσκηση</a>
+        </div>
+    </div>
+</div>
 
 <!-- Footer Section -->
 <footer class="footer">
