@@ -28,7 +28,7 @@ p {
 
 /* Main */
 
-main {
+.text-block {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -41,15 +41,6 @@ main {
     margin-top: 5em;
     width: 60%;
     border: 1px solid #c4161c;
-}
-
-.lesson-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 60%;
-    margin: auto;
 }
 
 /* Exercise */
@@ -111,18 +102,6 @@ main {
 
 .card-link:hover {
     background-color: #9f1113;
-}
-
-/* Section 1 */
-
-.section1-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 60%;
-    margin: auto;
-    padding-bottom: 5em;
 }
 
 /* Thumbnail styles */
@@ -194,8 +173,7 @@ th {
 }
 
 /*  Code */
-
-.section1-container code {
+code {
     background-color: #0f1432;
     color: white;
     padding: 1em 1em;
@@ -221,7 +199,7 @@ th {
         font-size: 1.8em;
     }
 
-    main {
+    .text-block {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -230,22 +208,13 @@ th {
         margin: auto;
     }
 
-    main h1 {
+    .text-block h1 {
         text-align: center;
     }
 
     .line {
         width: 80%;
         border: 1px solid #c4161c;
-    }
-
-    .lesson-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 90%;
-        margin: auto;
     }
 
     /* Exercise */
@@ -288,17 +257,6 @@ th {
 
     .card-link:hover {
         background-color: #9f1113;
-    }
-
-    /* Section 1 */
-
-    .section1-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 90%;
-        margin: auto;
     }
 
     /* Thumbnail styles */
@@ -348,8 +306,7 @@ th {
     }
 
     /*  Code */
-
-    .section1-container code {
+    code {
         background-color: #0f1432;
         color: white;
         padding: 1em 1em;
@@ -388,8 +345,6 @@ th {
         font-size: 18px;
     }
 
-
-
 }
 
 @media screen and (max-width: 480px) {
@@ -413,7 +368,7 @@ th {
         font-size: 16px;
     }
 
-    main {
+    .text-block {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -422,22 +377,13 @@ th {
         margin: auto;
     }
 
-    main h1 {
+    .text-block h1 {
         text-align: center;
     }
 
     .line {
         width: 80%;
         border: 1px solid #c4161c;
-    }
-
-    .lesson-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 90%;
-        margin: auto;
     }
 
     /* Exercise */
@@ -479,17 +425,6 @@ th {
 
     .card-link:hover {
         background-color: #9f1113;
-    }
-
-    /* Section 1 */
-
-    .section1-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 90%;
-        margin: auto;
     }
 
     /* Thumbnail styles */
@@ -540,7 +475,7 @@ th {
 
     /*  Code */
 
-    .section1-container code {
+    code {
         background-color: #0f1432;
         color: white;
         padding: 1em 1em;
