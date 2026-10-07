@@ -1,0 +1,86 @@
+---
+/**
+ * Assignment status pill, styled like MSN Messenger presence.
+ *
+ *   done     green  — the visitor ticked it off (stored in their browser)
+ *   soon     amber  — due within 72h
+ *   overdue  red    — past the due date and not ticked
+ *   locked   grey   — not released yet
+ *   open     blue   — released, due later than 72h
+ *
+ * Meaning never relies on colour alone: the text label always says it.
+ * The dot is a little glossy orb, like the old presence icons.
+ */
+export type Status = 'done' | 'soon' | 'overdue' | 'locked' | 'open';
+
+interface Props {
+  status: Status;
+  /** Override the default Greek label, e.g. "Λήγει σε 5ω". */
+  label?: string;
+}
+
+const LABELS: Record<Status, string> = {
+  done: 'Ολοκληρώθηκε',
+  soon: 'Λήγει σύντομα',
+  overdue: 'Εκπρόθεσμο',
+  locked: 'Δεν έχει ανοίξει',
+  open: 'Ανοιχτό',
+};
+
+const { status, label = LABELS[status] } = Astro.props;
+---
+
+<span class="pill" data-status={status}>
+  <span class="dot" aria-hidden="true"></span>
+  {label}
+</span>
+
+<style>
+  .pill {
+    --dot: var(--st-open);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    padding: 0.2em 0.75em 0.2em 0.45em;
+    border: 1px solid color-mix(in oklab, var(--dot), transparent 45%);
+    border-radius: var(--r-pill);
+    background: var(--pill-bg);
+    color: var(--pill-text);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    line-height: 1.4;
+    white-space: nowrap;
+    box-shadow: var(--highlight);
+  }
+
+  [data-status='done'] { --dot: var(--st-done); }
+  [data-status='soon'] { --dot: var(--st-soon); }
+  [data-status='overdue'] { --dot: var(--st-overdue); }
+  [data-status='locked'] { --dot: var(--st-locked); }
+
+  .dot {
+    width: 0.9em;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 35% 30%,
+      white 0 12%,
+      color-mix(in oklab, var(--dot), white 25%) 30%,
+      var(--dot) 70%,
+      color-mix(in oklab, var(--dot), black 25%)
+    );
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--dot), black 30%);
+  }
+
+  /* Overdue gently pulses so it's noticed (disabled by reduced motion). */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-status='overdue'] .dot {
+      animation: pulse 1.8s var(--ease-out) infinite;
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 1px color-mix(in oklab, var(--dot), black 30%), 0 0 0 0 rgb(224 57 62 / 0.5); }
+    60% { box-shadow: 0 0 0 1px color-mix(in oklab, var(--dot), black 30%), 0 0 0 5px rgb(224 57 62 / 0); }
+  }
+</style>

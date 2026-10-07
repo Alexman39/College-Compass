@@ -1,0 +1,96 @@
+---
+/**
+ * The HTML shell every page uses.
+ *
+ *   <Base title="Web Technologies" description="…">…</Base>
+ *
+ * `lang` defaults to "el" because most content is Greek. Wrap English
+ * passages in <span lang="en"> (or pass lang="en" for an English page) so
+ * screen readers switch pronunciation.
+ */
+import '@fontsource-variable/manrope';
+import '~/styles/tokens.css';
+import '~/styles/base.css';
+import SkyScene from '~/components/SkyScene.astro';
+import TopBar from '~/components/TopBar.astro';
+import SiteFooter from '~/components/SiteFooter.astro';
+import { url } from '~/lib/url';
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: 'el' | 'en';
+}
+
+const SITE = 'College Compass';
+const {
+  title,
+  description = 'Ο ανεπίσημος οδηγός μαθημάτων του Metropolitan College: μαθήματα, εβδομάδες, εργασίες και προθεσμίες σε ένα μέρος.',
+  lang = 'el',
+} = Astro.props;
+
+const fullTitle = title ? `${title} · ${SITE}` : SITE;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <!-- Never block pinch-zoom: no maximum-scale / user-scalable here. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+    <meta name="theme-color" content="#3d9be0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#03101b" media="(prefers-color-scheme: dark)" />
+
+    <!-- Runs before paint to set the theme and avoid a flash of the wrong
+         colours. Must be inline (not bundled) to run that early. -->
+    <script is:inline>
+      (function () {
+        var t = null;
+        try { t = localStorage.getItem('cc-theme'); } catch (e) {}
+        if (t !== 'light' && t !== 'dark') {
+          t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.dataset.theme = t;
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Μετάβαση στο περιεχόμενο</a>
+    <SkyScene />
+    <TopBar />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>
+
+<style>
+  /* Hidden until focused with Tab — then it's the first thing you see. */
+  .skip-link {
+    position: absolute;
+    top: var(--s-2);
+    left: var(--s-2);
+    z-index: 100;
+    padding: var(--s-2) var(--s-4);
+    border-radius: var(--r-md);
+    background: var(--panel-solid);
+    color: var(--text);
+    font-weight: 700;
+    box-shadow: var(--shadow-md);
+    transform: translateY(-200%);
+  }
+
+  .skip-link:focus {
+    transform: none;
+  }
+
+  main:focus {
+    outline: none;
+  }
+</style>

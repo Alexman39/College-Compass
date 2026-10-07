@@ -1,0 +1,35 @@
+---
+/**
+ * A surface. Pick the variant by what goes inside:
+ *   solid (default) — anything with text to read; near-opaque, AA-safe
+ *   glass           — decorative chrome only (frames, toolbars, gadgets)
+ *
+ * `as` sets the element so the panel can be a <section>, <article>, <aside>…
+ */
+import type { HTMLTag } from 'astro/types';
+
+interface Props {
+  as?: HTMLTag;
+  variant?: 'solid' | 'glass';
+  pad?: 'none' | 'sm' | 'md' | 'lg';
+  class?: string;
+  [attr: string]: unknown;
+}
+
+const { as: Tag = 'div', variant = 'solid', pad = 'md', class: className, ...rest } = Astro.props;
+---
+
+<Tag class:list={[variant === 'solid' ? 'panel' : 'glass', `pad-${pad}`, className]} {...rest}>
+  <slot />
+</Tag>
+
+<style>
+  .pad-sm { padding: var(--s-3); }
+  .pad-md { padding: var(--s-4); }
+  .pad-lg { padding: var(--s-5); }
+
+  @media (min-width: 40rem) {
+    .pad-md { padding: var(--s-5); }
+    .pad-lg { padding: var(--s-6); }
+  }
+</style>

@@ -1,0 +1,36 @@
+---
+/** Small footer with the "unofficial" disclaimer. */
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <p class="panel inner">
+      <span>
+        Φτιαγμένο από φοιτητές, για φοιτητές. Ανεπίσημος οδηγός — για τα επίσημα
+        υλικά και τις υποβολές ισχύει πάντα το Moodle.
+      </span>
+      <span class="muted">© {year} College Compass</span>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: var(--s-8);
+    padding-bottom: var(--s-5);
+  }
+
+  .inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--s-2) var(--s-5);
+    padding: var(--s-4);
+    font-size: var(--fs-sm);
+  }
+
+  .muted {
+    color: var(--text-muted);
+  }
+</style>
