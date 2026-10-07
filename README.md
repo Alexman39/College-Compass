@@ -12,3 +12,18 @@ College Compass is a student-driven platform designed to provide comprehensive c
 💡 Built by students, for students. Learning just got easier!
 
 🔗 [Coming Soon] – Stay tuned for updates! 🚀
+
+## Development (v2)
+
+```sh
+npm install
+npm run dev      # http://localhost:4321/College-Compass/
+npm run build    # type-check + static build into dist/
+npm run preview  # serve the built site
+```
+
+- Stack: Astro (static) + TypeScript, plain CSS with design tokens (`src/styles/tokens.css`).
+- Internal links always go through `url()` from `src/lib/url.ts`, so the site
+  works under the `/College-Compass/` base path and can move to a custom domain
+  by changing `site`/`base` in `astro.config.mjs`.
+- The old hand-coded demo lives in `legacy/` as a content source during migration.
