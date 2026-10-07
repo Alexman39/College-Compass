@@ -179,6 +179,8 @@ const assignments = defineCollection({
     .object({
       course: reference('courses'),
       title: z.string().min(1),
+      /** One line for cards and lists, e.g. "Δημιουργήστε μια ιστοσελίδα συνταγών." */
+      teaser: blank(z.string()),
       type: z.enum(['exercise', 'coursework', 'exam', 'quiz']),
       /** Week it belongs to, so the lesson page can list it. */
       week: blank(z.number().int().min(1).max(20)),

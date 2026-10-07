@@ -1,6 +1,7 @@
 ---
 course: cn4003
 title: 3η Άσκηση Βασικά HTML Tags
+teaser: "Δημιουργήστε μια ιστοσελίδα συνταγών."
 type: exercise
 week: 1
 released:

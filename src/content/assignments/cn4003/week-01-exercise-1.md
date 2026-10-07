@@ -1,6 +1,7 @@
 ---
 course: cn4003
 title: 1η Άσκηση Βασικά HTML Tags
+teaser: "Δημιουργήστε μια ιστοσελίδα με θέμα τα είδη video games."
 type: exercise
 week: 1
 released:

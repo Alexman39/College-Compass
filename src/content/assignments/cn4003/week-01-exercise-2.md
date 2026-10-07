@@ -1,6 +1,7 @@
 ---
 course: cn4003
 title: 2η Άσκηση Βασικά HTML Tags
+teaser: "Κατασκευάστε μια ιστοσελίδα αφιερωμένη στην αγαπημένη σας ποδοσφαιρική ομάδα."
 type: exercise
 week: 1
 released:
