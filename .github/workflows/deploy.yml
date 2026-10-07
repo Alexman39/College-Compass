@@ -1,0 +1,75 @@
+# Build and (eventually) deploy College Compass.
+#
+# Until launch, GitHub Pages serves the old demo straight from the `main`
+# branch ("Deploy from a branch"). A repository can only have one Pages
+# source, so this workflow does NOT touch the live site yet:
+#
+#   push to v2 / PR      → build + check, upload the site as a downloadable
+#                          "site-preview" artifact (Actions run → Artifacts)
+#   push to main         → same, plus deploy to Pages — but only once the repo
+#                          variable PAGES_FROM_ACTIONS is set to "true"
+#
+# Launch checklist:
+#   1. Settings → Pages → Source: "GitHub Actions"
+#   2. Settings → Secrets and variables → Actions → Variables:
+#        PAGES_FROM_ACTIONS = true
+#   3. Merge v2 into main.
+
+name: Build & deploy
+
+on:
+  push:
+    branches: [v2, main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One run per branch at a time; a newer push cancels an older build.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      # `npm run build` = astro check (types) + astro build
+      - run: npm run build
+
+      - name: Upload preview
+        uses: actions/upload-artifact@v7
+        with:
+          name: site-preview
+          path: dist/
+          retention-days: 14
+
+      - name: Upload for Pages
+        if: github.ref == 'refs/heads/main' && vars.PAGES_FROM_ACTIONS == 'true'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist/
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' && vars.PAGES_FROM_ACTIONS == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
