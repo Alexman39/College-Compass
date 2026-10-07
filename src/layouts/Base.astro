@@ -15,6 +15,11 @@ import SkyScene from '~/components/SkyScene.astro';
 import TopBar from '~/components/TopBar.astro';
 import SiteFooter from '~/components/SiteFooter.astro';
 import { url } from '~/lib/url';
+import { validateContent } from '~/lib/content';
+
+// Every page uses this layout, so this guarantees the cross-file content
+// checks run on every build (once — the result is cached).
+await validateContent();
 
 interface Props {
   title?: string;
