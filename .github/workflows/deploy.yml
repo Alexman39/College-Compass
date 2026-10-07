@@ -44,6 +44,8 @@ jobs:
 
       - run: npm ci
 
+      - run: npm test
+
       # `npm run build` = astro check (types) + astro build
       - run: npm run build
 
