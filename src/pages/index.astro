@@ -1,0 +1,173 @@
+---
+/**
+ * Placeholder home page for phase A1.
+ * The real "Desktop" (gadgets + course tiles) replaces this in phase A4.
+ * The style preview below is temporary and exists so the design tokens and
+ * primitives can be reviewed on a real device.
+ */
+import Base from '~/layouts/Base.astro';
+import GlassPanel from '~/components/GlassPanel.astro';
+import JellyButton from '~/components/JellyButton.astro';
+import StatusPill from '~/components/StatusPill.astro';
+
+// Sample accents only — real ones come from each course's `accent` field.
+const accents = [
+  { name: 'Systems Modelling', color: '#2f8fdc' },
+  { name: 'Systems & Networks', color: '#1fa58a' },
+  { name: 'Web Technologies', color: '#e0662f' },
+  { name: 'Grape', color: '#8a5cd6' },
+];
+---
+
+<Base>
+  <div class="container stack">
+    <GlassPanel as="section" variant="glass" pad="lg" class="hero" aria-labelledby="hero-title">
+      <div class="panel hero-copy">
+        <h1 id="hero-title">Η πυξίδα σου για το πτυχίο</h1>
+        <p class="lead">
+          Όλα τα μαθήματα, οι εβδομάδες, οι εργασίες και οι προθεσμίες σου — σε ένα μέρος,
+          πιο καθαρά από το <span lang="en">Moodle</span>.
+        </p>
+        <p class="note">Η σελίδα είναι υπό κατασκευή. Παρακάτω, μια προεπισκόπηση του στυλ.</p>
+        <div class="actions">
+          <JellyButton href="#preview">Δες το στυλ</JellyButton>
+          <JellyButton href="#preview-prose" variant="glass">Δείγμα κειμένου</JellyButton>
+        </div>
+      </div>
+    </GlassPanel>
+
+    <section id="preview" class="stack" aria-labelledby="preview-title">
+      <h2 id="preview-title" class="section-title">Προεπισκόπηση στυλ</h2>
+
+      <div class="grid">
+        <GlassPanel as="article" aria-labelledby="pills-title">
+          <h3 id="pills-title">Κατάσταση εργασιών</h3>
+          <ul class="pill-list" role="list">
+            <li><StatusPill status="done" /></li>
+            <li><StatusPill status="soon" label="Λήγει σε 14 ώρες" /></li>
+            <li><StatusPill status="overdue" /></li>
+            <li><StatusPill status="open" /></li>
+            <li><StatusPill status="locked" /></li>
+          </ul>
+        </GlassPanel>
+
+        <GlassPanel as="article" aria-labelledby="accents-title">
+          <h3 id="accents-title">Χρώματα μαθημάτων</h3>
+          <ul class="accent-list" role="list">
+            {
+              accents.map((a) => (
+                <li style={`--accent:${a.color}`}>
+                  <JellyButton type="button" size="sm">
+                    <span lang="en">{a.name}</span>
+                  </JellyButton>
+                </li>
+              ))
+            }
+          </ul>
+        </GlassPanel>
+      </div>
+
+      <GlassPanel as="article" pad="lg" id="preview-prose" aria-labelledby="prose-title">
+        <div class="prose">
+          <h3 id="prose-title">Εβδομάδα 1 — Βασικά <span lang="en">HTML tags</span></h3>
+          <p>
+            Ένα έγγραφο <abbr lang="en" title="HyperText Markup Language">HTML</abbr> ξεκινά με
+            τη δήλωση <code>&lt;!doctype html&gt;</code>. Μέσα στο στοιχείο
+            <code>&lt;head&gt;</code> βάζουμε πληροφορίες για τη σελίδα, ενώ στο
+            <code>&lt;body&gt;</code> ό,τι βλέπει ο επισκέπτης.
+          </p>
+          <ul>
+            <li>Επικεφαλίδες: <code>&lt;h1&gt;</code> έως <code>&lt;h6&gt;</code></li>
+            <li>Παράγραφοι: <code>&lt;p&gt;</code></li>
+            <li>Σύνδεσμοι: <code>&lt;a href="…"&gt;</code></li>
+          </ul>
+          <pre><code>&lt;h1&gt;Γεια σου, κόσμε!&lt;/h1&gt;
+&lt;p&gt;Η πρώτη μου σελίδα.&lt;/p&gt;</code></pre>
+          <blockquote>
+            <p>Συμβουλή: κάνε <span lang="en">validate</span> τη σελίδα σου πριν την παραδώσεις.</p>
+          </blockquote>
+        </div>
+      </GlassPanel>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .stack {
+    display: grid;
+    gap: var(--s-5);
+  }
+
+  .container.stack {
+    padding-top: var(--s-5);
+  }
+
+  .hero {
+    animation: window-in var(--dur-slow) var(--ease-overshoot) both;
+  }
+
+  .hero-copy {
+    display: grid;
+    gap: var(--s-4);
+    max-width: 44rem;
+    padding: var(--s-5);
+  }
+
+  h1 {
+    font-size: var(--fs-3xl);
+  }
+
+  .lead {
+    font-size: var(--fs-lg);
+  }
+
+  .note {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-3);
+  }
+
+  /* Titles that sit directly on the sky get their own small panel so they
+   * never rely on raw glass for contrast. */
+  .section-title {
+    justify-self: start;
+    padding: var(--s-1) var(--s-4);
+    border-radius: var(--r-pill);
+    background: var(--panel-solid);
+    box-shadow: var(--highlight), var(--shadow-sm);
+    font-size: var(--fs-lg);
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--s-5);
+  }
+
+  @media (min-width: 48rem) {
+    .grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  .grid h3 {
+    margin-bottom: var(--s-3);
+  }
+
+  .pill-list,
+  .accent-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Windows open with a slight overshoot (disabled by reduced motion). */
+  @keyframes window-in {
+    from { opacity: 0; transform: scale(0.96) translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+</style>
