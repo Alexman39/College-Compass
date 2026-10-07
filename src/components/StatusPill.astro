@@ -11,7 +11,7 @@
  * Meaning never relies on colour alone: the text label always says it.
  * The dot is a little glossy orb, like the old presence icons.
  */
-export type Status = 'done' | 'soon' | 'overdue' | 'locked' | 'open';
+import { STATUS_LABELS, type Status } from '~/lib/status';
 
 interface Props {
   status: Status;
@@ -19,20 +19,12 @@ interface Props {
   label?: string;
 }
 
-const LABELS: Record<Status, string> = {
-  done: 'Ολοκληρώθηκε',
-  soon: 'Λήγει σύντομα',
-  overdue: 'Εκπρόθεσμο',
-  locked: 'Δεν έχει ανοίξει',
-  open: 'Ανοιχτό',
-};
-
-const { status, label = LABELS[status] } = Astro.props;
+const { status, label = STATUS_LABELS[status] } = Astro.props;
 ---
 
-<span class="pill" data-status={status}>
+<span class="pill" data-status={status} data-pill>
   <span class="dot" aria-hidden="true"></span>
-  {label}
+  <span data-pill-label>{label}</span>
 </span>
 
 <style>
@@ -77,6 +69,19 @@ const { status, label = LABELS[status] } = Astro.props;
     [data-status='overdue'] .dot {
       animation: pulse 1.8s var(--ease-out) infinite;
     }
+  }
+
+  /* Ticking a task off makes its pill "pop" (class added by ticks.ts). */
+  @media (prefers-reduced-motion: no-preference) {
+    .pill:global(.pop) {
+      animation: pop var(--dur-slow) var(--ease-overshoot);
+    }
+  }
+
+  @keyframes pop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.18); }
+    100% { transform: scale(1); }
   }
 
   @keyframes pulse {

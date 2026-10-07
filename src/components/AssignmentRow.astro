@@ -1,0 +1,62 @@
+---
+/**
+ * Compact one-line assignment (title + pill) linking to its full entry.
+ * Used inside week lists. The pill is kept current by ticks.ts, like the
+ * full AssignmentItem.
+ */
+import type { Assignment } from '~/lib/content';
+import { ASSIGNMENT_TYPES } from '~/lib/labels';
+import { statusLabel, timeStatus } from '~/lib/status';
+import StatusPill from './StatusPill.astro';
+
+interface Props {
+  assignment: Assignment;
+  /** Page that holds the full entry, e.g. the lesson or course page. */
+  href: string;
+}
+
+const { assignment, href } = Astro.props;
+const { title, type, released, due } = assignment.data;
+const now = new Date();
+const status = timeStatus({ released, due }, now);
+const anchor = `task-${assignment.id.replaceAll('/', '-')}`;
+---
+
+<li
+  class="row"
+  data-assignment={assignment.id}
+  data-due={due?.toISOString()}
+  data-released={released?.toISOString()}
+>
+  <a href={`${href}#${anchor}`}>
+    <span class="visually-hidden">{ASSIGNMENT_TYPES[type]}: </span>{title}
+  </a>
+  <StatusPill status={status} label={statusLabel(status, { released, due }, now)} />
+</li>
+
+<script>
+  import '~/scripts/ticks';
+</script>
+
+<style>
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-1) var(--s-3);
+    padding: var(--s-2) 0;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .row:last-child {
+    border-bottom: 0;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 600;
+  }
+</style>

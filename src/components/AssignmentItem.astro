@@ -1,0 +1,258 @@
+---
+/**
+ * One assignment, in full: type, title, status pill, deadline, teaser, the
+ * brief (in a disclosure so long briefs don't swamp the page), the Moodle
+ * link and the visitor's "done" tick.
+ *
+ * The pill is computed at build time here and kept current in the browser
+ * by src/scripts/ticks.ts (see the data-* attributes it reads).
+ */
+import { render } from 'astro:content';
+import type { Assignment } from '~/lib/content';
+import { ASSIGNMENT_TYPES, formatDeadline } from '~/lib/labels';
+import { statusLabel, timeStatus } from '~/lib/status';
+import StatusPill from './StatusPill.astro';
+
+interface Props {
+  assignment: Assignment;
+  /** Heading level for the title, to fit the surrounding outline. */
+  level?: 2 | 3 | 4;
+  /** Only needed when the same assignment appears twice on one page. */
+  idSuffix?: string;
+}
+
+const { assignment, level = 3, idSuffix } = Astro.props;
+const { title, teaser, type, released, due, weight, link, submission } = assignment.data;
+const { Content } = await render(assignment);
+const hasBrief = Boolean(assignment.body?.trim());
+
+const now = new Date();
+const status = timeStatus({ released, due }, now);
+const Heading = `h${level}` as 'h2' | 'h3' | 'h4';
+// A stable, URL-safe anchor so other pages can link here.
+const anchor = `task-${assignment.id.replaceAll('/', '-')}${idSuffix ? `-${idSuffix}` : ''}`;
+---
+
+<article
+  class="assignment"
+  id={anchor}
+  data-assignment={assignment.id}
+  data-due={due?.toISOString()}
+  data-released={released?.toISOString()}
+>
+  <header class="head">
+    <div class="titles">
+      <span class="type">{ASSIGNMENT_TYPES[type]}</span>
+      <Heading class="title">{title}</Heading>
+    </div>
+    <StatusPill status={status} label={statusLabel(status, { released, due }, now)} />
+  </header>
+
+  <dl class="facts">
+    {
+      due ? (
+        <div>
+          <dt>Προθεσμία</dt>
+          <dd>
+            <time datetime={due.toISOString()}>{formatDeadline(due)}</time>
+          </dd>
+        </div>
+      ) : (
+        <div>
+          <dt>Προθεσμία</dt>
+          <dd>Χωρίς προθεσμία — για εξάσκηση</dd>
+        </div>
+      )
+    }
+    {
+      released && (
+        <div>
+          <dt>Ανοίγει</dt>
+          <dd>
+            <time datetime={released.toISOString()}>{formatDeadline(released)}</time>
+          </dd>
+        </div>
+      )
+    }
+    {
+      weight !== undefined && (
+        <div>
+          <dt>Βαρύτητα</dt>
+          <dd>{weight}%</dd>
+        </div>
+      )
+    }
+    {
+      submission && (
+        <div>
+          <dt>Υποβολή</dt>
+          <dd>{submission}</dd>
+        </div>
+      )
+    }
+  </dl>
+
+  {teaser && <p class="teaser">{teaser}</p>}
+
+  {
+    hasBrief && (
+      <details class="brief">
+        <summary>Εκφώνηση</summary>
+        <div class="prose">
+          <Content />
+        </div>
+      </details>
+    )
+  }
+
+  <footer class="actions">
+    <!-- Revealed by ticks.ts; useless without JavaScript, so hidden by default. -->
+    <label class="tick" data-tick hidden>
+      <input type="checkbox" />
+      <span>Το ολοκλήρωσα<span class="visually-hidden">: {title}</span></span>
+    </label>
+    {
+      link && (
+        <a class="moodle" href={link}>
+          Άνοιγμα στο Moodle<span class="visually-hidden">: {title}</span>
+        </a>
+      )
+    }
+  </footer>
+</article>
+
+<script>
+  import '~/scripts/ticks';
+</script>
+
+<style>
+  .assignment {
+    display: grid;
+    gap: var(--s-3);
+    padding: var(--s-4);
+    border: 1px solid var(--divider);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--r-md);
+    background: var(--panel-solid);
+    scroll-margin-top: 5rem;
+  }
+
+  .assignment:target {
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent), transparent 55%);
+  }
+
+  .head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--s-2) var(--s-3);
+  }
+
+  .titles {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .type {
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .title {
+    font-size: var(--fs-lg);
+  }
+
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-1) var(--s-5);
+    font-size: var(--fs-sm);
+  }
+
+  .facts div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--s-2);
+  }
+
+  .facts dt {
+    color: var(--text-muted);
+  }
+
+  .facts dd {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .teaser {
+    max-width: var(--measure);
+  }
+
+  .brief summary {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-height: 44px;
+    font-weight: 700;
+    color: var(--link);
+    cursor: pointer;
+  }
+
+  .brief[open] summary {
+    margin-bottom: var(--s-2);
+  }
+
+  .brief .prose {
+    padding: var(--s-4);
+    border-radius: var(--r-md);
+    background: var(--panel-sunken);
+  }
+
+  .brief .prose :global(h2) {
+    font-size: var(--fs-lg);
+  }
+
+  .brief .prose :global(h3) {
+    font-size: var(--fs-md);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-2) var(--s-5);
+  }
+
+  .actions:empty {
+    display: none;
+  }
+
+  .tick {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-height: 44px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .tick[hidden] {
+    display: none;
+  }
+
+  .tick input {
+    width: 22px;
+    height: 22px;
+    accent-color: var(--st-done);
+    cursor: pointer;
+  }
+
+  .moodle {
+    font-weight: 700;
+  }
+</style>
