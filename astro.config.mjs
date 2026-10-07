@@ -12,4 +12,12 @@ export default defineConfig({
   trailingSlash: 'always',
   build: { format: 'directory' },
   output: 'static',
+  markdown: {
+    // Code blocks get both a light and a dark colour set as CSS variables
+    // (--shiki-light / --shiki-dark); base.css picks one per theme.
+    shikiConfig: {
+      themes: { light: 'github-light', dark: 'github-dark' },
+      defaultColor: false,
+    },
+  },
 });

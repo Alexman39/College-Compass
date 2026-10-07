@@ -195,10 +195,60 @@ pre {
   line-height: 1.5;
 }
 
+.prose pre.astro-code {
+  background: var(--panel-sunken) !important; /* our surface, not Shiki's */
+}
+
+/* Shiki emits both colour sets; show the one for the current theme. */
+.astro-code span {
+  color: var(--shiki-light);
+}
+[data-theme='dark'] .astro-code span {
+  color: var(--shiki-dark);
+}
+
 .prose :not(pre) > code {
   padding: 0.1em 0.35em;
   border-radius: 6px;
   background: var(--panel-sunken);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+}
+
+.prose th,
+.prose td {
+  padding: var(--s-2);
+  /* At 360px a 3-column table of Greek terms is wider than the screen;
+   * let long words hyphenate (or, failing that, break) inside cells
+   * rather than pushing the page sideways. */
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  border-bottom: 1px solid var(--divider);
+  text-align: left;
+  vertical-align: top;
+}
+
+@media (min-width: 40rem) {
+  .prose th,
+  .prose td {
+    padding: var(--s-2) var(--s-3);
+    overflow-wrap: normal;
+  }
+}
+
+.prose th {
+  font-weight: 700;
+  background: var(--panel-sunken);
+}
+
+.prose img {
+  border-radius: var(--r-md);
+  border: 1px solid var(--divider);
+  background: #fff; /* diagrams are drawn on white; keep them legible in dark mode */
 }
 
 .prose blockquote {
