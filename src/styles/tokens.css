@@ -14,7 +14,8 @@
  * Body text must sit on --panel-solid, never on raw glass.
  */
 
-:root {
+:root,
+[data-theme='light'] {
   color-scheme: light;
 
   /* ---- Raw palette: sky → aqua → fresh green ------------------------ */
@@ -42,6 +43,7 @@
   --text-on-accent: #ffffff;
   --link: #0b5aa8;
   --link-hover: #073f78;
+  --text-danger: #b3261e; /* red that passes AA as text; pill red is for dots only */
 
   /* ---- Surfaces ------------------------------------------------------
    * glass  = decorative chrome (title bars, gadgets' frames, nav)
@@ -126,7 +128,9 @@
  * Dark theme — "night aquarium"
  *
  * Applied when the OS prefers dark *and* the visitor hasn't picked light, or
- * when they explicitly picked dark. The same block appears twice because CSS
+ * when they explicitly picked dark. The [data-theme] selectors also work on
+ * any element, so a page section can be forced light or dark (the
+ * /styleguide page shows both side by side this way). The same block appears twice because CSS
  * can't express "OS dark unless overridden" in one selector.
  */
 @media (prefers-color-scheme: dark) {
@@ -141,6 +145,7 @@
     --text-muted: #a6c4d1;
     --link: #7fd6ff;
     --link-hover: #b9e9ff;
+    --text-danger: #ff9b8f;
     --glass: rgb(30 90 120 / 0.28);
     --glass-strong: rgb(30 90 120 / 0.45);
     --glass-border: rgb(140 225 255 / 0.22);
@@ -158,7 +163,7 @@
   }
 }
 
-:root[data-theme='dark'] {
+[data-theme='dark'] {
   color-scheme: dark;
   --bg-solid: #061a27;
   --bg-scene:
@@ -169,6 +174,7 @@
   --text-muted: #a6c4d1;
   --link: #7fd6ff;
   --link-hover: #b9e9ff;
+  --text-danger: #ff9b8f;
   --glass: rgb(30 90 120 / 0.28);
   --glass-strong: rgb(30 90 120 / 0.45);
   --glass-border: rgb(140 225 255 / 0.22);
