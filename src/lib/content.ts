@@ -198,6 +198,36 @@ export async function getAnnouncements(): Promise<Announcement[]> {
   return all.sort((a, b) => Number(b.data.pinned) - Number(a.data.pinned) || b.data.date.localeCompare(a.data.date));
 }
 
+export async function getProfessor(id: string): Promise<Professor> {
+  // validateContent() guarantees every course's professor exists.
+  return (await getProfessors()).find((p) => p.id === id)!;
+}
+
+export interface Week {
+  week: number;
+  lesson?: Lesson;
+  assignments: Assignment[];
+}
+
+/**
+ * A course's weeks: every week that has a lesson or an assignment, in
+ * order. (Archived courses can have exercises without a written lesson.)
+ */
+export async function getWeeks(courseId: string): Promise<Week[]> {
+  const [lessons, assignments] = await Promise.all([getLessons(courseId), getAssignments(courseId)]);
+  const numbers = new Set([
+    ...lessons.map((l) => l.data.week),
+    ...assignments.flatMap((a) => (a.data.week === undefined ? [] : [a.data.week])),
+  ]);
+  return [...numbers]
+    .sort((a, b) => a - b)
+    .map((week) => ({
+      week,
+      lesson: lessons.find((l) => l.data.week === week),
+      assignments: assignments.filter((a) => a.data.week === week),
+    }));
+}
+
 export async function getSettings(): Promise<Settings['data']> {
   await validateContent();
   const [only] = await getCollection('settings');

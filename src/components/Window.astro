@@ -1,0 +1,137 @@
+---
+/**
+ * An Aero-style "window": glossy title bar in the course accent, solid
+ * reading surface underneath. The chrome is where the nostalgia lives; the
+ * body stays calm and fully opaque so text contrast is always reliable.
+ *
+ *   <Window title="Web Technologies" icon="globe" accent="#ab2f80">…</Window>
+ *
+ * The title bar text is white on the raw accent; every accent is tested to
+ * reach 4.5:1 (src/lib/accents.test.ts). The gloss only ever *darkens*
+ * the bar, so it can't reduce that contrast.
+ */
+import type { HTMLTag } from 'astro/types';
+import type { COURSE_ICONS } from '~/content.config';
+import CourseIcon from './CourseIcon.astro';
+
+interface Props {
+  title: string;
+  /** Language of the title, if it differs from the page (e.g. "en"). */
+  titleLang?: string;
+  icon?: (typeof COURSE_ICONS)[number];
+  accent?: string;
+  as?: HTMLTag;
+  /** Heading level used for the title bar text. */
+  level?: 1 | 2 | 3;
+  /** Small text on the right of the title bar, e.g. the course code. */
+  meta?: string;
+  class?: string;
+  [attr: string]: unknown;
+}
+
+const { title, titleLang, icon, accent, as: Tag = 'section', level = 2, meta, class: className, ...rest } = Astro.props;
+const Heading = `h${level}` as 'h1' | 'h2' | 'h3';
+---
+
+<Tag class:list={['window', className]} style={accent ? `--accent:${accent}` : undefined} {...rest}>
+  <div class="titlebar">
+    {icon && <CourseIcon name={icon} size={20} />}
+    <Heading class="title" lang={titleLang}>{title}</Heading>
+    {meta && <span class="meta">{meta}</span>}
+    <span class="controls" aria-hidden="true"><i></i><i></i><i></i></span>
+  </div>
+  <div class="body">
+    <slot />
+  </div>
+</Tag>
+
+<style>
+  .window {
+    border: 1px solid var(--glass-border);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    background: var(--panel-solid);
+    box-shadow: var(--highlight), var(--shadow-lg);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .window {
+      animation: window-in var(--dur-slow) var(--ease-overshoot) both;
+    }
+  }
+
+  @keyframes window-in {
+    from { opacity: 0; transform: scale(0.97) translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .titlebar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    min-height: 48px;
+    padding: var(--s-2) var(--s-4);
+    color: #fff;
+    /* Accent at the top, a touch darker at the bottom: darkening only, so
+     * contrast with the white text never drops below the tested value. */
+    background: linear-gradient(var(--accent), color-mix(in oklab, var(--accent), black 18%));
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.35),
+      inset 0 -1px 0 rgb(0 0 0 / 0.2);
+  }
+
+  /* Glass sheen: a thin light band along the very top edge only. */
+  .titlebar::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 6px;
+    background: linear-gradient(rgb(255 255 255 / 0.28), transparent);
+    pointer-events: none;
+  }
+
+  .title {
+    flex: 1;
+    min-width: 0;
+    font-size: var(--fs-md);
+    font-weight: 750;
+    letter-spacing: 0;
+    text-shadow: 0 1px 1px rgb(0 0 0 / 0.35);
+  }
+
+  .meta {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    opacity: 0.95;
+    white-space: nowrap;
+  }
+
+  /* Decorative min/max/close jelly dots. */
+  .controls {
+    display: none;
+    gap: 6px;
+  }
+  .controls i {
+    width: 12px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, rgb(255 255 255 / 0.9), rgb(255 255 255 / 0.35) 45%, rgb(255 255 255 / 0.15));
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.2);
+  }
+  .controls i:last-child {
+    background: radial-gradient(circle at 35% 30%, #ffd3cf, #e8574f 55%, #b8302a);
+  }
+
+  @media (min-width: 40rem) {
+    .controls { display: inline-flex; }
+  }
+
+  .body {
+    padding: var(--s-4);
+  }
+
+  @media (min-width: 40rem) {
+    .body { padding: var(--s-5) var(--s-6); }
+  }
+</style>

@@ -29,6 +29,10 @@ function splitSuffix(path: string): [string, string] {
   return i === -1 ? [path, ''] : [path.slice(0, i), path.slice(i)];
 }
 
+/** Links to course pages, so the URL scheme lives in one place. */
+export const courseUrl = (slug: string) => url(`courses/${slug}/`);
+export const lessonUrl = (slug: string, week: number) => url(`courses/${slug}/week/${week}/`);
+
 /**
  * True when `href` (as produced by url()) is the page currently shown.
  * Used to set aria-current="page" in navigation.
