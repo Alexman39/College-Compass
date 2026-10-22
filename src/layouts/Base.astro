@@ -25,8 +25,14 @@ interface Props {
   title?: string;
   description?: string;
   lang?: 'el' | 'en';
-  /** Keep the page out of search engines (design previews). */
+  /** Keep the page out of search engines (e.g. /styleguide). */
   noindex?: boolean;
+  /**
+   * Include this page in the site's own search (Pagefind). Only content
+   * pages (courses, lessons) opt in, so results aren't cluttered with
+   * the home page, calendars or the style guide.
+   */
+  searchable?: boolean;
 }
 
 const SITE = 'College Compass';
@@ -35,6 +41,7 @@ const {
   description = 'Ο ανεπίσημος οδηγός μαθημάτων του Metropolitan College: μαθήματα, εβδομάδες, εργασίες και προθεσμίες σε ένα μέρος.',
   lang = 'el',
   noindex = false,
+  searchable = false,
 } = Astro.props;
 
 const fullTitle = title ? `${title} · ${SITE}` : SITE;
@@ -72,7 +79,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <a class="skip-link" href="#main">Μετάβαση στο περιεχόμενο</a>
     <SkyScene />
     <TopBar />
-    <main id="main" tabindex="-1">
+    <main id="main" tabindex="-1" data-pagefind-body={searchable ? '' : undefined}>
       <slot />
     </main>
     <SiteFooter />

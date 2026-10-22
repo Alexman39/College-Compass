@@ -1,0 +1,280 @@
+---
+/**
+ * The Start menu, opened by the compass orb (or "/" anywhere). A native
+ * modal <dialog>: the browser handles Esc, focus trapping and returning
+ * focus to the orb. Contents: search, the main pages, every course.
+ */
+import CompassOrb from './CompassOrb.astro';
+import SearchBox from './SearchBox.astro';
+import CourseIcon from './CourseIcon.astro';
+import { getCourses } from '~/lib/content';
+import { courseUrl, url } from '~/lib/url';
+
+const courses = await getCourses();
+const current = courses.filter((c) => c.data.status === 'current');
+const archived = courses.filter((c) => c.data.status === 'archived');
+const pages = [
+  { href: url(), label: 'Αρχική' },
+  { href: url('upcoming'), label: 'Προθεσμίες' },
+  { href: url('calendar'), label: 'Ημερολόγιο' },
+  { href: url('archive'), label: 'Αρχείο' },
+  { href: url('about'), label: 'Σχετικά' },
+];
+---
+
+<dialog id="start-menu" class="start" aria-labelledby="start-title" data-start-menu>
+  <div class="frame">
+    <header class="head">
+      <CompassOrb size={32} />
+      <h2 id="start-title">College Compass</h2>
+      <form method="dialog">
+        <button class="close" type="submit">
+          <span aria-hidden="true">×</span><span class="visually-hidden">Κλείσιμο μενού</span>
+        </button>
+      </form>
+    </header>
+
+    <div class="body">
+      <SearchBox id="start-search" limit={6} />
+
+      <div class="columns">
+        <nav aria-label="Σελίδες">
+          <ul class="pages" role="list">
+            {
+              pages.map((p) => (
+                <li>
+                  <a href={p.href}>{p.label}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <nav aria-label="Μαθήματα" class="courses">
+          {
+            current.length > 0 && (
+              <>
+                <p class="group">Αυτό το εξάμηνο</p>
+                <ul role="list">
+                  {current.map((c) => (
+                    <li style={`--accent:${c.data.accent}`}>
+                      <a href={courseUrl(c.data.slug)}>
+                        <span class="icon">
+                          <CourseIcon name={c.data.icon} size={16} />
+                        </span>
+                        <span lang="en">{c.data.title_en}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )
+          }
+          <p class="group">Αρχείο</p>
+          <ul role="list">
+            {
+              archived.map((c) => (
+                <li style={`--accent:${c.data.accent}`}>
+                  <a href={courseUrl(c.data.slug)}>
+                    <span class="icon">
+                      <CourseIcon name={c.data.icon} size={16} />
+                    </span>
+                    <span lang="en">{c.data.title_en}</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-start-menu]')!;
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-start-button]');
+  const search = dialog.querySelector<HTMLInputElement>('input[type="search"]')!;
+
+  const open = () => {
+    dialog.showModal();
+    search.focus();
+  };
+
+  // Keep aria-expanded in step with the dialog's "open" attribute, however
+  // it gets closed (Esc, the × button, a backdrop click, or script).
+  const sync = () => buttons.forEach((b) => b.setAttribute('aria-expanded', String(dialog.open)));
+  new MutationObserver(sync).observe(dialog, { attributes: true, attributeFilter: ['open'] });
+
+  buttons.forEach((b) => b.addEventListener('click', open));
+  // A click on the dimmed backdrop (outside the panel) closes the menu.
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+
+  // "/" opens search from anywhere, unless you're already typing somewhere.
+  document.addEventListener('keydown', (e) => {
+    const t = e.target as HTMLElement;
+    const typing = t.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(t.tagName);
+    if (e.key === '/' && !typing && !dialog.open && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      e.preventDefault();
+      open();
+    }
+  });
+</script>
+
+<style>
+  .start {
+    width: min(100% - 2 * var(--gutter), 40rem);
+    max-height: min(85dvh, 44rem);
+    margin: 4.5rem auto auto var(--gutter);
+    padding: 0;
+    border: 0;
+    border-radius: var(--r-lg);
+    background: transparent;
+    color: var(--text);
+    overflow: visible;
+  }
+
+  @media (min-width: 76rem) {
+    /* Line the panel up under the orb in the centred container. */
+    .start {
+      margin-left: calc((100vw - 76rem) / 2 + var(--gutter));
+    }
+  }
+
+  .start::backdrop {
+    background: rgb(3 16 27 / 0.35);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .start[open] {
+      animation: start-in var(--dur-med) var(--ease-overshoot);
+    }
+  }
+
+  @keyframes start-in {
+    from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* Glass frame (chrome) around a solid body (content). */
+  .frame {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    max-height: inherit;
+    padding: 6px;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--r-lg);
+    background: var(--glass-strong);
+    box-shadow: var(--highlight), var(--shadow-lg);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    backdrop-filter: blur(18px) saturate(150%);
+  }
+
+  .head {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    padding: var(--s-1) var(--s-2) var(--s-2);
+  }
+
+  /* Title sits on glass, so it wears a solid chip. */
+  h2 {
+    margin-right: auto;
+    padding: 0 var(--s-3);
+    border-radius: var(--r-pill);
+    background: var(--panel-solid);
+    font-size: var(--fs-sm);
+    line-height: 2;
+  }
+
+  .close {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    background: var(--panel-solid);
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+
+  .body {
+    display: grid;
+    gap: var(--s-4);
+    min-height: 0;
+    overflow: auto;
+    padding: var(--s-4);
+    border-radius: var(--r-md);
+    background: var(--panel-solid);
+  }
+
+  .columns {
+    display: grid;
+    gap: var(--s-4);
+  }
+
+  @media (min-width: 36rem) {
+    .columns {
+      grid-template-columns: 10rem 1fr;
+    }
+  }
+
+  ul {
+    display: grid;
+    gap: 2px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pages a,
+  .courses a {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-height: 40px;
+    padding: 0 var(--s-2);
+    border-radius: var(--r-sm);
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .pages a {
+    font-weight: 800;
+  }
+
+  .pages a:hover,
+  .courses a:hover {
+    background: var(--panel-sunken);
+  }
+
+  .group {
+    margin: var(--s-2) 0 var(--s-1);
+    padding-left: var(--s-2);
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .group:first-child {
+    margin-top: 0;
+  }
+
+  .icon {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: var(--accent);
+    color: #fff;
+  }
+</style>

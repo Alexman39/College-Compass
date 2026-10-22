@@ -5,6 +5,7 @@
  */
 import CompassOrb from './CompassOrb.astro';
 import ThemeToggle from './ThemeToggle.astro';
+import StartMenu from './StartMenu.astro';
 import { url, isCurrent } from '~/lib/url';
 
 const home = url();
@@ -19,10 +20,21 @@ const links = [
 
 <header class="topbar">
   <div class="container bar">
-    <a class="brand" href={home} aria-current={onHome ? 'page' : undefined}>
-      <CompassOrb size={40} />
-      <span class="name">College Compass</span>
-    </a>
+    <div class="brand">
+      <!-- The orb is the Start button (opens the menu); the name links home. -->
+      <button
+        type="button"
+        class="orb-button"
+        aria-haspopup="dialog"
+        aria-controls="start-menu"
+        aria-expanded="false"
+        data-start-button
+      >
+        <CompassOrb size={40} />
+        <span class="visually-hidden">Μενού και αναζήτηση</span>
+      </button>
+      <a class="name" href={home} aria-current={onHome ? 'page' : undefined}>College Compass</a>
+    </div>
     <nav class="nav" aria-label="Κύρια πλοήγηση">
       <ul role="list">
         {
@@ -41,6 +53,7 @@ const links = [
     </div>
   </div>
 </header>
+<StartMenu />
 
 <style>
   .topbar {
@@ -129,17 +142,26 @@ const links = [
   .brand {
     display: inline-flex;
     align-items: center;
-    gap: var(--s-3);
-    padding-right: var(--s-2);
-    border-radius: var(--r-pill);
-    color: var(--text);
-    text-decoration: none;
+    gap: var(--s-2);
+  }
+
+  .orb-button {
+    display: grid;
+    place-items: center;
+    padding: 2px;
+    border: 0;
+    border-radius: 50%;
+    background: none;
   }
 
   .name {
+    padding: var(--s-1) var(--s-2);
+    border-radius: var(--r-pill);
+    color: var(--text);
     font-size: var(--fs-lg);
     font-weight: 800;
     letter-spacing: -0.02em;
+    text-decoration: none;
   }
 
   .tools {

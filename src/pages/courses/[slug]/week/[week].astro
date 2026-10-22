@@ -47,8 +47,10 @@ const { Content } = await render(lesson);
 const heading = `Εβδομάδα ${l.week}: ${l.title}`;
 ---
 
-<Base title={`${heading} · ${c.title_en}`} description={`${c.title_en} — ${heading}`}>
+<Base title={`${heading} · ${c.title_en}`} description={`${c.title_en} — ${heading}`} searchable>
   <div class="container page" style={`--accent:${c.accent}`}>
+    <span hidden data-pagefind-filter="course">{c.code.replace(/_\d+$/, '')}</span>
+    <span hidden data-pagefind-meta="kind">Μάθημα εβδομάδας</span>
     <Breadcrumbs
       items={[
         { label: 'Αρχική', href: url() },
@@ -59,14 +61,14 @@ const heading = `Εβδομάδα ${l.week}: ${l.title}`;
 
     <article class="panel lesson">
       <header class="head">
-        <p class="kicker"><span lang="en">{c.title_en}</span> · {c.code}</p>
+        <p class="kicker" data-pagefind-ignore><span lang="en">{c.title_en}</span> · {c.code}</p>
         <h1>{heading}</h1>
         {
           (l.date || l.tags.length > 0) && (
             <div class="meta">
               {l.date && <time datetime={l.date}>{formatLocalDate(l.date)}</time>}
               {l.tags.length > 0 && (
-                <ul class="tags" role="list" aria-label="Ετικέτες">
+                <ul class="tags" role="list" aria-label="Ετικέτες" data-pagefind-ignore>
                   {l.tags.map((t) => (
                     <li lang="en">{t}</li>
                   ))}

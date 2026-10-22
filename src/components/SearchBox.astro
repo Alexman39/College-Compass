@@ -1,0 +1,135 @@
+---
+/**
+ * Search field + live results (see src/scripts/search.ts). Used on /search
+ * and in the Start menu. Without JavaScript it falls back to a plain GET
+ * form to /search/, which explains that search needs JavaScript.
+ */
+import { url } from '~/lib/url';
+
+interface Props {
+  id: string;
+  limit?: number;
+  value?: string;
+  autofocus?: boolean;
+}
+const { id, limit = 20, value = '', autofocus = false } = Astro.props;
+---
+
+<form class="search" role="search" action={url('search')} method="get" data-search data-limit={limit}>
+  <label for={id} class="visually-hidden">Αναζήτηση στα μαθήματα</label>
+  <div class="field">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+      <path d="M10.5 3a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15zM16 16l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <input
+      id={id}
+      name="q"
+      type="search"
+      value={value}
+      placeholder="Αναζήτηση: π.χ. κλάσεις, HTML, Java…"
+      autocomplete="off"
+      spellcheck="false"
+      autofocus={autofocus}
+    />
+  </div>
+  <p class="status" role="status" data-search-status></p>
+  <ol class="results" role="list" data-search-results></ol>
+</form>
+
+<script>
+  import '~/scripts/search';
+</script>
+
+<style>
+  .search {
+    display: grid;
+    gap: var(--s-2);
+  }
+
+  .field {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  svg {
+    position: absolute;
+    left: var(--s-3);
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+
+  input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 var(--s-4) 0 calc(var(--s-3) + 28px);
+    border: 1px solid var(--divider);
+    border-radius: var(--r-pill);
+    background: var(--panel-sunken);
+    box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.08);
+    font-size: var(--fs-md);
+  }
+
+  input::placeholder {
+    color: var(--text-muted);
+    opacity: 1;
+  }
+
+  input:focus-visible {
+    border-radius: var(--r-pill);
+  }
+
+  .status {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+  }
+
+  .status:empty {
+    display: none;
+  }
+
+  .results {
+    display: grid;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Results are created by script, so they need :global to be styled. */
+  .results :global(.result) {
+    display: grid;
+    gap: 2px;
+    padding: var(--s-3) 0;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .results :global(.result-meta) {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+  }
+
+  .results :global(.result-course) {
+    padding: 0 var(--s-2);
+    border-radius: var(--r-sm);
+    background: var(--panel-sunken);
+    color: var(--text);
+  }
+
+  .results :global(.result-title) {
+    font-weight: 700;
+  }
+
+  .results :global(.result-excerpt) {
+    font-size: var(--fs-sm);
+  }
+
+  .results :global(mark) {
+    padding: 0 1px;
+    border-radius: 3px;
+    background: color-mix(in oklab, var(--st-soon), transparent 55%);
+    color: inherit;
+  }
+</style>
