@@ -3,6 +3,8 @@
  * Small footer: the "unofficial" disclaimer and, once the visitor has ticked
  * anything, a quiet two-step "clear my ticks" control.
  */
+import { url } from '~/lib/url';
+
 const year = new Date().getFullYear();
 ---
 
@@ -28,7 +30,9 @@ const year = new Date().getFullYear();
       </div>
       <p class="visually-hidden" role="status" data-reset-status></p>
 
-      <p class="muted">© {year} College Compass</p>
+      <p class="muted">
+        © {year} College Compass · <a href={url('about')}>Σχετικά & ιδιωτικότητα</a>
+      </p>
     </div>
   </div>
 </footer>
