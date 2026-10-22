@@ -1,6 +1,6 @@
 # College Compass v2 — Roadmap & status
 
-_Last updated: 22 October 2026 · branch `v2`_
+_Last updated: 22 October 2026 · branch `v2` · Phase A complete_
 
 College Compass is being rebuilt from a hand-coded HTML/CSS demo into a static
 Astro site with a structured content model. This document records **where the
@@ -15,12 +15,15 @@ The original brief is in [`PROJECT_BRIEF.md`](../PROJECT_BRIEF.md).
 | **A2** Content model | Zod schemas, build-time validation, all demo content migrated | ✅ Done |
 | **A3** Course pages | Course windows, lesson pages, live status pills, done ticks, `/styleguide` | ✅ Done |
 | **A4** Desktop & time views | Home "desktop", `/upcoming`, `/calendar` + `.ics`, `/archive` | ✅ Done |
-| **A5** Search & polish | Pagefind (Greek), Start-menu orb, `/about`, Lighthouse ≥ 90 | ⏭️ Next |
-| **Launch** | Switch GitHub Pages to Actions, merge `v2` → `main` | Planned |
+| **A5** Search & polish | Pagefind (Greek), Start-menu orb, `/about`, Lighthouse ≥ 90 | ✅ Done |
+| **Launch** | Switch GitHub Pages to Actions, merge `v2` → `main` | ⏭️ Next — waiting on owner |
 | **B** Admin CMS | Sveltia CMS at `/admin`, GitHub OAuth via Cloudflare Worker | Later |
 
 Quality gates on every push: `astro check` (types), **64 unit tests** (vitest),
-static build, and build-time content validation.
+static build, build-time content validation, and post-build checks on the
+generated HTML (duplicate ids, empty briefs, code colours below 4.5:1).
+Lighthouse (mobile, light and dark): accessibility, best practices and SEO
+100 on every main page; performance 99–100.
 
 ## What exists today
 
@@ -94,6 +97,7 @@ behind each.
 ## Open questions (waiting on the owner)
 
 - [ ] **Welcome announcement**: text drafted, awaiting approval before commit.
+- [ ] **`/about` text**: new copy including the privacy note, awaiting review.
 - [ ] **Contact email** (`collegecompass@gmail.com`): keep or drop?
 - [ ] **Alt text** for the five UML diagrams: awaiting review.
 - [ ] **2026–27 calendar**: semester start/end dates and holidays (`src/content/settings/site.yaml`).
@@ -105,13 +109,15 @@ behind each.
 
 ## Known issues
 
-- On the CN4000 course page, two assignment briefs share heading text
-  ("Ερώτημα 1"). The Markdown engine gives those headings identical automatic ids.
-  Nothing references them, but they should be unique. Fix planned in A5 (small
-  Markdown plugin).
-- `TODO` notes in content are hidden on the page but visible in the HTML source.
 - Year 3 courses will need accents beyond the current 12. They can reuse colours
   from archived years or extend the set; either way the contrast test must pass.
+- After changing the Markdown setup locally, delete `.astro/` before building:
+  Astro caches rendered content and can keep serving an old render. (CI always
+  builds fresh.)
+
+_Resolved in A5:_ duplicate heading ids when two briefs share a page (now
+prefixed per assignment); code-highlighting colours below AA (now GitHub's
+high-contrast themes, enforced by the build check).
 
 ## Next steps
 
@@ -122,12 +128,11 @@ navigation, gadgets (next deadline, this week, workload forecast,
 announcements), course tiles with a "Year 3 coming soon" placeholder, and a
 daily scheduled rebuild so time-based views stay current after launch.
 
-### A5 — Search & polish
-1. Pagefind static search, tuned for Greek.
-2. Compass orb opens a Start-menu panel with search and all courses.
-3. `/about` with a short privacy note: no accounts, no analytics, ticks stay in your own browser.
-4. Lighthouse ≥ 90 for performance and accessibility on key pages.
-5. Fix the duplicate heading ids.
+### A5 — Search & polish ✅
+Pagefind search tuned for Greek (accent- and case-insensitive, stemmed), a
+Start menu behind the compass orb (`/` opens it), `/search`, `/about` with the
+privacy note, unique heading ids, high-contrast code colours, post-build
+checks, and Lighthouse verified in both themes.
 
 ### Launch checklist
 1. Settings → Pages → Source: **GitHub Actions**.

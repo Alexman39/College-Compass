@@ -7,7 +7,7 @@ every course with its weekly lessons, exercises, coursework and deadlines, in on
 clear place. Content is mostly in Greek; course titles and technical terms are
 in English.
 
-> **Status:** v2 rebuild in progress on the `v2` branch. Phases A1–A3 are done.
+> **Status:** v2 rebuild on the `v2` branch. Phase A (the static site) is complete and ready for launch.
 > See **[docs/ROADMAP.md](docs/ROADMAP.md)** for progress, decisions and next steps.
 > The live site still serves the original demo from `main` until launch.
 
@@ -20,6 +20,11 @@ in English.
   always calculated in Athens time and kept current in the browser.
 - **Personal ticks**: mark tasks as done. Ticks are stored only in your own
   browser; there are no accounts and no tracking.
+- **Deadlines everywhere**: a cross-course `/upcoming` list, a next-deadline
+  countdown, a weekly workload chart, and a calendar feed (`/calendar.ics`)
+  for phones and calendar apps.
+- **Search in Greek**: accents and capitals don't matter (`ασκηση` finds
+  «Άσκηση»). Press `/` anywhere, or use the compass orb's Start menu.
 - **Light and dark themes**: "Aero Campus" design, inspired by Windows 7, with a
   "night aquarium" dark mode.
 - **Accessible by default**: WCAG AA contrast (tested), keyboard navigable,
@@ -31,6 +36,7 @@ in English.
 - Astro Content Collections with zod schemas
 - Plain CSS with custom properties as design tokens (no framework)
 - Small vanilla TypeScript scripts for interactivity
+- Pagefind for static search
 - Vitest for unit tests
 - GitHub Pages via GitHub Actions
 
@@ -42,7 +48,7 @@ Requires Node.js 24 (see `.nvmrc`).
 npm install
 npm run dev      # http://localhost:4321/College-Compass/
 npm test         # unit tests
-npm run build    # type-check + build into dist/
+npm run build    # type-check, build into dist/, post-build checks, search index
 npm run preview  # serve the built site
 ```
 
@@ -56,9 +62,11 @@ src/
   content.config.ts   content schemas (zod)
   lib/                content access + validation, Athens time, status, colour maths
   components/         UI components (Window, StatusPill, AssignmentItem, …)
-  pages/              routes: /, /courses/[slug]/, /courses/[slug]/week/[n]/, /styleguide/
-  scripts/            browser scripts (ticks, image zoom)
+  pages/              routes: /, /courses/[slug]/, /courses/[slug]/week/[n]/, /upcoming/,
+                      /calendar/ (+ calendar.ics), /archive/, /search/, /about/, /styleguide/
+  scripts/            browser scripts (ticks, deadlines, search, image zoom)
   styles/             tokens.css (design tokens) and base.css
+scripts/check-build.mjs  post-build checks on the generated HTML
 docs/ROADMAP.md       status, decisions and next steps
 ```
 
