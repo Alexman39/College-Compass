@@ -1,0 +1,5 @@
+# Placeholder for courses whose lecturer isn't known yet. Point the course's
+# `professor:` at the real professor file once known, then this can go.
+name: Θα ανακοινωθεί
+email:
+office_hours:
