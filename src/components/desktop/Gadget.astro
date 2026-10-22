@@ -1,0 +1,79 @@
+---
+/**
+ * A desktop "gadget" (Windows 7 sidebar style): a small glass frame with a
+ * title strip and a solid body. Glass is chrome only; everything readable
+ * sits on the solid body.
+ */
+interface Props {
+  title: string;
+  /** Optional "see all" link in the title strip. */
+  href?: string;
+  linkLabel?: string;
+  id: string;
+  class?: string;
+}
+const { title, href, linkLabel = 'Όλα', id, class: className } = Astro.props;
+---
+
+<section class:list={['gadget', 'glass', className]} aria-labelledby={id}>
+  <header class="strip">
+    <h2 id={id}>{title}</h2>
+    {
+      href && (
+        <a href={href} class="more">
+          {linkLabel}
+          <span class="visually-hidden">: {title}</span>
+        </a>
+      )
+    }
+  </header>
+  <div class="body">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .gadget {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-width: 0;
+    padding: 6px;
+    border-radius: var(--r-lg);
+  }
+
+  .strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-3);
+    padding: var(--s-1) var(--s-2) var(--s-2);
+  }
+
+  /* Titles sit on glass, so they get a solid chip behind them. */
+  h2 {
+    padding: 0 var(--s-3);
+    border-radius: var(--r-pill);
+    background: var(--panel-solid);
+    font-size: var(--fs-sm);
+    font-weight: 800;
+    line-height: 1.9;
+    letter-spacing: 0.01em;
+  }
+
+  .more {
+    padding: 0 var(--s-3);
+    border-radius: var(--r-pill);
+    background: var(--panel-solid);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    line-height: 2.2;
+  }
+
+  .body {
+    min-width: 0;
+    padding: var(--s-4);
+    border-radius: var(--r-md);
+    background: var(--panel-solid);
+    box-shadow: var(--highlight);
+  }
+</style>

@@ -1,0 +1,129 @@
+---
+/**
+ * "This week" gadget: classes Monday → Sunday of the current Athens week,
+ * today highlighted. Only days with classes are listed, so it stays short
+ * on a phone. Built daily (see the scheduled workflow run).
+ */
+import Gadget from './Gadget.astro';
+import type { TimetableDay } from '~/lib/derive';
+import { DAY_NAMES, formatLocalDate } from '~/lib/labels';
+import { courseUrl, url } from '~/lib/url';
+
+interface Props {
+  days: TimetableDay[];
+}
+const { days } = Astro.props;
+const withClasses = days.filter((d) => d.slots.length > 0);
+const shortDate = (key: string) => formatLocalDate(key).replace(/\s\d{4}$/, ''); // "22 Οκτωβρίου"
+---
+
+<Gadget title="Αυτή την εβδομάδα" id="gadget-week" href={url('calendar')} linkLabel="Ημερολόγιο">
+  {
+    withClasses.length === 0 ? (
+      <p class="empty">Δεν υπάρχουν μαθήματα σε εξέλιξη αυτό το εξάμηνο.</p>
+    ) : (
+      <ol class="days" role="list">
+        {withClasses.map((d) => (
+          <li class:list={['day', { today: d.isToday }]} aria-current={d.isToday ? 'date' : undefined}>
+            <p class="day-name">
+              {DAY_NAMES[d.day]}
+              <span class="date">{shortDate(d.date)}</span>
+              {d.isToday && <span class="today-chip">Σήμερα</span>}
+            </p>
+            <ul class="slots" role="list">
+              {d.slots.map((s) => (
+                <li style={`--accent:${s.course.accent}`}>
+                  <span class="time">
+                    {s.start}–{s.end}
+                  </span>
+                  <a href={courseUrl(s.course.slug)} lang="en">
+                    {s.course.title}
+                  </a>
+                  {s.room && <span class="room">{s.room}</span>}
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ol>
+    )
+  }
+</Gadget>
+
+<style>
+  .empty {
+    color: var(--text-muted);
+  }
+
+  .days {
+    display: grid;
+    gap: var(--s-3);
+    padding: 0;
+    list-style: none;
+  }
+
+  .day {
+    display: grid;
+    gap: var(--s-1);
+  }
+
+  .today {
+    margin-inline: calc(var(--s-2) * -1);
+    padding: var(--s-2);
+    border-radius: var(--r-md);
+    background: var(--panel-sunken);
+  }
+
+  .day-name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 var(--s-2);
+    font-weight: 800;
+  }
+
+  .date {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+  }
+
+  .today-chip {
+    padding: 0 var(--s-2);
+    border-radius: var(--r-pill);
+    background: var(--link);
+    color: var(--panel-solid);
+    font-size: var(--fs-xs);
+    font-weight: 800;
+  }
+
+  .slots {
+    display: grid;
+    gap: var(--s-1);
+    padding: 0;
+    list-style: none;
+  }
+
+  .slots li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 var(--s-2);
+    padding-left: var(--s-3);
+    border-left: 4px solid var(--accent);
+    font-size: var(--fs-sm);
+  }
+
+  .time {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+  }
+
+  .slots a {
+    font-weight: 600;
+  }
+
+  .room {
+    color: var(--text-muted);
+  }
+</style>

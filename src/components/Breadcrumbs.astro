@@ -1,0 +1,62 @@
+---
+/** "Αρχική › Web Technologies › Εβδομάδα 1". The last item is the current page. */
+interface Props {
+  items: { label: string; href?: string; lang?: string }[];
+}
+const { items } = Astro.props;
+---
+
+<nav class="crumbs" aria-label="Διαδρομή" data-pagefind-ignore>
+  <ol>
+    {
+      items.map((item, i) =>
+        i === items.length - 1 || !item.href ? (
+          <li aria-current={i === items.length - 1 ? 'page' : undefined} lang={item.lang}>
+            {item.label}
+          </li>
+        ) : (
+          <li lang={item.lang}>
+            <a href={item.href}>{item.label}</a>
+          </li>
+        ),
+      )
+    }
+  </ol>
+</nav>
+
+<style>
+  .crumbs {
+    justify-self: start;
+    max-width: 100%;
+    padding: var(--s-1) var(--s-4);
+    /* Not a pill: long course names wrap onto several lines on phones. */
+    border-radius: var(--r-lg);
+    background: var(--panel-solid);
+    box-shadow: var(--highlight), var(--shadow-sm);
+    font-size: var(--fs-sm);
+  }
+
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--s-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-height: 36px;
+  }
+
+  li + li::before {
+    content: '›';
+    color: var(--text-muted);
+  }
+
+  [aria-current='page'] {
+    font-weight: 700;
+  }
+</style>

@@ -1,0 +1,463 @@
+---
+/**
+ * /courses/<slug>/ — the course "window": overview, professor, schedule,
+ * assessment, weeks, assignments and resources. Sections with no content
+ * are left out; a course with no material at all gets a friendly note.
+ */
+import { render } from 'astro:content';
+import Base from '~/layouts/Base.astro';
+import Window from '~/components/Window.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import AssignmentItem from '~/components/AssignmentItem.astro';
+import AssignmentRow from '~/components/AssignmentRow.astro';
+import { getAssignments, getCourses, getProfessor, getResources, getWeeks, type Course } from '~/lib/content';
+import { DAY_NAMES, RESOURCE_KINDS, formatLocalDate, yearSemester } from '~/lib/labels';
+import { courseUrl, lessonUrl, url } from '~/lib/url';
+
+export async function getStaticPaths() {
+  const courses = await getCourses();
+  return courses.map((course) => ({ params: { slug: course.data.slug }, props: { course } }));
+}
+
+interface Props {
+  course: Course;
+}
+
+const { course } = Astro.props;
+const c = course.data;
+const [professor, weeks, assignments, resources] = await Promise.all([
+  getProfessor(c.professor.id),
+  getWeeks(course.id),
+  getAssignments(course.id),
+  getResources(course.id),
+]);
+const { Content: Overview } = await render(course);
+const hasOverview = Boolean(course.body?.trim());
+
+const withDeadline = assignments.filter((a) => a.data.due);
+const practice = assignments.filter((a) => !a.data.due);
+const hasGreekTitle = c.title_el !== c.title_en;
+const isEmpty = !hasOverview && !c.summary && weeks.length === 0 && assignments.length === 0 && resources.length === 0;
+const here = courseUrl(c.slug);
+---
+
+<Base title={c.title_en} description={c.summary ?? `${c.title_en} (${c.code}) — ${yearSemester(c.year, c.semester)}`} searchable>
+  <div class="container page" style={`--accent:${c.accent}`}>
+    <span hidden data-pagefind-filter="course">{c.code.replace(/_\d+$/, '')}</span>
+    <span hidden data-pagefind-meta="kind">Μάθημα</span>
+    <Breadcrumbs items={[{ label: 'Αρχική', href: url() }, { label: c.title_en, lang: 'en' }]} />
+
+    <Window as="article" title={c.title_en} titleLang="en" icon={c.icon} level={1} meta={c.code}>
+      <header class="intro">
+        {hasGreekTitle && <p class="title-el">{c.title_el}</p>}
+        <ul class="chips" role="list">
+          <li>{yearSemester(c.year, c.semester)}</li>
+          {c.status === 'archived' ? <li>Αρχείο</li> : <li class="current">Τρέχον εξάμηνο</li>}
+        </ul>
+        {c.summary && <p class="summary">{c.summary}</p>}
+      </header>
+
+      <div class="layout">
+        <div class="main">
+          {
+            isEmpty && (
+              <section class="empty" data-pagefind-ignore>
+                <h2>Δεν υπάρχει ακόμη υλικό</h2>
+                <p>
+                  Για αυτό το μάθημα δεν έχουν προστεθεί ακόμη εβδομάδες ή ασκήσεις. Το επίσημο υλικό βρίσκεται
+                  πάντα στο <span lang="en">Moodle</span>.
+                </p>
+              </section>
+            )
+          }
+
+
+
+          {
+            weeks.length > 0 && (
+              <section aria-labelledby="weeks">
+                <h2 id="weeks">Εβδομάδες</h2>
+                <div class="weeks">
+                  {weeks.map(({ week, lesson, assignments: tasks }, i) => (
+                    <details class="week" name="weeks" open={i === 0}>
+                      <summary>
+                        <span class="week-no">Εβδομάδα {week}</span>
+                        {lesson && <span class="week-title">{lesson.data.title}</span>}
+                        {lesson?.data.date && <span class="week-date">{formatLocalDate(lesson.data.date)}</span>}
+                      </summary>
+                      <div class="week-body">
+                        {lesson ? (
+                          <a class="open-lesson" href={lessonUrl(c.slug, week)}>
+                            Άνοιγμα μαθήματος<span class="visually-hidden">: Εβδομάδα {week}</span>
+                          </a>
+                        ) : (
+                          <p class="muted" data-pagefind-ignore>Δεν υπάρχει γραμμένο μάθημα για αυτή την εβδομάδα.</p>
+                        )}
+                        {tasks.length > 0 && (
+                          <ul class="rows" role="list">
+                            {tasks.map((a) => (
+                              <AssignmentRow assignment={a} href={lesson ? lessonUrl(c.slug, week) : here} />
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              </section>
+            )
+          }
+
+          {
+            withDeadline.length > 0 && (
+              <section aria-labelledby="deadlines">
+                <h2 id="deadlines">Εργασίες με προθεσμία</h2>
+                <div class="stack">
+                  {withDeadline.map((a) => (
+                    <AssignmentItem assignment={a} />
+                  ))}
+                </div>
+              </section>
+            )
+          }
+
+          {
+            practice.length > 0 && (
+              <section aria-labelledby="practice">
+                <h2 id="practice">Ασκήσεις εξάσκησης</h2>
+                <div class="stack">
+                  {practice.map((a) => (
+                    <AssignmentItem assignment={a} />
+                  ))}
+                </div>
+              </section>
+            )
+          }
+
+        </div>
+
+        <aside class="side" aria-label="Στοιχεία μαθήματος">
+          <section class="card" aria-labelledby="professor">
+            <h2 id="professor">Διδάσκων/ουσα</h2>
+            <p class="strong">{professor.data.name}</p>
+            {
+              professor.data.email && (
+                <p>
+                  <a href={`mailto:${professor.data.email}`}>{professor.data.email}</a>
+                </p>
+              )
+            }
+            {professor.data.office_hours && <p>Ώρες γραφείου: {professor.data.office_hours}</p>}
+            {!professor.data.email && !professor.data.office_hours && <p class="muted" data-pagefind-ignore>Δεν έχουν προστεθεί στοιχεία επικοινωνίας.</p>}
+          </section>
+
+          {
+            c.schedule.length > 0 && (
+              <section class="card" aria-labelledby="schedule">
+                <h2 id="schedule">Ώρες μαθήματος</h2>
+                <ul class="plain" role="list">
+                  {c.schedule.map((s) => (
+                    <li>
+                      <span class="strong">{DAY_NAMES[s.day]}</span> {s.start}–{s.end}
+                      {s.room && <span class="muted"> · {s.room}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+
+          {
+            c.assessment.length > 0 && (
+              <section class="card" aria-labelledby="assessment">
+                <h2 id="assessment">Αξιολόγηση</h2>
+                <ul class="plain weights" role="list">
+                  {c.assessment.map((a) => (
+                    <li>
+                      <span>{a.item}</span>
+                      <span class="strong">{a.weight}%</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+
+          {
+            resources.length > 0 && (
+              <section class="card" aria-labelledby="resources">
+                <h2 id="resources">Υλικό & εργαλεία</h2>
+                <ul class="plain" role="list">
+                  {resources.map((r) => (
+                    <li class="resource">
+                      <span class="kind">{RESOURCE_KINDS[r.data.kind]}</span>
+                      <a href={r.data.url}>
+                        {r.data.title}
+                        <span class="visually-hidden"> (εξωτερικός σύνδεσμος)</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+
+          {
+            c.moodle_url && (
+              <a class="moodle" href={c.moodle_url}>
+                Το μάθημα στο <span lang="en">Moodle</span>
+              </a>
+            )
+          }
+        </aside>
+
+        <div class="about">
+          {
+            hasOverview && (
+              <section aria-labelledby="overview">
+                <h2 id="overview">Επισκόπηση</h2>
+                <div class="prose">
+                  <Overview />
+                </div>
+              </section>
+            )
+          }
+
+          {
+            c.learning_goals.length > 0 && (
+              <section aria-labelledby="goals">
+                <h2 id="goals">Τι θα μάθουμε</h2>
+                <ul class="goals">
+                  {c.learning_goals.map((g) => (
+                    <li>{g}</li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+        </div>
+      </div>
+    </Window>
+  </div>
+</Base>
+
+<style>
+  .page {
+    display: grid;
+    gap: var(--s-4);
+    padding-top: var(--s-5);
+  }
+
+  .intro {
+    display: grid;
+    gap: var(--s-3);
+    padding-bottom: var(--s-5);
+    margin-bottom: var(--s-5);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .title-el {
+    font-size: var(--fs-xl);
+    font-weight: 750;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .chips li {
+    padding: 0.15em 0.75em;
+    border: 1px solid var(--divider);
+    border-radius: var(--r-pill);
+    background: var(--panel-sunken);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+  }
+
+  .chips .current {
+    border-color: color-mix(in oklab, var(--st-done), transparent 40%);
+  }
+
+  .summary {
+    max-width: var(--measure);
+  }
+
+  .layout {
+    display: grid;
+    gap: var(--s-6);
+  }
+
+  /* HTML order is: tasks, details sidebar, overview — so phones get the
+   * practical bits first. Wide screens put the sidebar on the right,
+   * spanning both. */
+  @media (min-width: 60rem) {
+    .layout {
+      grid-template-columns: minmax(0, 1fr) 18rem;
+      grid-template-areas:
+        'main side'
+        'about side';
+      align-items: start;
+    }
+    .main { grid-area: main; }
+    .side { grid-area: side; }
+    .about { grid-area: about; }
+  }
+
+  .main,
+  .about {
+    display: grid;
+    gap: var(--s-6);
+    min-width: 0;
+  }
+
+  .main:empty,
+  .about:empty {
+    display: none;
+  }
+
+  .main h2,
+  .about h2 {
+    margin-bottom: var(--s-3);
+  }
+
+  .goals {
+    display: grid;
+    gap: var(--s-2);
+    max-width: var(--measure);
+    padding-left: 1.3em;
+  }
+
+  .weeks {
+    display: grid;
+    gap: var(--s-2);
+  }
+
+  .week {
+    border: 1px solid var(--divider);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--r-md);
+    background: var(--panel-solid);
+  }
+
+  .week summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 var(--s-3);
+    min-height: 48px;
+    padding: var(--s-3) var(--s-4);
+    cursor: pointer;
+    list-style-position: inside;
+  }
+
+  .week[open] summary {
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .week-no {
+    font-weight: 800;
+  }
+
+  .week-title {
+    font-weight: 700;
+  }
+
+  .week-date {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+  }
+
+  .week-body {
+    display: grid;
+    gap: var(--s-2);
+    padding: var(--s-3) var(--s-4) var(--s-4);
+  }
+
+  .open-lesson {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 700;
+  }
+
+  .rows {
+    padding: 0;
+    list-style: none;
+  }
+
+  .stack {
+    display: grid;
+    gap: var(--s-4);
+  }
+
+  .side {
+    display: grid;
+    gap: var(--s-4);
+  }
+
+  .card {
+    display: grid;
+    gap: var(--s-2);
+    padding: var(--s-4);
+    border-radius: var(--r-md);
+    background: var(--panel-sunken);
+    font-size: var(--fs-sm);
+  }
+
+  .card h2 {
+    font-size: var(--fs-xs);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .plain {
+    display: grid;
+    gap: var(--s-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .weights li {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--s-3);
+  }
+
+  .resource {
+    display: grid;
+  }
+
+  .kind {
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+  }
+
+  .strong {
+    font-weight: 700;
+  }
+
+  .muted {
+    color: var(--text-muted);
+  }
+
+  .moodle {
+    font-weight: 700;
+  }
+
+  .empty {
+    padding: var(--s-5);
+    border: 1px dashed var(--divider);
+    border-radius: var(--r-md);
+    background: var(--panel-sunken);
+  }
+
+  .empty h2 {
+    margin-bottom: var(--s-2);
+  }
+</style>

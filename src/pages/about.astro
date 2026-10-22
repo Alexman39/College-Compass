@@ -1,0 +1,69 @@
+---
+/** /about/ — what College Compass is, its relationship to Moodle, and privacy. */
+import Base from '~/layouts/Base.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import { url } from '~/lib/url';
+---
+
+<Base title="Σχετικά" description="Τι είναι το College Compass, πώς σχετίζεται με το Moodle και τι γίνεται με τα δεδομένα σου.">
+  <div class="container page">
+    <Breadcrumbs items={[{ label: 'Αρχική', href: url() }, { label: 'Σχετικά' }]} />
+
+    <article class="panel about prose">
+      <h1>Σχετικά με το College Compass</h1>
+      <p>
+        Το College Compass είναι ένας ανεπίσημος οδηγός για τα μαθήματα του Metropolitan College, φτιαγμένος από
+        φοιτητές για φοιτητές. Συγκεντρώνει μαθήματα, εβδομάδες, ασκήσεις και προθεσμίες σε ένα μέρος, για να βλέπεις
+        με μια ματιά τι έχεις μπροστά σου.
+      </p>
+
+      <h2>Δεν αντικαθιστά το Moodle</h2>
+      <p>
+        Για τις επίσημες ανακοινώσεις, το υλικό των καθηγητών και τις υποβολές ισχύει πάντα το
+        <span lang="en">Moodle</span>. Οι διαφάνειες και τα αρχεία των καθηγητών δεν αναδημοσιεύονται εδώ· όπου
+        χρειάζεται, υπάρχει σύνδεσμος προς το <span lang="en">Moodle</span>.
+      </p>
+
+      <h2 id="privacy">Ιδιωτικότητα</h2>
+      <ul>
+        <li>Δεν υπάρχουν λογαριασμοί ούτε σύνδεση.</li>
+        <li>Δεν χρησιμοποιούνται εργαλεία στατιστικών (analytics), cookies παρακολούθησης ή διαφημίσεις.</li>
+        <li>
+          Οι εργασίες που σημειώνεις ως ολοκληρωμένες και η επιλογή φωτεινού ή σκοτεινού θέματος αποθηκεύονται μόνο στον
+          browser σου. Δεν στέλνονται πουθενά. Μπορείς να διαγράψεις τις σημειώσεις σου από το κάτω μέρος κάθε σελίδας.
+        </li>
+        <li>Οι γραμματοσειρές φιλοξενούνται στο ίδιο το site, χωρίς αιτήματα σε τρίτους.</li>
+        <li>
+          Το site φιλοξενείται στο <span lang="en">GitHub Pages</span>. Όπως κάθε πάροχος φιλοξενίας, το
+          <span lang="en">GitHub</span> μπορεί να καταγράφει τεχνικά στοιχεία πρόσβασης, όπως τη διεύθυνση IP.
+        </li>
+      </ul>
+
+      <h2>Πώς φτιάχτηκε</h2>
+      <p>
+        Με <a href="https://astro.build" lang="en">Astro</a>, απλό CSS και λίγη JavaScript, ως στατικό site. Ο κώδικας
+        είναι ανοιχτός στο <a href="https://github.com/Alexman39/College-Compass"><span lang="en">GitHub</span></a>.
+      </p>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .page {
+    display: grid;
+    gap: var(--s-4);
+    max-width: 52rem;
+    padding-top: var(--s-5);
+  }
+
+  .about {
+    padding: var(--s-5);
+    max-width: none;
+  }
+
+  @media (min-width: 40rem) {
+    .about {
+      padding: var(--s-6) var(--s-7);
+    }
+  }
+</style>

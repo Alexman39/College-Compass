@@ -1,0 +1,207 @@
+/*
+ * Design tokens — "Aero Campus"
+ *
+ * Every colour, radius, shadow and timing used by the site is defined here as
+ * a CSS custom property. Components never hard-code these values, so a change
+ * here (or the dark theme below) restyles the whole site.
+ *
+ * Naming:  --c-*  raw palette     --surface-* / --text-*  semantic roles
+ *          --s-*  spacing         --r-*  radius   --fs-*  font size
+ *
+ * Contrast notes (WCAG AA = 4.5:1 for body text):
+ *   --text on --panel-solid      ≈ 14:1 light / 13:1 dark
+ *   --text-muted on --panel-solid ≈ 6.5:1 light / 7:1 dark
+ * Body text must sit on --panel-solid, never on raw glass.
+ */
+
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+
+  /* ---- Raw palette: sky → aqua → fresh green ------------------------ */
+  --c-sky-900: #0b3d6b;
+  --c-sky-700: #1565a8;
+  --c-sky-500: #2f8fdc;
+  --c-sky-300: #7cc6f2;
+  --c-sky-100: #d9f0fc;
+  --c-aqua-500: #1fb5c4;
+  --c-aqua-300: #7fe0e6;
+  --c-grass-600: #3f9a2c;
+  --c-grass-400: #7ccb4a;
+  --c-cloud: #ffffff;
+  --c-ink: #0c2636;
+
+  /* ---- Page background (the "wallpaper") ----------------------------- */
+  --bg-solid: #cfeaf9; /* fallback + what Lighthouse measures against */
+  --bg-scene:
+    radial-gradient(120% 60% at 75% -10%, rgb(255 255 255 / 0.85), transparent 60%),
+    linear-gradient(180deg, #3d9be0 0%, #8fd0f4 38%, #d6f1fb 58%, #9fe3e2 72%, #63c7b4 88%, #6fc35a 100%);
+
+  /* ---- Text -------------------------------------------------------- */
+  --text: var(--c-ink);
+  --text-muted: #3b5868;
+  --text-on-accent: #ffffff;
+  --link: #0b5aa8;
+  --link-hover: #073f78;
+  --text-danger: #b3261e; /* red that passes AA as text; pill red is for dots only */
+
+  /* Charts: one hue for single-series bars (validated ≥3:1 vs panel). */
+  --chart-bar: #1f7fcf;
+  --chart-bar-hover: #155f9e;
+
+  /* ---- Surfaces ------------------------------------------------------
+   * glass  = decorative chrome (title bars, gadgets' frames, nav)
+   * solid  = anywhere text is read; near-opaque so contrast is reliable */
+  --glass: rgb(255 255 255 / 0.38);
+  --glass-strong: rgb(255 255 255 / 0.6);
+  --glass-border: rgb(255 255 255 / 0.75);
+  --glass-blur: 14px;
+  --panel-solid: rgb(250 253 255 / 0.94);
+  --panel-sunken: #eaf5fb;
+  --divider: rgb(12 38 54 / 0.12);
+
+  /* The Aero signature: 1px bright line along the top inner edge. */
+  --highlight: inset 0 1px 0 rgb(255 255 255 / 0.95);
+  --shadow-sm: 0 1px 2px rgb(8 48 80 / 0.12), 0 2px 6px rgb(8 48 80 / 0.08);
+  --shadow-md: 0 2px 4px rgb(8 48 80 / 0.1), 0 10px 28px rgb(8 48 80 / 0.16);
+  --shadow-lg: 0 4px 8px rgb(8 48 80 / 0.12), 0 24px 56px rgb(8 48 80 / 0.22);
+
+  /* ---- Course accent (overridden per course via style="--accent:…") -- */
+  --accent: var(--c-sky-500);
+
+  /* ---- Status pills (MSN-style presence) -----------------------------
+   * The dot carries the colour; the label stays dark on a pale tint so it
+   * passes AA whatever the colour. */
+  --st-done: #2fae4e;
+  --st-soon: #f2a516;
+  --st-overdue: #e0393e;
+  --st-locked: #8b9aa6;
+  --st-open: #1f9fd6;
+  --pill-bg: rgb(255 255 255 / 0.9);
+  --pill-text: var(--c-ink);
+
+  /* ---- Focus ring ------------------------------------------------------
+   * Two rings (dark + light) so it is visible on any gradient. */
+  --focus-inner: #0b4f94;
+  --focus-outer: #ffffff;
+
+  /* ---- Shape --------------------------------------------------------- */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-pill: 999px;
+
+  /* ---- Spacing (4px based) --------------------------------------------- */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --gutter: 1rem; /* side padding at 360px; grows on wider screens */
+
+  /* ---- Type -------------------------------------------------------------
+   * Manrope is self-hosted (latin + greek subsets) so there is no request to
+   * Google and Greek glyphs never fall back to a mismatched system font.
+   * clamp() makes sizes fluid between 360px and ~1200px viewports. */
+  --font-sans: 'Manrope Variable', 'Segoe UI', 'Noto Sans', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', 'JetBrains Mono', Consolas, monospace;
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.25rem);
+  --fs-xl: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+  --fs-2xl: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+  --fs-3xl: clamp(2.1rem, 1.6rem + 2.4vw, 3.4rem);
+  --lh-tight: 1.2;
+  --lh-body: 1.65;
+  --measure: 68ch; /* comfortable reading line length */
+
+  /* ---- Motion -------------------------------------------------------------
+   * All reset to ~0 under prefers-reduced-motion (see base.css). */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1); /* windows "scale in" */
+  --dur-fast: 140ms;
+  --dur-med: 260ms;
+  --dur-slow: 480ms;
+}
+
+/*
+ * Dark theme — "night aquarium"
+ *
+ * Applied when the OS prefers dark *and* the visitor hasn't picked light, or
+ * when they explicitly picked dark. The [data-theme] selectors also work on
+ * any element, so a page section can be forced light or dark (the
+ * /styleguide page shows both side by side this way). The same block appears twice because CSS
+ * can't express "OS dark unless overridden" in one selector.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg-solid: #061a27;
+    --bg-scene:
+      radial-gradient(90% 50% at 70% 0%, rgb(60 200 230 / 0.18), transparent 60%),
+      radial-gradient(70% 40% at 15% 100%, rgb(40 170 150 / 0.22), transparent 70%),
+      linear-gradient(180deg, #03101b 0%, #062234 40%, #08354a 75%, #0b4a55 100%);
+    --text: #e4f4fa;
+    --text-muted: #a6c4d1;
+    --link: #7fd6ff;
+    --link-hover: #b9e9ff;
+    --text-danger: #ff9b8f;
+    --chart-bar: #3a96d2;
+    --chart-bar-hover: #63b0e2;
+    --glass: rgb(30 90 120 / 0.28);
+    --glass-strong: rgb(30 90 120 / 0.45);
+    --glass-border: rgb(140 225 255 / 0.22);
+    --panel-solid: rgb(8 30 44 / 0.94);
+    --panel-sunken: #0b2738;
+    --divider: rgb(180 230 255 / 0.14);
+    --highlight: inset 0 1px 0 rgb(200 240 255 / 0.14);
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-md: 0 2px 4px rgb(0 0 0 / 0.35), 0 10px 28px rgb(0 10 20 / 0.5);
+    --shadow-lg: 0 4px 8px rgb(0 0 0 / 0.4), 0 24px 56px rgb(0 10 20 / 0.6);
+    --pill-bg: rgb(6 26 39 / 0.85);
+    --pill-text: #e4f4fa;
+    --focus-inner: #8ee6ff;
+    --focus-outer: #03101b;
+  }
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg-solid: #061a27;
+  --bg-scene:
+    radial-gradient(90% 50% at 70% 0%, rgb(60 200 230 / 0.18), transparent 60%),
+    radial-gradient(70% 40% at 15% 100%, rgb(40 170 150 / 0.22), transparent 70%),
+    linear-gradient(180deg, #03101b 0%, #062234 40%, #08354a 75%, #0b4a55 100%);
+  --text: #e4f4fa;
+  --text-muted: #a6c4d1;
+  --link: #7fd6ff;
+  --link-hover: #b9e9ff;
+  --text-danger: #ff9b8f;
+  --chart-bar: #3a96d2;
+  --chart-bar-hover: #63b0e2;
+  --glass: rgb(30 90 120 / 0.28);
+  --glass-strong: rgb(30 90 120 / 0.45);
+  --glass-border: rgb(140 225 255 / 0.22);
+  --panel-solid: rgb(8 30 44 / 0.94);
+  --panel-sunken: #0b2738;
+  --divider: rgb(180 230 255 / 0.14);
+  --highlight: inset 0 1px 0 rgb(200 240 255 / 0.14);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 2px 4px rgb(0 0 0 / 0.35), 0 10px 28px rgb(0 10 20 / 0.5);
+  --shadow-lg: 0 4px 8px rgb(0 0 0 / 0.4), 0 24px 56px rgb(0 10 20 / 0.6);
+  --pill-bg: rgb(6 26 39 / 0.85);
+  --pill-text: #e4f4fa;
+  --focus-inner: #8ee6ff;
+  --focus-outer: #03101b;
+}
+
+@media (min-width: 40rem) {
+  :root { --gutter: 1.5rem; }
+}
+@media (min-width: 64rem) {
+  :root { --gutter: 2rem; }
+}

@@ -1,0 +1,97 @@
+---
+/**
+ * One deadline in a cross-course list (/upcoming, /calendar): course chip,
+ * title, date and the live status pill. data-* attributes let ticks.ts
+ * update the pill and upcoming.ts show/hide the row as time passes.
+ */
+import StatusPill from './StatusPill.astro';
+import type { DeadlineItem } from '~/lib/derive';
+import { ASSIGNMENT_TYPES, formatDeadline } from '~/lib/labels';
+import { statusLabel, timeStatus } from '~/lib/status';
+import { courseUrl } from '~/lib/url';
+
+interface Props {
+  item: DeadlineItem;
+  now: Date;
+  hidden?: boolean;
+}
+const { item, now, hidden = false } = Astro.props;
+const status = timeStatus(item, now);
+const anchor = `task-${item.id.replaceAll('/', '-')}`;
+---
+
+<li
+  class="row"
+  data-upcoming-item
+  data-assignment={item.id}
+  data-due={item.due.toISOString()}
+  data-released={item.released?.toISOString()}
+  hidden={hidden}
+  style={`--accent:${item.course.accent}`}
+>
+  <span class="chip">{item.course.code.replace(/_\d+$/, '')}</span>
+  <div class="text">
+    <a href={`${courseUrl(item.course.slug)}#${anchor}`} class="title">
+      <span class="visually-hidden">{ASSIGNMENT_TYPES[item.type]}: </span>{item.title}
+    </a>
+    <time datetime={item.due.toISOString()}>{formatDeadline(item.due)}</time>
+  </div>
+  <StatusPill status={status} label={statusLabel(status, item, now)} />
+</li>
+
+<script>
+  import '~/scripts/ticks';
+</script>
+
+<style>
+  .row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: var(--s-1) var(--s-3);
+    padding: var(--s-3) 0;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .row[hidden] {
+    display: none;
+  }
+
+  .row > :global(.pill) {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  @media (min-width: 40rem) {
+    .row {
+      grid-template-columns: auto 1fr auto;
+    }
+    .row > :global(.pill) {
+      grid-column: auto;
+    }
+  }
+
+  .chip {
+    align-self: start;
+    padding: 0.15em 0.6em;
+    border-radius: var(--r-sm);
+    background: var(--accent);
+    color: #fff;
+    font-size: var(--fs-xs);
+    font-weight: 800;
+  }
+
+  .text {
+    display: grid;
+    min-width: 0;
+  }
+
+  .title {
+    font-weight: 700;
+  }
+
+  time {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+  }
+</style>

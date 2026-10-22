@@ -1,0 +1,38 @@
+---
+/**
+ * Home — the "desktop": Welcome Center hero, gadgets (next deadline, this
+ * week, workload, announcements) and every course grouped Year → Semester.
+ * Time-based parts are recomputed in the browser and the site rebuilds
+ * daily, so it stays current between content changes.
+ */
+import Base from '~/layouts/Base.astro';
+import Desktop from '~/components/desktop/Desktop.astro';
+import HeroWelcome from '~/components/desktop/HeroWelcome.astro';
+import { getAnnouncements, getClassSlots, getCourses, getDeadlineItems } from '~/lib/content';
+import { weekTimetable, workloadForecast } from '~/lib/derive';
+
+const now = new Date();
+const [courses, deadlines, slots, announcements] = await Promise.all([
+  getCourses(),
+  getDeadlineItems(),
+  getClassSlots(),
+  getAnnouncements(),
+]);
+const forecast = workloadForecast(deadlines, now, 6);
+const currentCourses = courses.filter((c) => c.data.status === 'current').length;
+---
+
+<Base>
+  <div class="container">
+    <Desktop
+      now={now}
+      deadlines={deadlines}
+      week={weekTimetable(slots, now)}
+      forecast={forecast}
+      announcements={announcements}
+      courses={courses}
+    >
+      <HeroWelcome slot="hero" thisWeek={forecast[0]} currentCourses={currentCourses} />
+    </Desktop>
+  </div>
+</Base>

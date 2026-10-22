@@ -1,0 +1,30 @@
+---
+import Base from '~/layouts/Base.astro';
+import GlassPanel from '~/components/GlassPanel.astro';
+import JellyButton from '~/components/JellyButton.astro';
+import { url } from '~/lib/url';
+---
+
+<Base title="Η σελίδα δεν βρέθηκε">
+  <div class="container wrap">
+    <GlassPanel as="section" pad="lg" class="box">
+      <h1>Χάθηκες; Συμβαίνει.</h1>
+      <p>Η σελίδα που ψάχνεις δεν υπάρχει (ή μετακόμισε). Η πυξίδα δείχνει προς την αρχική.</p>
+      <JellyButton href={url()}>Πίσω στην αρχική</JellyButton>
+    </GlassPanel>
+  </div>
+</Base>
+
+<style>
+  .wrap {
+    padding-top: var(--s-7);
+  }
+
+  .box {
+    display: grid;
+    gap: var(--s-4);
+    justify-items: start;
+    max-width: 36rem;
+    margin-inline: auto;
+  }
+</style>

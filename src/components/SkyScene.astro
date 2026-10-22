@@ -1,0 +1,117 @@
+---
+/**
+ * The "wallpaper": sky gradient, soft clouds, a lens flare and drifting
+ * bubbles. Purely decorative, so it's hidden from assistive tech and can't
+ * receive clicks. Pure CSS — no images, no JS.
+ *
+ * In dark mode the clouds fade out and the bubbles glow ("night aquarium").
+ * Under prefers-reduced-motion the bubbles simply stay still.
+ */
+
+// Fixed positions so every build renders the same scene (no Math.random()).
+// x = % from left, size in px, dur/delay in seconds.
+const bubbles = [
+  { x: 6, size: 18, dur: 26, delay: -4 },
+  { x: 14, size: 34, dur: 34, delay: -18 },
+  { x: 27, size: 12, dur: 22, delay: -9 },
+  { x: 39, size: 24, dur: 30, delay: -25 },
+  { x: 52, size: 14, dur: 24, delay: -2 },
+  { x: 63, size: 40, dur: 38, delay: -14 },
+  { x: 74, size: 16, dur: 27, delay: -21 },
+  { x: 83, size: 28, dur: 32, delay: -7 },
+  { x: 92, size: 12, dur: 21, delay: -15 },
+];
+---
+
+<div class="sky" aria-hidden="true">
+  <div class="flare"></div>
+  <div class="cloud c1"></div>
+  <div class="cloud c2"></div>
+  <div class="cloud c3"></div>
+  {
+    bubbles.map((b) => (
+      <span
+        class="bubble"
+        style={`--x:${b.x}%;--size:${b.size}px;--dur:${b.dur}s;--delay:${b.delay}s`}
+      />
+    ))
+  }
+</div>
+
+<style>
+  .sky {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    background: var(--bg-scene);
+  }
+
+  /* Soft sun glow, top right. */
+  .flare {
+    position: absolute;
+    top: -12vmax;
+    right: -8vmax;
+    width: 42vmax;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(255 255 255 / 0.9), rgb(255 255 240 / 0.35) 30%, transparent 65%);
+    transition: opacity var(--dur-slow);
+  }
+
+  /* Clouds: a few overlapping blurred ellipses. */
+  .cloud {
+    position: absolute;
+    height: 7vmax;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.75);
+    filter: blur(18px);
+    transition: opacity var(--dur-slow);
+  }
+  .c1 { top: 9%; left: -6%; width: 38vmax; }
+  .c2 { top: 20%; left: 46%; width: 30vmax; height: 5vmax; opacity: 0.7; }
+  .c3 { top: 4%; left: 30%; width: 18vmax; height: 4vmax; opacity: 0.55; }
+
+  /* Bubbles: glossy spheres that float upwards. */
+  .bubble {
+    position: absolute;
+    bottom: calc(var(--size) * -2);
+    left: var(--x);
+    width: var(--size);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px solid rgb(255 255 255 / 0.55);
+    background:
+      radial-gradient(circle at 32% 28%, rgb(255 255 255 / 0.9) 0 12%, transparent 22%),
+      radial-gradient(circle at 50% 50%, transparent 55%, rgb(255 255 255 / 0.35) 100%);
+    opacity: 0.6;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .bubble {
+      animation: rise var(--dur) linear var(--delay) infinite;
+    }
+  }
+
+  /* Bubbles sitting still (reduced motion) are scattered instead of all
+   * hiding below the fold. */
+  @media (prefers-reduced-motion: reduce) {
+    .bubble { bottom: calc(var(--x) * 0.7); }
+  }
+
+  @keyframes rise {
+    from { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(14px, -55vh, 0); }
+    to { transform: translate3d(-6px, -115vh, 0); }
+  }
+
+  /* ---- Night aquarium ---------------------------------------------------- */
+  :global([data-theme='dark']) .cloud { opacity: 0; }
+  :global([data-theme='dark']) .flare { opacity: 0.12; }
+  :global([data-theme='dark']) .bubble {
+    border-color: rgb(140 230 255 / 0.5);
+    box-shadow: 0 0 12px rgb(80 210 255 / 0.35);
+    opacity: 0.75;
+  }
+</style>

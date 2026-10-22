@@ -1,0 +1,334 @@
+---
+/**
+ * /calendar/ — this week day by day (classes + deadlines), the next weeks'
+ * deadlines and holidays, and how to subscribe to /calendar.ics.
+ * Built daily, so "this week" moves on by itself.
+ */
+import Base from '~/layouts/Base.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import DeadlineRow from '~/components/DeadlineRow.astro';
+import JellyButton from '~/components/JellyButton.astro';
+import { getClassSlots, getDeadlineItems, getSettings } from '~/lib/content';
+import { weekTimetable, workloadForecast } from '~/lib/derive';
+import { DAY_NAMES, formatLocalDate } from '~/lib/labels';
+import { addDays, athensDateKey, formatAthens } from '~/lib/time';
+import { courseUrl, url } from '~/lib/url';
+
+const now = new Date();
+const today = athensDateKey(now);
+const [slots, deadlines, settings] = await Promise.all([getClassSlots(), getDeadlineItems(), getSettings()]);
+
+const week = weekTimetable(slots, now).map((d) => ({
+  ...d,
+  deadlines: deadlines.filter((x) => athensDateKey(x.due) === d.date).sort((a, b) => a.due.getTime() - b.due.getTime()),
+}));
+const later = workloadForecast(deadlines, now, 6).slice(1); // the five weeks after this one
+const horizon = addDays(week[0]!.date, 42);
+const holidays = settings.holidays.filter((h) => (h.end ?? h.start) >= today && h.start < horizon);
+
+const feedPath = url('calendar.ics');
+const feedUrl = new URL(feedPath, Astro.site).href;
+const webcal = feedUrl.replace(/^https?:/, 'webcal:');
+const short = (key: string) => formatLocalDate(key).replace(/\s\d{4}$/, '');
+const feedContents = settings.semesters.length > 0 ? 'οι προθεσμίες, τα μαθήματα και οι αργίες' : 'οι προθεσμίες και οι αργίες';
+const timeOf = (d: Date) => formatAthens(d, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+---
+
+<Base title="Ημερολόγιο" description="Μαθήματα, προθεσμίες και αργίες, και συνδρομή στο ημερολόγιό σου.">
+  <div class="container page">
+    <Breadcrumbs items={[{ label: 'Αρχική', href: url() }, { label: 'Ημερολόγιο' }]} />
+
+    <header class="panel intro">
+      <h1>Ημερολόγιο</h1>
+      <p>
+        Εβδομάδα {short(week[0]!.date)} – {short(week[6]!.date)}. Όλες οι ώρες είναι ώρες Ελλάδας.
+      </p>
+    </header>
+
+    <section class="panel block" aria-labelledby="week-title">
+      <h2 id="week-title">Αυτή την εβδομάδα</h2>
+      <ol class="week" role="list">
+        {
+          week.map((d) => (
+            <li class:list={['day', { today: d.isToday }]} aria-current={d.isToday ? 'date' : undefined}>
+              <p class="day-name">
+                {DAY_NAMES[d.day]} <span class="date">{short(d.date)}</span>
+                {d.isToday && <span class="today-chip">Σήμερα</span>}
+              </p>
+              {d.slots.length === 0 && d.deadlines.length === 0 ? (
+                <p class="nothing">—</p>
+              ) : (
+                <ul class="events" role="list">
+                  {d.slots.map((s) => (
+                    <li class="class" style={`--accent:${s.course.accent}`}>
+                      <span class="time">
+                        {s.start}–{s.end}
+                      </span>
+                      <a href={courseUrl(s.course.slug)} lang="en">
+                        {s.course.title}
+                      </a>
+                      {s.room && <span class="muted">{s.room}</span>}
+                    </li>
+                  ))}
+                  {d.deadlines.map((x) => (
+                    <li class="deadline" style={`--accent:${x.course.accent}`}>
+                      <span class="time">Προθεσμία {timeOf(x.due)}</span>
+                      <a href={courseUrl(x.course.slug)}>{x.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+      {slots.length === 0 && <p class="muted note">Δεν υπάρχουν μαθήματα σε εξέλιξη αυτό το εξάμηνο.</p>}
+    </section>
+
+    <section class="panel block" aria-labelledby="later-title">
+      <h2 id="later-title">Τις επόμενες εβδομάδες</h2>
+      {
+        later.every((w) => w.count === 0) && holidays.length === 0 ? (
+          <p class="muted">Καμία προθεσμία ή αργία τις επόμενες εβδομάδες.</p>
+        ) : (
+          <div class="weeks">
+            {holidays.length > 0 && (
+              <section aria-labelledby="holidays-title">
+                <h3 id="holidays-title">Αργίες</h3>
+                <ul class="holidays" role="list">
+                  {holidays.map((h) => (
+                    <li>
+                      <span class="strong">{h.name}</span>{' '}
+                      <span class="muted">
+                        {short(h.start)}
+                        {h.end && h.end !== h.start && ` – ${short(h.end)}`}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+            {later
+              .filter((w) => w.count > 0)
+              .map((w) => (
+                <section aria-labelledby={`w-${w.weekStart}`}>
+                  <h3 id={`w-${w.weekStart}`}>
+                    Εβδομάδα {short(w.weekStart)} – {short(addDays(w.weekStart, 6))}
+                  </h3>
+                  <ul class="rows" role="list">
+                    {w.items.map((d) => (
+                      <DeadlineRow item={d} now={now} />
+                    ))}
+                  </ul>
+                </section>
+              ))}
+          </div>
+        )
+      }
+    </section>
+
+    <section class="panel block subscribe" aria-labelledby="sub-title">
+      <h2 id="sub-title">Στο ημερολόγιό σου</h2>
+      <p>
+        Πρόσθεσε το College Compass στο ημερολόγιο του κινητού ή του υπολογιστή σου: {feedContents} εμφανίζονται
+        δίπλα στα δικά σου, με υπενθύμιση μία ημέρα πριν από κάθε προθεσμία. Το ημερολόγιο ενημερώνεται αυτόματα.
+      </p>
+      <div class="feed">
+        <label for="feed-url">Διεύθυνση ημερολογίου</label>
+        <input id="feed-url" type="text" readonly value={feedUrl} />
+      </div>
+      <div class="actions">
+        <JellyButton href={webcal}>Συνδρομή στο ημερολόγιο</JellyButton>
+        <a href={feedPath} download="college-compass.ics">Λήψη αρχείου .ics</a>
+      </div>
+      <details>
+        <summary>Οδηγίες για Google, Apple, Outlook</summary>
+        <ul>
+          <li><strong>Google Calendar:</strong> Άλλα ημερολόγια → «+» → Από URL → επικόλλησε τη διεύθυνση.</li>
+          <li><strong>iPhone / Mac:</strong> πάτησε «Συνδρομή στο ημερολόγιο» παραπάνω.</li>
+          <li><strong>Outlook:</strong> Προσθήκη ημερολογίου → Συνδρομή από τον ιστό → επικόλλησε τη διεύθυνση.</li>
+        </ul>
+      </details>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .page {
+    display: grid;
+    gap: var(--s-4);
+    padding-top: var(--s-5);
+  }
+
+  .page > * {
+    min-width: 0;
+  }
+
+  .intro,
+  .block {
+    display: grid;
+    gap: var(--s-3);
+    padding: var(--s-5);
+  }
+
+  .muted {
+    color: var(--text-muted);
+  }
+
+  .strong {
+    font-weight: 700;
+  }
+
+  .week {
+    display: grid;
+    gap: var(--s-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Seven columns once there's room; a list on phones. */
+  @media (min-width: 64rem) {
+    .week {
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+  }
+
+  .day {
+    display: grid;
+    align-content: start;
+    gap: var(--s-2);
+    padding: var(--s-3);
+    border: 1px solid var(--divider);
+    border-radius: var(--r-md);
+  }
+
+  .today {
+    border-color: var(--link);
+    box-shadow: inset 0 0 0 1px var(--link);
+    background: var(--panel-sunken);
+  }
+
+  .day-name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 var(--s-2);
+    font-weight: 800;
+  }
+
+  .date {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+  }
+
+  .today-chip {
+    padding: 0 var(--s-2);
+    border-radius: var(--r-pill);
+    background: var(--link);
+    color: var(--panel-solid);
+    font-size: var(--fs-xs);
+    font-weight: 800;
+  }
+
+  .nothing {
+    color: var(--text-muted);
+  }
+
+  .events {
+    display: grid;
+    gap: var(--s-2);
+    padding: 0;
+    list-style: none;
+    font-size: var(--fs-sm);
+  }
+
+  .events li {
+    display: grid;
+    padding-left: var(--s-2);
+    border-left: 4px solid var(--accent);
+  }
+
+  .deadline {
+    border-left-style: dashed !important;
+  }
+
+  .time {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .note {
+    font-size: var(--fs-sm);
+  }
+
+  .weeks {
+    display: grid;
+    gap: var(--s-4);
+  }
+
+  .weeks h3 {
+    font-size: var(--fs-md);
+  }
+
+  .rows,
+  .holidays {
+    padding: 0;
+    list-style: none;
+  }
+
+  .holidays li {
+    padding: var(--s-1) 0;
+  }
+
+  .feed {
+    display: grid;
+    gap: var(--s-1);
+  }
+
+  .feed label {
+    font-size: var(--fs-sm);
+    font-weight: 700;
+  }
+
+  .feed input {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 var(--s-3);
+    border: 1px solid var(--divider);
+    border-radius: var(--r-md);
+    background: var(--panel-sunken);
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-2) var(--s-5);
+  }
+
+  .actions a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 700;
+  }
+
+  details summary {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--link);
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  details ul {
+    display: grid;
+    gap: var(--s-1);
+    padding-left: 1.2em;
+    font-size: var(--fs-sm);
+  }
+</style>

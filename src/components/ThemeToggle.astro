@@ -1,0 +1,108 @@
+---
+/**
+ * Light ⇄ dark switch.
+ *
+ * How theming works:
+ *  1. An inline script in <head> (see Base.astro) sets <html data-theme> to
+ *     the saved choice, or to the OS preference, *before* first paint — so
+ *     there is no white flash on dark-mode devices.
+ *  2. This button flips data-theme and saves the choice in localStorage.
+ *  3. Until the visitor clicks it, we keep following OS changes live.
+ *
+ * aria-pressed tells screen readers whether dark mode is on.
+ */
+---
+
+<button class="theme-toggle" type="button" aria-pressed="false" data-theme-toggle>
+  <span class="visually-hidden">Σκοτεινό θέμα</span>
+  <svg class="sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <circle cx="12" cy="12" r="4.5"></circle>
+    <path
+      d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"
+    ></path>
+  </svg>
+  <svg class="moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"></path>
+  </svg>
+</button>
+
+<script>
+  const KEY = 'cc-theme';
+  const root = document.documentElement;
+  const media = window.matchMedia('(prefers-color-scheme: dark)');
+
+  // localStorage can throw (private mode, blocked storage) — never let that
+  // break the page; the toggle then just doesn't remember the choice.
+  const save = (value: string) => {
+    try {
+      localStorage.setItem(KEY, value);
+    } catch {}
+  };
+  const saved = () => {
+    try {
+      return localStorage.getItem(KEY);
+    } catch {
+      return null;
+    }
+  };
+
+  const apply = (theme: string) => {
+    root.dataset.theme = theme;
+    document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+      btn.setAttribute('aria-pressed', String(theme === 'dark'));
+    });
+  };
+
+  apply(root.dataset.theme ?? (media.matches ? 'dark' : 'light'));
+
+  document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      save(next);
+      apply(next);
+    });
+  });
+
+  media.addEventListener('change', (e) => {
+    if (!saved()) apply(e.matches ? 'dark' : 'light');
+  });
+</script>
+
+<style>
+  .theme-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    background: var(--glass-strong);
+    color: var(--text);
+    box-shadow: var(--highlight), var(--shadow-sm);
+    transition: transform var(--dur-med) var(--ease-overshoot);
+  }
+
+  .theme-toggle:hover {
+    transform: rotate(-12deg) scale(1.05);
+  }
+
+  svg {
+    grid-area: 1 / 1;
+    width: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: opacity var(--dur-med), transform var(--dur-med) var(--ease-out);
+  }
+
+  .sun circle { fill: currentColor; }
+  .moon { fill: currentColor; stroke: none; }
+
+  /* Show the icon for the theme you'd switch *to*. */
+  .moon { opacity: 1; }
+  .sun { opacity: 0; transform: rotate(-90deg) scale(0.6); }
+  :global([data-theme='dark']) .moon { opacity: 0; transform: rotate(90deg) scale(0.6); }
+  :global([data-theme='dark']) .sun { opacity: 1; transform: none; }
+</style>

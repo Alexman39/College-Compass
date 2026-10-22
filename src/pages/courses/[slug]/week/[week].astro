@@ -1,0 +1,295 @@
+---
+/**
+ * /courses/<slug>/week/<n>/ — a lesson. Deliberately calm: one solid panel,
+ * comfortable line length, a thin accent line instead of window chrome.
+ * The week's exercises follow the text, then previous/next links.
+ */
+import { render } from 'astro:content';
+import Base from '~/layouts/Base.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import AssignmentItem from '~/components/AssignmentItem.astro';
+import { getCourses, getWeeks, type Course, type Lesson, type Assignment } from '~/lib/content';
+import { formatLocalDate } from '~/lib/labels';
+import { courseUrl, lessonUrl, url } from '~/lib/url';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const course of await getCourses()) {
+    const withLessons = (await getWeeks(course.id)).filter((w) => w.lesson);
+    for (const [i, w] of withLessons.entries()) {
+      paths.push({
+        params: { slug: course.data.slug, week: String(w.week) },
+        props: {
+          course,
+          lesson: w.lesson!,
+          tasks: w.assignments,
+          prev: withLessons[i - 1]?.lesson,
+          next: withLessons[i + 1]?.lesson,
+        },
+      });
+    }
+  }
+  return paths;
+}
+
+interface Props {
+  course: Course;
+  lesson: Lesson;
+  tasks: Assignment[];
+  prev?: Lesson;
+  next?: Lesson;
+}
+
+const { course, lesson, tasks, prev, next } = Astro.props;
+const c = course.data;
+const l = lesson.data;
+const { Content } = await render(lesson);
+const heading = `Εβδομάδα ${l.week}: ${l.title}`;
+---
+
+<Base title={`${heading} · ${c.title_en}`} description={`${c.title_en} — ${heading}`} searchable>
+  <div class="container page" style={`--accent:${c.accent}`}>
+    <span hidden data-pagefind-filter="course">{c.code.replace(/_\d+$/, '')}</span>
+    <span hidden data-pagefind-meta="kind">Μάθημα εβδομάδας</span>
+    <Breadcrumbs
+      items={[
+        { label: 'Αρχική', href: url() },
+        { label: c.title_en, href: courseUrl(c.slug), lang: 'en' },
+        { label: `Εβδομάδα ${l.week}` },
+      ]}
+    />
+
+    <article class="panel lesson">
+      <header class="head">
+        <p class="kicker" data-pagefind-ignore><span lang="en">{c.title_en}</span> · {c.code}</p>
+        <h1>{heading}</h1>
+        {
+          (l.date || l.tags.length > 0) && (
+            <div class="meta">
+              {l.date && <time datetime={l.date}>{formatLocalDate(l.date)}</time>}
+              {l.tags.length > 0 && (
+                <ul class="tags" role="list" aria-label="Ετικέτες" data-pagefind-ignore>
+                  {l.tags.map((t) => (
+                    <li lang="en">{t}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )
+        }
+      </header>
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      {
+        tasks.length > 0 && (
+          <section class="tasks" aria-labelledby="tasks">
+            <h2 id="tasks">Ασκήσεις της εβδομάδας</h2>
+            <div class="stack">
+              {tasks.map((a) => (
+                <AssignmentItem assignment={a} />
+              ))}
+            </div>
+          </section>
+        )
+      }
+    </article>
+
+    {
+      (prev || next) && (
+        <nav class="pager" aria-label="Άλλες εβδομάδες">
+          {prev ? (
+            <a class="panel prev" href={lessonUrl(c.slug, prev.data.week)} rel="prev">
+              <span class="dir">← Προηγούμενη</span>
+              <span>
+                Εβδομάδα {prev.data.week}: {prev.data.title}
+              </span>
+            </a>
+          ) : (
+            <span />
+          )}
+          {next && (
+            <a class="panel next" href={lessonUrl(c.slug, next.data.week)} rel="next">
+              <span class="dir">Επόμενη →</span>
+              <span>
+                Εβδομάδα {next.data.week}: {next.data.title}
+              </span>
+            </a>
+          )}
+        </nav>
+      )
+    }
+  </div>
+
+  <dialog class="lightbox" data-lightbox aria-label="Μεγέθυνση εικόνας">
+    <form method="dialog">
+      <button class="close" type="submit">Κλείσιμο</button>
+    </form>
+    <img alt="" />
+  </dialog>
+</Base>
+
+<script>
+  import '~/scripts/lightbox';
+</script>
+
+<style>
+  .page {
+    display: grid;
+    gap: var(--s-4);
+    padding-top: var(--s-5);
+  }
+
+  /* Grid items default to min-width: auto, which lets a wide code block
+   * push the whole column past the screen edge. 0 lets <pre> scroll inside
+   * its own box instead. */
+  .page > *,
+  .lesson > * {
+    min-width: 0;
+  }
+
+  .lesson {
+    display: grid;
+    gap: var(--s-6);
+    max-width: 52rem;
+    width: 100%;
+    margin-inline: auto;
+    padding: var(--s-5) var(--s-4);
+    border-top: 4px solid var(--accent);
+  }
+
+  @media (min-width: 40rem) {
+    .lesson {
+      padding: var(--s-6) var(--s-7);
+    }
+  }
+
+  .head {
+    display: grid;
+    gap: var(--s-2);
+  }
+
+  .kicker {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-2) var(--s-4);
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-1);
+    padding: 0;
+    list-style: none;
+  }
+
+  .tags li {
+    padding: 0 0.6em;
+    border-radius: var(--r-pill);
+    background: var(--panel-sunken);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+  }
+
+  /* Lessons read a little larger than the rest of the site. */
+  .lesson .prose {
+    font-size: 1.0625rem;
+  }
+
+  .tasks h2 {
+    margin-bottom: var(--s-4);
+  }
+
+  .stack {
+    display: grid;
+    gap: var(--s-4);
+  }
+
+  .pager {
+    display: grid;
+    gap: var(--s-3);
+    max-width: 52rem;
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 40rem) {
+    .pager {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .pager a {
+    display: grid;
+    gap: 2px;
+    padding: var(--s-3) var(--s-4);
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .pager .next {
+    text-align: right;
+  }
+
+  .dir {
+    color: var(--link);
+    font-weight: 700;
+    font-size: var(--fs-sm);
+  }
+
+  /* ---- Image zoom ---------------------------------------------------- */
+  .lesson :global(.zoom) {
+    display: block;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: zoom-in;
+  }
+
+  .lightbox {
+    max-width: min(96vw, 1400px);
+    max-height: 92vh;
+    padding: var(--s-3);
+    border: 0;
+    border-radius: var(--r-lg);
+    background: #fff;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .lightbox::backdrop {
+    background: rgb(3 16 27 / 0.75);
+  }
+
+  .lightbox img {
+    max-height: calc(92vh - 5rem);
+    width: auto;
+    margin-inline: auto;
+  }
+
+  .lightbox form {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: var(--s-2);
+  }
+
+  .close {
+    min-height: 40px;
+    padding: 0 var(--s-4);
+    border: 1px solid #c9d6de;
+    border-radius: var(--r-pill);
+    background: #f2f7fa;
+    color: #0c2636;
+    font-weight: 700;
+  }
+</style>

@@ -1,0 +1,85 @@
+---
+/**
+ * /styleguide/ — every component in light and dark, side by side on wide
+ * screens, stacked on phones. Each column forces its theme with
+ * data-theme, which the tokens support on any element.
+ */
+import Base from '~/layouts/Base.astro';
+import Specimens from '~/components/styleguide/Specimens.astro';
+---
+
+<Base title="Οδηγός στυλ" description="Όλα τα στοιχεία του College Compass σε φωτεινό και σκοτεινό θέμα." noindex>
+  <div class="container page">
+    <header class="panel intro">
+      <h1>Οδηγός στυλ</h1>
+      <p>
+        Κάθε στοιχείο του site, όπως ακριβώς αποδίδεται, σε φωτεινό και σκοτεινό θέμα. Οι λόγοι αντίθεσης
+        υπολογίζονται κατά το build από τα πραγματικά χρώματα των μαθημάτων.
+      </p>
+    </header>
+
+    <div class="columns">
+      <section class="theme" data-theme="light" aria-labelledby="light-title">
+        <h2 id="light-title">Φωτεινό θέμα</h2>
+        <Specimens suffix="light" />
+      </section>
+      <section class="theme" data-theme="dark" aria-labelledby="dark-title">
+        <h2 id="dark-title">Σκοτεινό θέμα</h2>
+        <Specimens suffix="dark" />
+      </section>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .page {
+    display: grid;
+    gap: var(--s-5);
+    padding-top: var(--s-5);
+  }
+
+  .intro {
+    display: grid;
+    gap: var(--s-2);
+    padding: var(--s-5);
+  }
+
+  .columns {
+    display: grid;
+    gap: var(--s-5);
+  }
+
+  @media (min-width: 72rem) {
+    .columns {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+
+  /* Each column paints its own theme's background and text colour. */
+  .theme {
+    min-width: 0;
+    padding: var(--s-4);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--r-lg);
+    background: var(--bg-scene);
+    color: var(--text);
+    box-shadow: var(--shadow-md);
+  }
+
+  .theme > h2 {
+    justify-self: start;
+    display: inline-block;
+    margin-bottom: var(--s-4);
+    padding: var(--s-1) var(--s-4);
+    border-radius: var(--r-pill);
+    background: var(--panel-solid);
+    font-size: var(--fs-lg);
+  }
+
+  .theme > :global(.specimens) {
+    padding: var(--s-4);
+    border-radius: var(--r-md);
+    background: var(--panel-solid);
+  }
+</style>

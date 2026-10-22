@@ -1,0 +1,49 @@
+---
+/** /search/ — full-page search. The box pre-fills from ?q= in the URL. */
+import Base from '~/layouts/Base.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import SearchBox from '~/components/SearchBox.astro';
+import { url } from '~/lib/url';
+---
+
+<Base title="Αναζήτηση" description="Αναζήτηση σε μαθήματα, εβδομάδες και ασκήσεις.">
+  <div class="container page">
+    <Breadcrumbs items={[{ label: 'Αρχική', href: url() }, { label: 'Αναζήτηση' }]} />
+    <section class="panel box" aria-labelledby="search-title">
+      <h1 id="search-title">Αναζήτηση</h1>
+      <p class="muted">Σε μαθήματα, εβδομάδες και ασκήσεις. Οι τόνοι και τα κεφαλαία δεν παίζουν ρόλο.</p>
+      <SearchBox id="search-page" />
+      <noscript><p>Η αναζήτηση χρειάζεται JavaScript.</p></noscript>
+    </section>
+  </div>
+</Base>
+
+<script>
+  // Carry ?q= from the URL into the box (e.g. the no-JS form fallback,
+  // or a link someone shared), then let search.ts run it.
+  const q = new URLSearchParams(location.search).get('q');
+  const input = document.querySelector<HTMLInputElement>('#search-page');
+  if (q && input && !input.value) {
+    input.value = q;
+    input.dispatchEvent(new Event('input'));
+  }
+</script>
+
+<style>
+  .page {
+    display: grid;
+    gap: var(--s-4);
+    max-width: 52rem;
+    padding-top: var(--s-5);
+  }
+
+  .box {
+    display: grid;
+    gap: var(--s-3);
+    padding: var(--s-5);
+  }
+
+  .muted {
+    color: var(--text-muted);
+  }
+</style>

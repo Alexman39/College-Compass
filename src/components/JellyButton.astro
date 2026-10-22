@@ -1,0 +1,102 @@
+---
+/**
+ * Glossy "jelly" pill button. Renders an <a> when given `href`, otherwise a
+ * <button>, so it's always the semantically correct element.
+ *
+ *   <JellyButton href={url('upcoming')}>Προθεσμίες</JellyButton>
+ *   <JellyButton type="button" variant="glass">Άκυρο</JellyButton>
+ *
+ * Colour comes from --accent, so inside a course it automatically uses that
+ * course's colour. The fill is a darkened mix of the accent, which keeps
+ * white text above 4.5:1 for any reasonable accent.
+ */
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = {
+  href?: string;
+  variant?: 'accent' | 'glass';
+  size?: 'sm' | 'md';
+} & HTMLAttributes<'a'> &
+  HTMLAttributes<'button'>;
+
+const { href, variant = 'accent', size = 'md', class: className, ...rest } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag href={href} class:list={['jelly', variant, size, className]} {...rest}>
+  <slot />
+</Tag>
+
+<style>
+  .jelly {
+    --fill: color-mix(in oklab, var(--accent), black 32%);
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s-2);
+    min-height: 44px; /* comfortable touch target */
+    padding: 0 var(--s-5);
+    border: 1px solid color-mix(in oklab, var(--fill), black 25%);
+    border-radius: var(--r-pill);
+    background: linear-gradient(
+      color-mix(in oklab, var(--fill), white 12%),
+      var(--fill) 50%,
+      color-mix(in oklab, var(--fill), black 8%)
+    );
+    color: var(--text-on-accent);
+    font-weight: 700;
+    line-height: 1.1;
+    text-decoration: none;
+    text-shadow: 0 1px 1px rgb(0 0 0 / 0.3);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.45),
+      inset 0 -2px 4px rgb(0 0 0 / 0.18),
+      var(--shadow-sm);
+    transition:
+      transform var(--dur-fast) var(--ease-out),
+      filter var(--dur-fast);
+  }
+
+  /* The highlight band across the top half — the "jelly" look. Kept faint
+   * so it doesn't wash out the text contrast. */
+  .jelly::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 1px 6px 50%;
+    border-radius: var(--r-pill) var(--r-pill) 40% 40% / var(--r-pill) var(--r-pill) 100% 100%;
+    background: linear-gradient(rgb(255 255 255 / 0.4), rgb(255 255 255 / 0.04));
+  }
+
+  .jelly:hover {
+    color: var(--text-on-accent);
+    filter: brightness(1.08);
+  }
+
+  .jelly:active {
+    transform: translateY(1px) scale(0.98);
+  }
+
+  .sm {
+    min-height: 36px;
+    padding: 0 var(--s-4);
+    font-size: var(--fs-sm);
+  }
+
+  /* Secondary: frosted, uses normal text colour. */
+  .glass {
+    border-color: var(--glass-border);
+    background: var(--glass-strong);
+    color: var(--text);
+    text-shadow: none;
+    box-shadow: var(--highlight), var(--shadow-sm);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+
+  .glass:hover {
+    color: var(--text);
+  }
+</style>

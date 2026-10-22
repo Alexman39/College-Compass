@@ -1,0 +1,10 @@
+# Site-wide settings. Dates are YYYY-MM-DD.
+academic_year: 2026-2027
+
+# Fill in once the college calendar is published, e.g.
+#   - { semester: 1, start: 2026-10-05, end: 2027-01-29 }
+semesters: []
+
+# e.g. - { name: Χριστούγεννα, start: 2026-12-23, end: 2027-01-06 }
+#      - { name: 28η Οκτωβρίου, start: 2026-10-28 }
+holidays: []

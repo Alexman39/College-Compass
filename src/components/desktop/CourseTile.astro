@@ -1,0 +1,144 @@
+---
+/**
+ * A course "tile" for the desktop and the archive: accent header with icon
+ * and code, title, a short summary and what's inside. The whole tile is one
+ * link (the title), with the click area stretched over the tile.
+ */
+import CourseIcon from '~/components/CourseIcon.astro';
+import type { Course } from '~/lib/content';
+import { courseUrl } from '~/lib/url';
+
+interface Props {
+  course: Course;
+  weeks: number;
+  tasks: number;
+  level?: 3 | 4;
+}
+const { course, weeks, tasks, level = 4 } = Astro.props;
+const c = course.data;
+const Heading = `h${level}` as 'h3' | 'h4';
+const counts = [weeks ? `${weeks} ${weeks === 1 ? 'εβδομάδα' : 'εβδομάδες'}` : '', tasks ? `${tasks} ${tasks === 1 ? 'άσκηση' : 'ασκήσεις'}` : '']
+  .filter(Boolean)
+  .join(' · ');
+const fallback = course.body?.trim() ? 'Επισκόπηση μαθήματος' : 'Χωρίς υλικό ακόμη';
+---
+
+<article class="tile" style={`--accent:${c.accent}`}>
+  <div class="head">
+    <CourseIcon name={c.icon} size={20} />
+    <span class="code">{c.code.replace(/_\d+$/, '')}</span>
+    {c.status === 'current' && <span class="now">Τώρα</span>}
+  </div>
+  <div class="body">
+    <Heading class="title" lang="en">
+      <a href={courseUrl(c.slug)}>{c.title_en}</a>
+    </Heading>
+    {c.title_el !== c.title_en && <p class="title-el">{c.title_el}</p>}
+    {c.summary && <p class="summary">{c.summary}</p>}
+    <p class="counts">{counts || fallback}</p>
+  </div>
+</article>
+
+<style>
+  .tile {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    background: var(--panel-solid);
+    box-shadow: var(--highlight), var(--shadow-sm);
+    transition:
+      transform var(--dur-med) var(--ease-overshoot),
+      box-shadow var(--dur-med);
+  }
+
+  .tile:hover,
+  .tile:focus-within {
+    transform: translateY(-2px);
+    box-shadow: var(--highlight), var(--shadow-md);
+  }
+
+  .head {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-height: 40px;
+    padding: var(--s-2) var(--s-3);
+    color: #fff;
+    background: linear-gradient(var(--accent), color-mix(in oklab, var(--accent), black 18%));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35);
+    font-size: var(--fs-sm);
+    font-weight: 800;
+    text-shadow: 0 1px 1px rgb(0 0 0 / 0.3);
+  }
+
+  .code {
+    flex: 1;
+  }
+
+  /* "Τώρα" chip: white on the accent's darkest shade, so it always passes. */
+  .now {
+    padding: 0 var(--s-2);
+    border-radius: var(--r-pill);
+    background: rgb(0 0 0 / 0.25);
+    font-size: var(--fs-xs);
+  }
+
+  .body {
+    display: grid;
+    align-content: start;
+    gap: var(--s-1);
+    padding: var(--s-3);
+  }
+
+  .title {
+    font-size: var(--fs-md);
+  }
+
+  .title a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  /* Stretch the link over the whole tile (one tab stop, big target). */
+  .title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .title a:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .tile:has(.title a:focus-visible) {
+    outline: 3px solid var(--focus-inner);
+    outline-offset: 2px;
+  }
+
+  .title-el {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+  }
+
+  .summary {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+  }
+
+  .counts {
+    margin-top: var(--s-1);
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+  }
+</style>

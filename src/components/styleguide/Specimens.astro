@@ -1,0 +1,311 @@
+---
+/**
+ * Every component, as it really renders. /styleguide shows this twice: once
+ * forced light, once forced dark. `suffix` keeps element ids unique between
+ * the two copies.
+ */
+import { COURSE_ICONS } from '~/content.config';
+import { getAssignments, getCourses } from '~/lib/content';
+import { AA_NORMAL, contrastRatio } from '~/lib/color';
+import StatusPill from '~/components/StatusPill.astro';
+import JellyButton from '~/components/JellyButton.astro';
+import GlassPanel from '~/components/GlassPanel.astro';
+import Window from '~/components/Window.astro';
+import CourseIcon from '~/components/CourseIcon.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import AssignmentItem from '~/components/AssignmentItem.astro';
+
+interface Props {
+  suffix: string;
+}
+const { suffix } = Astro.props;
+const id = (name: string) => `${name}-${suffix}`;
+
+const courses = await getCourses();
+const sample = (await getAssignments('cn4003'))[0]!;
+const sampleCourse = courses.find((c) => c.id === 'cn4003')!;
+
+const surfaces = [
+  ['--text', 'Κείμενο'],
+  ['--text-muted', 'Δευτερεύον κείμενο'],
+  ['--link', 'Σύνδεσμος'],
+  ['--text-danger', 'Κίνδυνος'],
+  ['--panel-solid', 'Επιφάνεια ανάγνωσης'],
+  ['--panel-sunken', 'Βυθισμένη επιφάνεια'],
+  ['--glass', 'Γυαλί (μόνο διακόσμηση)'],
+  ['--bg-solid', 'Φόντο'],
+] as const;
+---
+
+<div class="specimens">
+  <section aria-labelledby={id('status')}>
+    <h3 id={id('status')}>Κατάσταση εργασιών</h3>
+    <ul class="row" role="list">
+      <li><StatusPill status="done" /></li>
+      <li><StatusPill status="soon" label="Λήγει σε 14 ώρες" /></li>
+      <li><StatusPill status="overdue" /></li>
+      <li><StatusPill status="open" /></li>
+      <li><StatusPill status="locked" label="Ανοίγει σε 3 ημέρες" /></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby={id('accents')}>
+    <h3 id={id('accents')}>Χρώματα μαθημάτων</h3>
+    <p class="note">Λευκό κείμενο πάνω στο χρώμα· ελάχιστο {AA_NORMAL}:1 (WCAG AA).</p>
+    <ul class="row pills-again" role="list" aria-label="Οι πέντε καταστάσεις, για σύγκριση">
+      <li><StatusPill status="done" /></li>
+      <li><StatusPill status="soon" /></li>
+      <li><StatusPill status="overdue" /></li>
+      <li><StatusPill status="open" /></li>
+      <li><StatusPill status="locked" /></li>
+    </ul>
+    <ul class="swatches" role="list">
+      {
+        courses.map((c) => {
+          const ratio = contrastRatio('#ffffff', c.data.accent);
+          return (
+            <li class="swatch">
+              <span class="chip" style={`background:${c.data.accent}`}>
+                <CourseIcon name={c.data.icon} size={18} />
+                {c.data.code.replace(/_\d+$/, '')}
+              </span>
+              <span class="hex">{c.data.accent}</span>
+              <span class:list={['ratio', ratio >= AA_NORMAL ? 'pass' : 'fail']}>
+                {ratio.toFixed(2)}:1 {ratio >= AA_NORMAL ? '✓' : '✗'}
+              </span>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+
+  <section aria-labelledby={id('surfaces')}>
+    <h3 id={id('surfaces')}>Χρώματα & επιφάνειες</h3>
+    <ul class="tokens" role="list">
+      {
+        surfaces.map(([token, name]) => (
+          <li>
+            <span class="token-swatch" style={`background:var(${token})`} />
+            <span>
+              {name}
+              <code>{token}</code>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section aria-labelledby={id('buttons')}>
+    <h3 id={id('buttons')}>Κουμπιά</h3>
+    <div class="row">
+      <JellyButton type="button">Κύριο</JellyButton>
+      <JellyButton type="button" variant="glass">Δευτερεύον</JellyButton>
+      <JellyButton type="button" size="sm">Μικρό</JellyButton>
+      <span style={`--accent:${sampleCourse.data.accent}`}>
+        <JellyButton type="button" size="sm">Με χρώμα μαθήματος</JellyButton>
+      </span>
+    </div>
+  </section>
+
+  <section aria-labelledby={id('surfaces-demo')}>
+    <h3 id={id('surfaces-demo')}>Γυαλί και συμπαγές πάνελ</h3>
+    <div class="pair">
+      <GlassPanel variant="glass" pad="sm"><span class="label-on-glass">Γυαλί — μόνο για πλαίσια</span></GlassPanel>
+      <GlassPanel pad="sm">Συμπαγές — για κείμενο</GlassPanel>
+    </div>
+  </section>
+
+  <section aria-labelledby={id('window')}>
+    <h3 id={id('window')}>Παράθυρο μαθήματος</h3>
+    <Window title="Web Technologies" titleLang="en" icon="globe" accent={sampleCourse.data.accent} meta="CN4003_1" level={3}>
+      <p>Το περιεχόμενο κάθε παραθύρου βρίσκεται πάντα σε συμπαγή επιφάνεια.</p>
+    </Window>
+  </section>
+
+  <section aria-labelledby={id('icons')}>
+    <h3 id={id('icons')}>Εικονίδια μαθημάτων</h3>
+    <ul class="icons" role="list">
+      {
+        COURSE_ICONS.map((name) => (
+          <li>
+            <CourseIcon name={name} />
+            <code>{name}</code>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section aria-labelledby={id('crumbs')}>
+    <h3 id={id('crumbs')}>Διαδρομή</h3>
+    <Breadcrumbs items={[{ label: 'Αρχική', href: '#' }, { label: 'Web Technologies', href: '#', lang: 'en' }, { label: 'Εβδομάδα 1' }]} />
+  </section>
+
+  <section aria-labelledby={id('assignment')} style={`--accent:${sampleCourse.data.accent}`}>
+    <h3 id={id('assignment')}>Εργασία</h3>
+    <AssignmentItem assignment={sample} level={4} idSuffix={suffix} />
+  </section>
+
+  <section aria-labelledby={id('type')}>
+    <h3 id={id('type')}>Τυπογραφία</h3>
+    <div class="prose">
+      <p class="h1-sample">Επικεφαλίδα 1</p>
+      <p class="h2-sample">Επικεφαλίδα 2</p>
+      <p>
+        Κείμενο ανάγνωσης με <a href="#">σύνδεσμο</a>, <strong>έντονα</strong>, <em>πλάγια</em> και
+        <code>inline code</code>. Ελληνικά με τόνους: άέήίόύώ ΐΰ ϊϋ.
+      </p>
+      <ul>
+        <li>Λίστα με κουκκίδες</li>
+        <li>Δεύτερο στοιχείο</li>
+      </ul>
+      <pre><code>public class User &#123;
+    private String name;
+&#125;</code></pre>
+      <blockquote><p>Παράθεμα ή συμβουλή.</p></blockquote>
+    </div>
+  </section>
+</div>
+
+<style>
+  .specimens {
+    display: grid;
+    gap: var(--s-6);
+  }
+
+  h3 {
+    margin-bottom: var(--s-3);
+  }
+
+  .note {
+    margin-bottom: var(--s-3);
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .pills-again {
+    margin-bottom: var(--s-3);
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+    gap: var(--s-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .swatch {
+    display: grid;
+    gap: 2px;
+    padding: var(--s-2);
+    border: 1px solid var(--divider);
+    border-radius: var(--r-md);
+    background: var(--panel-solid);
+    font-size: var(--fs-xs);
+  }
+
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    padding: var(--s-2) var(--s-3);
+    border-radius: var(--r-sm);
+    color: #fff;
+    font-size: var(--fs-sm);
+    font-weight: 750;
+  }
+
+  .hex {
+    font-family: var(--font-mono);
+  }
+
+  .ratio {
+    font-weight: 700;
+  }
+
+  .tokens {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+    gap: var(--s-2);
+    padding: 0;
+    list-style: none;
+    font-size: var(--fs-sm);
+  }
+
+  .tokens li {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+  }
+
+  .tokens code {
+    display: block;
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
+  }
+
+  .token-swatch {
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--divider);
+    border-radius: var(--r-sm);
+  }
+
+  .pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-3);
+    padding: var(--s-4);
+    border-radius: var(--r-md);
+    background: var(--bg-scene);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+  }
+
+  /* Text on glass only as a short label, on its own solid chip. */
+  .label-on-glass {
+    padding: 0 var(--s-2);
+    border-radius: var(--r-sm);
+    background: var(--panel-solid);
+  }
+
+  .icons {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+    gap: var(--s-3);
+    padding: 0;
+    list-style: none;
+  }
+
+  .icons li {
+    display: grid;
+    justify-items: center;
+    gap: var(--s-1);
+    font-size: var(--fs-xs);
+  }
+
+  .h1-sample {
+    font-size: var(--fs-2xl);
+    font-weight: 750;
+    line-height: var(--lh-tight);
+  }
+
+  .h2-sample {
+    font-size: var(--fs-xl);
+    font-weight: 750;
+    line-height: var(--lh-tight);
+  }
+</style>

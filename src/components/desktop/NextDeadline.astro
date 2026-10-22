@@ -1,0 +1,116 @@
+---
+/**
+ * "Next deadline" gadget: the soonest deadline the visitor hasn't ticked
+ * off, with a live countdown.
+ *
+ * Every future deadline is rendered (hidden); src/scripts/upcoming.ts picks
+ * the one to show in the browser, because the right answer depends on the
+ * current time and on the visitor's own ticks. Without JavaScript the
+ * build-time choice stays visible.
+ */
+import Gadget from './Gadget.astro';
+import type { DeadlineItem } from '~/lib/derive';
+import { ASSIGNMENT_TYPES, formatDeadline } from '~/lib/labels';
+import { formatCountdown } from '~/lib/status';
+import { courseUrl, url } from '~/lib/url';
+
+interface Props {
+  items: DeadlineItem[];
+  now: Date;
+}
+const { items, now } = Astro.props;
+const future = items.filter((i) => i.due > now).sort((a, b) => a.due.getTime() - b.due.getTime());
+const anchor = (id: string) => `task-${id.replaceAll('/', '-')}`;
+---
+
+<Gadget title="Επόμενη προθεσμία" id="gadget-next" href={url('upcoming')} linkLabel="Όλες">
+  <div class="next" data-next-deadline>
+    {
+      future.map((d, i) => (
+        <article
+          class="item"
+          data-next-item
+          data-assignment={d.id}
+          data-due={d.due.toISOString()}
+          hidden={i !== 0}
+          style={`--accent:${d.course.accent}`}
+        >
+          <p class="countdown" data-countdown aria-hidden="true">
+            {formatCountdown(d.due.getTime() - now.getTime())}
+          </p>
+          <h3 class="title">
+            <a href={`${courseUrl(d.course.slug)}#${anchor(d.id)}`}>{d.title}</a>
+          </h3>
+          <p class="meta">
+            <span class="course">
+              <span class="dot" aria-hidden="true" />
+              {d.course.code} · {ASSIGNMENT_TYPES[d.type]}
+            </span>
+            <time datetime={d.due.toISOString()}>{formatDeadline(d.due)}</time>
+          </p>
+        </article>
+      ))
+    }
+    <p class="empty" data-next-empty hidden={future.length > 0}>
+      Καμία προθεσμία στον ορίζοντα. Απόλαυσε το διάλειμμα.
+    </p>
+  </div>
+</Gadget>
+
+<script>
+  import '~/scripts/upcoming';
+</script>
+
+<style>
+  .next {
+    display: grid;
+  }
+
+  .item {
+    display: grid;
+    gap: var(--s-1);
+  }
+
+  .item[hidden],
+  .empty[hidden] {
+    display: none;
+  }
+
+  /* The one big number on the desktop. */
+  .countdown {
+    font-size: clamp(2.25rem, 1.6rem + 3vw, 3.25rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .title {
+    font-size: var(--fs-lg);
+  }
+
+  .meta {
+    display: grid;
+    gap: 2px;
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+  }
+
+  .course {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .empty {
+    color: var(--text-muted);
+  }
+</style>
