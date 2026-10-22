@@ -1,8 +1,7 @@
 ---
 /**
- * Sticky top bar: compass orb + name (links home) and the theme toggle.
- * In phase A5 the orb becomes the Start-menu button and the main nav
- * (Προθεσμίες, Ημερολόγιο, Αρχείο…) lands here once those pages exist.
+ * Sticky top bar: compass orb + name (links home), the main navigation and
+ * the theme toggle. In phase A5 the orb becomes the Start-menu button.
  */
 import CompassOrb from './CompassOrb.astro';
 import ThemeToggle from './ThemeToggle.astro';
@@ -10,6 +9,12 @@ import { url, isCurrent } from '~/lib/url';
 
 const home = url();
 const onHome = isCurrent(home, Astro.url.pathname);
+const links = [
+  { href: home, label: 'Αρχική' },
+  { href: url('upcoming'), label: 'Προθεσμίες' },
+  { href: url('calendar'), label: 'Ημερολόγιο' },
+  { href: url('archive'), label: 'Αρχείο' },
+].map((l) => ({ ...l, current: isCurrent(l.href, Astro.url.pathname) }));
 ---
 
 <header class="topbar">
@@ -18,6 +23,19 @@ const onHome = isCurrent(home, Astro.url.pathname);
       <CompassOrb size={40} />
       <span class="name">College Compass</span>
     </a>
+    <nav class="nav" aria-label="Κύρια πλοήγηση">
+      <ul role="list">
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href} aria-current={l.current ? 'page' : undefined}>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
     <div class="tools">
       <ThemeToggle />
     </div>
@@ -41,11 +59,71 @@ const onHome = isCurrent(home, Astro.url.pathname);
     .topbar { background: var(--panel-solid); }
   }
 
+  /* Phones: brand + toggle on one row, navigation underneath.
+   * Wide screens: everything on one row. */
   .bar {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'brand tools'
+      'nav nav';
     align-items: center;
-    justify-content: space-between;
-    gap: var(--s-3);
+    gap: var(--s-1) var(--s-3);
+  }
+
+  .brand { grid-area: brand; justify-self: start; }
+  .tools { grid-area: tools; }
+  .nav { grid-area: nav; }
+
+  @media (min-width: 52rem) {
+    .bar {
+      grid-template-columns: auto 1fr auto;
+      grid-template-areas: 'brand nav tools';
+    }
+  }
+
+  .nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-1);
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 52rem) {
+    .nav ul {
+      justify-content: center;
+      margin-inline: 0;
+    }
+    .nav a {
+      padding: 0 var(--s-3);
+    }
+  }
+
+  .nav ul {
+    margin-inline: calc(var(--s-2) * -1); /* align text with the brand */
+  }
+
+  .nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 var(--s-2);
+    border-radius: var(--r-pill);
+    color: var(--text);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .nav a:hover {
+    background: var(--glass-strong);
+  }
+
+  /* Current page: a solid jelly-style pill. */
+  .nav a[aria-current='page'] {
+    background: var(--panel-solid);
+    box-shadow: var(--highlight), var(--shadow-sm);
   }
 
   .brand {

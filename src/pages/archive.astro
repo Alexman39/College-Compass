@@ -1,0 +1,50 @@
+---
+/** /archive/ — every finished course, grouped by year and semester. */
+import Base from '~/layouts/Base.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import CourseShelf from '~/components/desktop/CourseShelf.astro';
+import { getCourses } from '~/lib/content';
+import { url } from '~/lib/url';
+
+const archived = (await getCourses()).filter((c) => c.data.status === 'archived');
+---
+
+<Base title="Αρχείο" description="Τα μαθήματα των προηγούμενων ετών, ανά έτος και εξάμηνο.">
+  <div class="container page">
+    <Breadcrumbs items={[{ label: 'Αρχική', href: url() }, { label: 'Αρχείο' }]} />
+
+    <header class="panel intro">
+      <h1>Αρχείο</h1>
+      <p>
+        Τα μαθήματα των προηγούμενων ετών ({archived.length}), με όσο υλικό έχει διασωθεί. Χρήσιμο για επανάληψη
+        και για όσους τα παρακολουθούν τώρα.
+      </p>
+    </header>
+
+    {
+      archived.length > 0 ? (
+        <CourseShelf courses={archived} comingSoon={false} />
+      ) : (
+        <p class="panel empty">Δεν υπάρχουν ακόμη αρχειοθετημένα μαθήματα.</p>
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .page {
+    display: grid;
+    gap: var(--s-5);
+    padding-top: var(--s-5);
+  }
+
+  .intro {
+    display: grid;
+    gap: var(--s-2);
+    padding: var(--s-5);
+  }
+
+  .empty {
+    padding: var(--s-5);
+  }
+</style>

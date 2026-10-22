@@ -1,0 +1,113 @@
+---
+/**
+ * /upcoming/ — everything due in the next 14 days, across all courses, plus
+ * anything missed in the last week that hasn't been ticked off. The lists
+ * are filtered in the browser too (src/scripts/upcoming.ts), so they stay
+ * right between builds.
+ */
+import Base from '~/layouts/Base.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import DeadlineRow from '~/components/DeadlineRow.astro';
+import { getDeadlineItems } from '~/lib/content';
+import { upcomingUntil } from '~/lib/derive';
+import { url } from '~/lib/url';
+
+const now = new Date();
+const WEEK = 7 * 24 * 60 * 60 * 1000;
+const all = (await getDeadlineItems()).sort((a, b) => a.due.getTime() - b.due.getTime());
+const until = upcomingUntil(now).getTime();
+
+// Render everything that could become relevant before the next build;
+// mark what is relevant right now.
+const candidates = all.filter((d) => d.due.getTime() >= now.getTime() - WEEK);
+const isNext = (t: number) => t >= now.getTime() && t < until;
+const isOverdue = (t: number) => t < now.getTime() && t >= now.getTime() - WEEK;
+const nextCount = candidates.filter((d) => isNext(d.due.getTime())).length;
+const overdueCount = candidates.filter((d) => isOverdue(d.due.getTime())).length;
+---
+
+<Base title="Προθεσμίες" description="Ό,τι λήγει τις επόμενες 14 ημέρες, από όλα τα μαθήματα.">
+  <div class="container page">
+    <Breadcrumbs items={[{ label: 'Αρχική', href: url() }, { label: 'Προθεσμίες' }]} />
+
+    <header class="panel intro">
+      <h1>Προθεσμίες</h1>
+      <p>Ό,τι λήγει τις επόμενες 14 ημέρες, από όλα τα μαθήματα. Όλες οι ώρες είναι ώρες Ελλάδας.</p>
+      <p class="muted">
+        Θες τις προθεσμίες στο κινητό σου; <a href={url('calendar')}>Πρόσθεσέ τες στο ημερολόγιό σου</a>.
+      </p>
+    </header>
+
+    <section class="panel list-panel" data-upcoming-section hidden={overdueCount === 0} aria-labelledby="overdue-title">
+      <h2 id="overdue-title">Εκπρόθεσμες</h2>
+      <p class="muted">Έληξαν τις τελευταίες 7 ημέρες και δεν τις έχεις σημειώσει ως ολοκληρωμένες.</p>
+      <ul class="rows" role="list" data-upcoming-list="overdue">
+        {candidates.map((d) => <DeadlineRow item={d} now={now} hidden={!isOverdue(d.due.getTime())} />)}
+      </ul>
+    </section>
+
+    <section class="panel list-panel" data-upcoming-section aria-labelledby="next-title">
+      <h2 id="next-title">Τις επόμενες 14 ημέρες</h2>
+      <ul class="rows" role="list" data-upcoming-list="next">
+        {candidates.map((d) => <DeadlineRow item={d} now={now} hidden={!isNext(d.due.getTime())} />)}
+      </ul>
+      <div class="empty" data-upcoming-empty hidden={nextCount > 0}>
+        <p class="empty-title">Καμία προθεσμία τις επόμενες 14 ημέρες.</p>
+        <p class="muted">
+          Τα μαθήματα του τρέχοντος εξαμήνου θα εμφανιστούν εδώ μόλις προστεθούν οι εργασίες τους.
+        </p>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<script>
+  import '~/scripts/upcoming';
+</script>
+
+<style>
+  .page {
+    display: grid;
+    gap: var(--s-4);
+    max-width: 52rem;
+    padding-top: var(--s-5);
+  }
+
+  .page > * {
+    min-width: 0;
+  }
+
+  .intro,
+  .list-panel {
+    display: grid;
+    gap: var(--s-2);
+    padding: var(--s-5);
+  }
+
+  .list-panel[hidden],
+  .empty[hidden] {
+    display: none;
+  }
+
+  .muted {
+    color: var(--text-muted);
+  }
+
+  .rows {
+    padding: 0;
+    list-style: none;
+  }
+
+  .empty {
+    display: grid;
+    gap: var(--s-1);
+    padding: var(--s-4);
+    border: 1px dashed var(--divider);
+    border-radius: var(--r-md);
+    background: var(--panel-sunken);
+  }
+
+  .empty-title {
+    font-weight: 800;
+  }
+</style>
