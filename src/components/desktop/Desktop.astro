@@ -30,7 +30,7 @@ const { now, deadlines, week, forecast, announcements, courses, nextInHero = fal
 
   <div class="gadgets" data-count={nextInHero ? 3 : 4}>
     {!nextInHero && <NextDeadline items={deadlines} now={now} />}
-    <ThisWeek days={week} />
+    <ThisWeek days={week} currentCourses={courses.filter((c) => c.data.status === 'current').length} />
     <WorkloadForecast weeks={forecast} />
     <Announcements entries={announcements} />
   </div>

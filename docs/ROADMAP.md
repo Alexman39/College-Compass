@@ -100,8 +100,8 @@ behind each.
 - [ ] **`/about` text**: new copy including the privacy note, awaiting review.
 - [ ] **Contact email** (`collegecompass@gmail.com`): keep or drop?
 - [ ] **Alt text** for the five UML diagrams: awaiting review.
-- [ ] **2026–27 calendar**: semester start/end dates and holidays (`src/content/settings/site.yaml`).
-- [ ] **Year 3 courses**: codes, titles, professors, schedules.
+- [ ] **2026–27 calendar**: estimated from the official 2024–25 calendar (same structure, dates moved, Easter-dependent dates recalculated). Replace with the official dates once published; regional holidays depend on the campus.
+- [ ] **Year 3 course details**: CN6003, CN6000 and CN6005 are added with lecturers and weekly timetable. Still needed: summaries, assessment, Moodle links, and whether the codes carry a `_1` suffix.
 - [ ] **CN4000 content gaps**, hidden behind `TODO` comments until written:
   - Java revision set 1, question 1
   - week 2 UML screenshots
@@ -109,8 +109,6 @@ behind each.
 
 ## Known issues
 
-- Year 3 courses will need accents beyond the current 12. They can reuse colours
-  from archived years or extend the set; either way the contrast test must pass.
 - After changing the Markdown setup locally, delete `.astro/` before building:
   Astro caches rendered content and can keep serving an old render. (CI always
   builds fresh.)
