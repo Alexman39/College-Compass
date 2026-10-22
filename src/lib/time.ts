@@ -113,6 +113,48 @@ function isRealDate(year: number, month: number, day: number): boolean {
   return d.getUTCFullYear() === year && d.getUTCMonth() === month - 1 && d.getUTCDate() === day;
 }
 
+// ---------------------------------------------------------------------------
+// Calendar days in Athens ("YYYY-MM-DD" keys)
+// ---------------------------------------------------------------------------
+
+const pad = (n: number) => String(n).padStart(2, '0');
+
+/** The Athens calendar day an instant falls on, e.g. "2026-10-22". */
+export function athensDateKey(instant: Date): string {
+  const w = athensWallTime(instant);
+  return `${w.year}-${pad(w.month)}-${pad(w.day)}`;
+}
+
+/** "2026-10-22" + 3 → "2026-10-25" (pure calendar maths, no time zones). */
+export function addDays(key: string, days: number): string {
+  const [y, m, d] = key.split('-').map(Number) as [number, number, number];
+  const t = new Date(Date.UTC(y, m - 1, d + days));
+  return `${t.getUTCFullYear()}-${pad(t.getUTCMonth() + 1)}-${pad(t.getUTCDate())}`;
+}
+
+const WEEKDAY_KEYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] as const;
+export type WeekdayKey = (typeof WEEKDAY_KEYS)[number];
+
+/** "2026-10-22" → "thu". */
+export function weekdayOf(key: string): WeekdayKey {
+  const [y, m, d] = key.split('-').map(Number) as [number, number, number];
+  return WEEKDAY_KEYS[new Date(Date.UTC(y, m - 1, d)).getUTCDay()]!;
+}
+
+/** Monday of the Athens week containing `key` (weeks run Monday–Sunday). */
+export function mondayOf(key: string): string {
+  const [y, m, d] = key.split('-').map(Number) as [number, number, number];
+  const sundayZero = new Date(Date.UTC(y, m - 1, d)).getUTCDay();
+  return addDays(key, -((sundayZero + 6) % 7));
+}
+
+/** Start of an Athens calendar day as an instant (midnight always exists in Athens). */
+export function athensMidnight(key: string): Date {
+  const r = parseAthensDateTime(`${key}T00:00`);
+  if (!r.ok) throw new Error(r.reason);
+  return r.date;
+}
+
 /** Format an instant for display, always in Athens time, Greek locale. */
 export function formatAthens(instant: Date, options: Intl.DateTimeFormatOptions): string {
   return new Intl.DateTimeFormat('el-GR', { timeZone: TZ, ...options }).format(instant);
