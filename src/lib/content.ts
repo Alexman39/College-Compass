@@ -18,6 +18,9 @@
  * everything that needs fixing. The check runs once per build (memoised).
  */
 import { getCollection, type CollectionEntry } from 'astro:content';
+import type { ClassSlot, CourseRef, DeadlineItem } from './derive';
+import type { ClassSeries } from './ics';
+import { addDays } from './time';
 
 export type Course = CollectionEntry<'courses'>;
 export type Professor = CollectionEntry<'professors'>;
@@ -226,6 +229,68 @@ export async function getWeeks(courseId: string): Promise<Week[]> {
       lesson: lessons.find((l) => l.data.week === week),
       assignments: assignments.filter((a) => a.data.week === week),
     }));
+}
+
+// ---------------------------------------------------------------------------
+// Plain shapes for the derived views (src/lib/derive.ts, src/lib/ics.ts)
+// ---------------------------------------------------------------------------
+
+export function courseRef(c: Course): CourseRef {
+  return { id: c.id, code: c.data.code, title: c.data.title_en, slug: c.data.slug, accent: c.data.accent };
+}
+
+/** Every assignment that has a deadline, with its course attached. */
+export async function getDeadlineItems(): Promise<DeadlineItem[]> {
+  const [courses, assignments] = await Promise.all([getCourses(), getAssignments()]);
+  const byId = new Map(courses.map((c) => [c.id, c]));
+  return assignments.flatMap((a) =>
+    a.data.due
+      ? [
+          {
+            id: a.id,
+            title: a.data.title,
+            type: a.data.type,
+            due: a.data.due,
+            released: a.data.released,
+            weight: a.data.weight,
+            course: courseRef(byId.get(a.data.course.id)!),
+          },
+        ]
+      : [],
+  );
+}
+
+/** Weekly class slots of the courses running this semester. */
+export async function getClassSlots(): Promise<ClassSlot[]> {
+  const current = (await getCourses()).filter((c) => c.data.status === 'current');
+  return current.flatMap((c) => c.data.schedule.map((s) => ({ ...s, course: courseRef(c) })));
+}
+
+/**
+ * Class series for the calendar feed: only for current courses whose
+ * semester has dates in settings (without dates we can't say when classes
+ * start and stop, so they're left out rather than guessed).
+ */
+export async function getClassSeries(): Promise<ClassSeries[]> {
+  const [settings, current] = await Promise.all([
+    getSettings(),
+    getCourses().then((cs) => cs.filter((c) => c.data.status === 'current')),
+  ]);
+  const holidayDays = settings.holidays.flatMap((h) => {
+    const days: string[] = [];
+    for (let d = h.start; d <= (h.end ?? h.start); d = addDays(d, 1)) days.push(d);
+    return days;
+  });
+  return current.flatMap((c) => {
+    const sem = settings.semesters.find((s) => s.semester === c.data.semester);
+    if (!sem) return [];
+    return c.data.schedule.map((s) => ({
+      slot: { ...s, course: courseRef(c) },
+      from: sem.start,
+      to: sem.end,
+      except: holidayDays,
+    }));
+  });
 }
 
 export async function getSettings(): Promise<Settings['data']> {
