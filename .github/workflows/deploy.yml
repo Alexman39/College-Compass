@@ -8,6 +8,10 @@
 #                          "site-preview" artifact (Actions run → Artifacts)
 #   push to main         → same, plus deploy to Pages — but only once the repo
 #                          variable PAGES_FROM_ACTIONS is set to "true"
+#   daily at 03:00 UTC   → rebuild + deploy from main, so build-time views
+#                          ("this week", workload forecast, calendar feed)
+#                          move on by themselves. Scheduled runs always use
+#                          main's copy of this file, so this starts at launch.
 #
 # Launch checklist:
 #   1. Settings → Pages → Source: "GitHub Actions"
@@ -22,6 +26,8 @@ on:
     branches: [v2, main]
   pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * *'
 
 permissions:
   contents: read
