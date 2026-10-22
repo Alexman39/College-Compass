@@ -1,0 +1,133 @@
+---
+/**
+ * All course tiles, grouped Year → Semester. Year 3 always appears: while
+ * it has no courses it shows a "coming soon" tile, so the desktop looks
+ * intentional rather than unfinished.
+ */
+import CourseTile from './CourseTile.astro';
+import { getAssignments, getWeeks, type Course } from '~/lib/content';
+import { archiveGroups } from '~/lib/derive';
+
+interface Props {
+  courses: Course[];
+  /** Heading level for the "Έτος n" titles. */
+  level?: 2 | 3;
+  /** Show the "Year 3 coming soon" placeholder when Year 3 is empty. */
+  comingSoon?: boolean;
+}
+const { courses, level = 2, comingSoon = true } = Astro.props;
+
+const groups = archiveGroups(courses.map((c) => ({ ...c, year: c.data.year, semester: c.data.semester })));
+if (comingSoon && !groups.some((g) => g.year === 3)) groups.push({ year: 3, semesters: [] });
+
+const stats = new Map(
+  await Promise.all(
+    courses.map(async (c) => [c.id, { weeks: (await getWeeks(c.id)).length, tasks: (await getAssignments(c.id)).length }] as const),
+  ),
+);
+const YearHeading = `h${level}` as 'h2' | 'h3';
+const SemHeading = `h${level + 1}` as 'h3' | 'h4';
+const tileLevel = (level + 2) as 3 | 4;
+---
+
+<div class="shelf">
+  {
+    groups.map((g) => (
+      <section class="year" aria-labelledby={`year-${g.year}`}>
+        <YearHeading id={`year-${g.year}`} class="year-title">
+          Έτος {g.year}
+          {comingSoon && g.year < 3 && <span class="muted"> · αρχείο</span>}
+        </YearHeading>
+        {g.semesters.length === 0 ? (
+          <div class="soon">
+            <p class="soon-title">Τα μαθήματα του τελευταίου έτους έρχονται σύντομα</p>
+            <p>Θα εμφανιστούν εδώ μόλις προστεθούν, μαζί με προθεσμίες και ωρολόγιο πρόγραμμα.</p>
+          </div>
+        ) : (
+          g.semesters.map((s) => (
+            <section class="semester" aria-labelledby={`sem-${g.year}-${s.semester}`}>
+              <SemHeading id={`sem-${g.year}-${s.semester}`} class="sem-title">
+                Εξάμηνο {s.semester}
+              </SemHeading>
+              <ul class="tiles" role="list">
+                {s.courses.map((c) => (
+                  <li>
+                    <CourseTile course={c} {...stats.get(c.id)!} level={tileLevel} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))
+        )}
+      </section>
+    ))
+  }
+</div>
+
+<style>
+  .shelf {
+    display: grid;
+    gap: var(--s-6);
+  }
+
+  .year {
+    display: grid;
+    gap: var(--s-4);
+  }
+
+  /* Titles sit on the sky, so they wear a solid chip. */
+  .year-title {
+    justify-self: start;
+    padding: var(--s-1) var(--s-4);
+    border-radius: var(--r-pill);
+    background: var(--panel-solid);
+    box-shadow: var(--highlight), var(--shadow-sm);
+    font-size: var(--fs-lg);
+  }
+
+  .muted {
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .semester {
+    display: grid;
+    gap: var(--s-2);
+  }
+
+  .sem-title {
+    justify-self: start;
+    padding: 0 var(--s-3);
+    border-radius: var(--r-pill);
+    background: var(--panel-solid);
+    font-size: var(--fs-sm);
+    line-height: 1.9;
+  }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    gap: var(--s-3);
+    padding: 0;
+    list-style: none;
+  }
+
+  .tiles > li {
+    display: grid;
+  }
+
+  .soon {
+    display: grid;
+    gap: var(--s-1);
+    padding: var(--s-5);
+    border: 2px dashed var(--glass-border);
+    border-radius: var(--r-lg);
+    background: var(--panel-solid);
+    color: var(--text-muted);
+  }
+
+  .soon-title {
+    color: var(--text);
+    font-weight: 800;
+  }
+</style>

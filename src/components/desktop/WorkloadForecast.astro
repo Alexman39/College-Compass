@@ -1,0 +1,261 @@
+---
+/**
+ * "Workload forecast" gadget: number of deadlines per week, this week and
+ * the next five. One series, so one hue and no legend; the title says what
+ * is plotted. Each column shows its details on hover *and* keyboard focus,
+ * and the same numbers are always available in the table below the chart.
+ * Plain HTML/CSS columns (no chart library, no JavaScript).
+ */
+import Gadget from './Gadget.astro';
+import type { ForecastWeek } from '~/lib/derive';
+import { addDays } from '~/lib/time';
+import { url } from '~/lib/url';
+
+interface Props {
+  weeks: ForecastWeek[];
+}
+const { weeks } = Astro.props;
+const max = Math.max(0, ...weeks.map((w) => w.count));
+const peak = weeks.findIndex((w) => w.count === max);
+
+const short = (key: string) => {
+  const [, m, d] = key.split('-').map(Number);
+  return `${d}/${m}`;
+};
+const range = (w: ForecastWeek) => `${short(w.weekStart)}–${short(addDays(w.weekStart, 6))}`;
+const label = (w: ForecastWeek, i: number) => (i === 0 ? 'Αυτή' : short(w.weekStart));
+const plural = (n: number) => (n === 1 ? '1 προθεσμία' : `${n} προθεσμίες`);
+---
+
+<Gadget title="Φόρτος εργασίας" id="gadget-forecast" href={url('upcoming')} linkLabel="Προθεσμίες">
+  <p class="subtitle">Προθεσμίες ανά εβδομάδα</p>
+  {
+    max === 0 ? (
+      <p class="empty">Καμία προθεσμία τις επόμενες {weeks.length} εβδομάδες.</p>
+    ) : (
+      <>
+        <div class="chart">
+          <div class="axis" aria-hidden="true">
+            <span class="tick top">{max}</span>
+            <span class="tick zero">0</span>
+          </div>
+          <ol class="plot" role="list">
+            {weeks.map((w, i) => (
+              <li class="col" tabindex="0" style={`--h:${(w.count / max) * 100}%`}>
+                <span class="visually-hidden">
+                  Εβδομάδα {range(w)}: {plural(w.count)}
+                </span>
+                <span class="slot" aria-hidden="true">
+                  {i === peak && <span class="value">{w.count}</span>}
+                  {w.count > 0 && <span class="bar" />}
+                </span>
+                <span class="week" aria-hidden="true">
+                  {label(w, i)}
+                </span>
+                <span class="tip" aria-hidden="true">
+                  <strong>{plural(w.count)}</strong>
+                  <span>Εβδομάδα {range(w)}</span>
+                  {w.weight > 0 && <span>Βαρύτητα {w.weight}%</span>}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <details class="table">
+          <summary>Πίνακας</summary>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Εβδομάδα</th>
+                <th scope="col">Προθεσμίες</th>
+                <th scope="col">Βαρύτητα</th>
+              </tr>
+            </thead>
+            <tbody>
+              {weeks.map((w) => (
+                <tr>
+                  <th scope="row">{range(w)}</th>
+                  <td>{w.count}</td>
+                  <td>{w.weight > 0 ? `${w.weight}%` : '—'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </details>
+      </>
+    )
+  }
+</Gadget>
+
+<style>
+  .subtitle {
+    margin-bottom: var(--s-3);
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+  }
+
+  .empty {
+    color: var(--text-muted);
+  }
+
+  .chart {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--s-2);
+  }
+
+  /* Recessive axis: just the top value and zero, aligned to the plot. */
+  .axis {
+    position: relative;
+    width: 1.5ch;
+    height: 120px;
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
+    font-variant-numeric: tabular-nums;
+  }
+  .tick {
+    position: absolute;
+    right: 0;
+    line-height: 1;
+  }
+  .top { top: 18px; transform: translateY(-50%); }
+  .zero { top: 120px; transform: translateY(-50%); }
+
+  .plot {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    grid-auto-flow: column;
+    padding: 0;
+    list-style: none;
+    /* Hairline gridlines at max (top) and zero (baseline). */
+    background:
+      linear-gradient(var(--divider), var(--divider)) 0 18px / 100% 1px no-repeat,
+      linear-gradient(var(--divider), var(--divider)) 0 120px / 100% 1px no-repeat;
+  }
+
+  .col {
+    position: relative;
+    display: grid;
+    grid-template-rows: 120px auto;
+    justify-items: center;
+    border-radius: var(--r-sm);
+    outline-offset: 0;
+    cursor: default;
+  }
+
+  /* Bars grow up from the baseline. The slot is exactly the 0→max range;
+   * the value label is positioned above the bar, outside that range, so it
+   * can never take height away from the bar (which would misstate data). */
+  .slot {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    height: 102px;
+    margin-top: 18px;
+  }
+
+  .bar {
+    flex: none;
+    width: min(24px, 60%);
+    height: var(--h);
+    min-height: 4px;
+    border-radius: 4px 4px 0 0; /* rounded data end, square at the baseline */
+    background: var(--chart-bar);
+    transition: background var(--dur-fast);
+  }
+
+  .value {
+    position: absolute;
+    bottom: calc(var(--h) + 2px);
+    font-size: var(--fs-xs);
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .week {
+    padding-top: var(--s-1);
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .col:first-child .week {
+    color: var(--text);
+    font-weight: 800;
+  }
+
+  /* Tooltip: value first (strong), context after. Hover and focus alike. */
+  .tip {
+    position: absolute;
+    bottom: calc(100% - 10px);
+    left: 50%;
+    z-index: 2;
+    display: none;
+    gap: 2px;
+    min-width: 9rem;
+    padding: var(--s-2) var(--s-3);
+    border: 1px solid var(--divider);
+    border-radius: var(--r-md);
+    background: var(--panel-solid);
+    box-shadow: var(--shadow-md);
+    font-size: var(--fs-xs);
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .col:first-child .tip { left: 0; transform: none; }
+  .col:last-child .tip { right: 0; left: auto; transform: none; }
+
+  .tip strong {
+    font-size: var(--fs-sm);
+  }
+
+  .col:hover .tip,
+  .col:focus-visible .tip {
+    display: grid;
+  }
+
+  .col:hover .bar,
+  .col:focus-visible .bar {
+    background: var(--chart-bar-hover);
+  }
+
+  .table {
+    margin-top: var(--s-3);
+    font-size: var(--fs-sm);
+  }
+
+  .table summary {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    color: var(--link);
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+
+  th,
+  td {
+    padding: var(--s-1) var(--s-2);
+    border-bottom: 1px solid var(--divider);
+    text-align: left;
+  }
+
+  thead th {
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
+  }
+
+  tbody th {
+    font-weight: 600;
+  }
+</style>

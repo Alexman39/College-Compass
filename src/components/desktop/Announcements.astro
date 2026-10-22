@@ -1,0 +1,87 @@
+---
+/** "Announcements" gadget: pinned first, then newest. Shows the latest few. */
+import { render } from 'astro:content';
+import Gadget from './Gadget.astro';
+import type { Announcement } from '~/lib/content';
+import { formatLocalDate } from '~/lib/labels';
+
+interface Props {
+  entries: Announcement[];
+  limit?: number;
+}
+const { entries, limit = 3 } = Astro.props;
+const shown = await Promise.all(
+  entries.slice(0, limit).map(async (a) => ({ a, Content: (await render(a)).Content })),
+);
+---
+
+<Gadget title="Ανακοινώσεις" id="gadget-news">
+  {
+    shown.length === 0 ? (
+      <p class="empty">Δεν υπάρχουν ανακοινώσεις.</p>
+    ) : (
+      <ul class="list" role="list">
+        {shown.map(({ a, Content }) => (
+          <li>
+            <article class="news">
+              <header>
+                {a.data.pinned && <span class="pin">Καρφιτσωμένη</span>}
+                <h3>{a.data.title}</h3>
+                <time datetime={a.data.date}>{formatLocalDate(a.data.date)}</time>
+              </header>
+              <div class="prose body">
+                <Content />
+              </div>
+            </article>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Gadget>
+
+<style>
+  .empty {
+    color: var(--text-muted);
+  }
+
+  .list {
+    display: grid;
+    gap: var(--s-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  .list li + li {
+    padding-top: var(--s-4);
+    border-top: 1px solid var(--divider);
+  }
+
+  header {
+    display: grid;
+    gap: 2px;
+    margin-bottom: var(--s-2);
+  }
+
+  .pin {
+    justify-self: start;
+    padding: 0 var(--s-2);
+    border-radius: var(--r-pill);
+    background: var(--panel-sunken);
+    font-size: var(--fs-xs);
+    font-weight: 800;
+  }
+
+  h3 {
+    font-size: var(--fs-md);
+  }
+
+  time {
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
+  }
+
+  .body {
+    font-size: var(--fs-sm);
+  }
+</style>

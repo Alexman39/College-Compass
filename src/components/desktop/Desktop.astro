@@ -1,0 +1,79 @@
+---
+/**
+ * The home "desktop": a hero (slot), the gadgets, then every course tile
+ * grouped Year → Semester. Data comes in as props so the same layout can be
+ * shown with real content (home page) or sample data (design previews).
+ */
+import NextDeadline from './NextDeadline.astro';
+import ThisWeek from './ThisWeek.astro';
+import WorkloadForecast from './WorkloadForecast.astro';
+import Announcements from './Announcements.astro';
+import CourseShelf from './CourseShelf.astro';
+import type { Announcement, Course } from '~/lib/content';
+import type { DeadlineItem, ForecastWeek, TimetableDay } from '~/lib/derive';
+
+interface Props {
+  now: Date;
+  deadlines: DeadlineItem[];
+  week: TimetableDay[];
+  forecast: ForecastWeek[];
+  announcements: Announcement[];
+  courses: Course[];
+  /** The hero already shows the next deadline; don't repeat it below. */
+  nextInHero?: boolean;
+}
+const { now, deadlines, week, forecast, announcements, courses, nextInHero = false } = Astro.props;
+---
+
+<div class="desktop">
+  <slot name="hero" />
+
+  <div class="gadgets" data-count={nextInHero ? 3 : 4}>
+    {!nextInHero && <NextDeadline items={deadlines} now={now} />}
+    <ThisWeek days={week} />
+    <WorkloadForecast weeks={forecast} />
+    <Announcements entries={announcements} />
+  </div>
+
+  <CourseShelf courses={courses} />
+</div>
+
+<style>
+  .desktop {
+    display: grid;
+    gap: var(--s-6);
+  }
+
+  .desktop > * {
+    min-width: 0;
+  }
+
+  /* One column on phones; 2×2 for four gadgets, one row for three. */
+  .gadgets {
+    display: grid;
+    align-items: start;
+    gap: var(--s-4);
+  }
+
+  @media (min-width: 46rem) {
+    .gadgets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 64rem) {
+    .gadgets[data-count='3'] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .gadgets > :global(*) {
+      animation: gadget-in var(--dur-slow) var(--ease-overshoot) both;
+    }
+    .gadgets > :global(:nth-child(2)) { animation-delay: 60ms; }
+    .gadgets > :global(:nth-child(3)) { animation-delay: 120ms; }
+    .gadgets > :global(:nth-child(4)) { animation-delay: 180ms; }
+  }
+
+  @keyframes gadget-in {
+    from { opacity: 0; transform: scale(0.96) translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
+</style>

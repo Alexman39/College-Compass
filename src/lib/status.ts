@@ -52,3 +52,20 @@ function relativeFrom(target: Date, now: Date): string {
   if (Math.abs(hours) < 48) return relative.format(hours, 'hour');
   return relative.format(Math.round(hours / 24), 'day');
 }
+
+const unit = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+
+/**
+ * Countdown text for the next-deadline gadget, two units at most:
+ * "3 ημέρες 4 ώρες", "5 ώρες 12 λεπτά", "12 λεπτά", "λιγότερο από 1 λεπτό".
+ */
+export function formatCountdown(ms: number): string {
+  if (ms < 60_000) return 'λιγότερο από 1 λεπτό';
+  const minutes = Math.floor(ms / 60_000);
+  const days = Math.floor(minutes / 1440);
+  const hours = Math.floor((minutes % 1440) / 60);
+  const mins = minutes % 60;
+  if (days > 0) return hours ? `${unit(days, 'ημέρα', 'ημέρες')} ${unit(hours, 'ώρα', 'ώρες')}` : unit(days, 'ημέρα', 'ημέρες');
+  if (hours > 0) return mins ? `${unit(hours, 'ώρα', 'ώρες')} ${unit(mins, 'λεπτό', 'λεπτά')}` : unit(hours, 'ώρα', 'ώρες');
+  return unit(mins, 'λεπτό', 'λεπτά');
+}

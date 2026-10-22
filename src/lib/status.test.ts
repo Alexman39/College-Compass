@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { statusLabel, timeStatus } from './status';
+import { formatCountdown, statusLabel, timeStatus } from './status';
 
 const d = (iso: string) => new Date(iso);
 const due = d('2026-11-20T21:59:00Z'); // 23:59 Athens
@@ -44,5 +44,22 @@ describe('statusLabel', () => {
 
   it('uses the default label otherwise', () => {
     expect(statusLabel('overdue', { due }, d('2026-12-01T00:00:00Z'))).toBeUndefined();
+  });
+});
+
+describe('formatCountdown', () => {
+  const m = 60_000;
+  const h = 60 * m;
+  const day = 24 * h;
+  it.each([
+    [30_000, 'λιγότερο από 1 λεπτό'],
+    [1 * m, '1 λεπτό'],
+    [12 * m, '12 λεπτά'],
+    [1 * h, '1 ώρα'],
+    [5 * h + 12 * m, '5 ώρες 12 λεπτά'],
+    [1 * day, '1 ημέρα'],
+    [3 * day + 1 * h + 59 * m, '3 ημέρες 1 ώρα'],
+  ])('%i ms → %s', (ms, text) => {
+    expect(formatCountdown(ms)).toBe(text);
   });
 });
