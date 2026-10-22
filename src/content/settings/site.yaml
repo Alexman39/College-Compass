@@ -1,10 +1,28 @@
 # Site-wide settings. Dates are YYYY-MM-DD.
 academic_year: 2026-2027
 
-# Fill in once the college calendar is published, e.g.
-#   - { semester: 1, start: 2026-10-05, end: 2027-01-29 }
-semesters: []
+# ESTIMATED from the official 2024–25 calendar (UEL UG column): same
+# structure, dates moved to 2026–27, Easter-dependent dates recalculated
+# (Orthodox Easter 2027: 2 May). Replace with the official dates when the
+# college publishes the 2026–27 calendar.
+#
+# Semesters cover the teaching weeks only (week 1 to week 12); weekly classes
+# appear in the calendar feed between these dates, minus the holidays below.
+#   Autumn: weeks 1–10 from 12 Oct, Christmas break, weeks 11–12,
+#           revision 18 Jan, exams 25 Jan, inter-semester break 1–12 Feb.
+#   Spring: weeks 1–10 from 15 Feb, Easter break, weeks 11–12,
+#           revision 24 May, exams 31 May & 7 Jun, resits 16–27 Aug.
+semesters:
+  - { semester: 1, start: 2026-10-12, end: 2027-01-15 }
+  - { semester: 2, start: 2027-02-15, end: 2027-05-21 }
 
-# e.g. - { name: Χριστούγεννα, start: 2026-12-23, end: 2027-01-06 }
-#      - { name: 28η Οκτωβρίου, start: 2026-10-28 }
-holidays: []
+# National holidays and breaks (no classes). Regional holidays depend on the
+# campus and are not included.
+holidays:
+  - { name: 28η Οκτωβρίου, start: 2026-10-28 }
+  - { name: Διακοπές Χριστουγέννων, start: 2026-12-21, end: 2027-01-01 }
+  - { name: Θεοφάνεια, start: 2027-01-06 }
+  - { name: Καθαρά Δευτέρα, start: 2027-03-15 }
+  - { name: 25η Μαρτίου, start: 2027-03-25 }
+  - { name: Διακοπές Πάσχα, start: 2027-04-26, end: 2027-05-07 }
+  - { name: Αγίου Πνεύματος, start: 2027-06-21 }
