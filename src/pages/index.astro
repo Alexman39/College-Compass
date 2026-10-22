@@ -1,142 +1,38 @@
 ---
 /**
- * Placeholder home page. The real "Desktop" (gadgets + course tiles)
- * replaces this in phase A4; until then it lists every course so all pages
- * are reachable.
+ * Home — the "desktop": Welcome Center hero, gadgets (next deadline, this
+ * week, workload, announcements) and every course grouped Year → Semester.
+ * Time-based parts are recomputed in the browser and the site rebuilds
+ * daily, so it stays current between content changes.
  */
 import Base from '~/layouts/Base.astro';
-import GlassPanel from '~/components/GlassPanel.astro';
-import JellyButton from '~/components/JellyButton.astro';
-import CourseIcon from '~/components/CourseIcon.astro';
-import { getCourses } from '~/lib/content';
-import { yearSemester } from '~/lib/labels';
-import { courseUrl, url } from '~/lib/url';
+import Desktop from '~/components/desktop/Desktop.astro';
+import HeroWelcome from '~/components/desktop/HeroWelcome.astro';
+import { getAnnouncements, getClassSlots, getCourses, getDeadlineItems } from '~/lib/content';
+import { weekTimetable, workloadForecast } from '~/lib/derive';
 
-const courses = await getCourses();
-const groups = Map.groupBy(courses, (c) => yearSemester(c.data.year, c.data.semester));
+const now = new Date();
+const [courses, deadlines, slots, announcements] = await Promise.all([
+  getCourses(),
+  getDeadlineItems(),
+  getClassSlots(),
+  getAnnouncements(),
+]);
+const forecast = workloadForecast(deadlines, now, 6);
+const currentCourses = courses.filter((c) => c.data.status === 'current').length;
 ---
 
 <Base>
-  <div class="container stack">
-    <GlassPanel as="section" variant="glass" pad="lg" class="hero" aria-labelledby="hero-title">
-      <div class="panel hero-copy">
-        <h1 id="hero-title">Η πυξίδα σου για το πτυχίο</h1>
-        <p class="lead">
-          Όλα τα μαθήματα, οι εβδομάδες, οι εργασίες και οι προθεσμίες σου — σε ένα μέρος, πιο καθαρά από το
-          <span lang="en">Moodle</span>.
-        </p>
-        <p class="note">Η αρχική σελίδα είναι υπό κατασκευή. Μέχρι τότε, όλα τα μαθήματα παρακάτω.</p>
-        <div class="actions">
-          <JellyButton href="#courses">Τα μαθήματα</JellyButton>
-          <JellyButton href={url('styleguide')} variant="glass">Οδηγός στυλ</JellyButton>
-        </div>
-      </div>
-    </GlassPanel>
-
-    <section id="courses" class="panel courses" aria-labelledby="courses-title">
-      <h2 id="courses-title">Μαθήματα</h2>
-      {
-        [...groups].map(([label, list]) => (
-          <section class="group">
-            <h3>{label}</h3>
-            <ul role="list">
-              {list.map((c) => (
-                <li style={`--accent:${c.data.accent}`}>
-                  <span class="icon">
-                    <CourseIcon name={c.data.icon} size={18} />
-                  </span>
-                  <a href={courseUrl(c.data.slug)} lang="en">
-                    {c.data.title_en}
-                  </a>
-                  <span class="code">{c.data.code}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))
-      }
-    </section>
+  <div class="container">
+    <Desktop
+      now={now}
+      deadlines={deadlines}
+      week={weekTimetable(slots, now)}
+      forecast={forecast}
+      announcements={announcements}
+      courses={courses}
+    >
+      <HeroWelcome slot="hero" thisWeek={forecast[0]} currentCourses={currentCourses} />
+    </Desktop>
   </div>
 </Base>
-
-<style>
-  .stack {
-    display: grid;
-    gap: var(--s-5);
-    padding-top: var(--s-5);
-  }
-
-  .hero-copy {
-    display: grid;
-    gap: var(--s-4);
-    max-width: 44rem;
-    padding: var(--s-5);
-  }
-
-  h1 {
-    font-size: var(--fs-3xl);
-  }
-
-  .lead {
-    font-size: var(--fs-lg);
-  }
-
-  .note {
-    color: var(--text-muted);
-    font-size: var(--fs-sm);
-  }
-
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-3);
-  }
-
-  .courses {
-    display: grid;
-    gap: var(--s-5);
-    padding: var(--s-5);
-  }
-
-  .group h3 {
-    margin-bottom: var(--s-2);
-    color: var(--text-muted);
-    font-size: var(--fs-sm);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
-  .group ul {
-    display: grid;
-    gap: var(--s-1);
-    padding: 0;
-    list-style: none;
-  }
-
-  .group li {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--s-1) var(--s-3);
-    min-height: 44px;
-  }
-
-  .icon {
-    display: inline-grid;
-    place-items: center;
-    width: 32px;
-    height: 32px;
-    border-radius: var(--r-sm);
-    background: var(--accent);
-    color: #fff;
-  }
-
-  .group a {
-    font-weight: 700;
-  }
-
-  .code {
-    color: var(--text-muted);
-    font-size: var(--fs-xs);
-  }
-</style>

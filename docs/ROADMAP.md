@@ -14,8 +14,8 @@ The original brief is in [`PROJECT_BRIEF.md`](../PROJECT_BRIEF.md).
 | **A1** Foundations | Astro + TypeScript, design tokens, light/dark themes, base layout, CI | ✅ Done |
 | **A2** Content model | Zod schemas, build-time validation, all demo content migrated | ✅ Done |
 | **A3** Course pages | Course windows, lesson pages, live status pills, done ticks, `/styleguide` | ✅ Done |
-| **A4** Desktop & time views | Home "desktop", `/upcoming`, `/calendar` + `.ics`, `/archive` | 🚧 In progress (home page waits on hero choice) |
-| **A5** Search & polish | Pagefind (Greek), Start-menu orb, `/about`, Lighthouse ≥ 90 | Planned |
+| **A4** Desktop & time views | Home "desktop", `/upcoming`, `/calendar` + `.ics`, `/archive` | ✅ Done |
+| **A5** Search & polish | Pagefind (Greek), Start-menu orb, `/about`, Lighthouse ≥ 90 | ⏭️ Next |
 | **Launch** | Switch GitHub Pages to Actions, merge `v2` → `main` | Planned |
 | **B** Admin CMS | Sveltia CMS at `/admin`, GitHub OAuth via Cloudflare Worker | Later |
 
@@ -93,7 +93,6 @@ behind each.
 
 ## Open questions (waiting on the owner)
 
-- [ ] **Hero direction** for the home page: A (Aero horizon) or B (Welcome Center).
 - [ ] **Welcome announcement**: text drafted, awaiting approval before commit.
 - [ ] **Contact email** (`collegecompass@gmail.com`): keep or drop?
 - [ ] **Alt text** for the five UML diagrams: awaiting review.
@@ -116,22 +115,12 @@ behind each.
 
 ## Next steps
 
-### A4 — Desktop & time views
-Done: `/upcoming`, `/calendar`, `/calendar.ics`, `/archive`, main navigation,
-all gadgets, course tiles, daily scheduled rebuild. Two hero directions are
-up for review at `/preview/hero-a/` and `/preview/hero-b/` (sample data).
-
-1. **Pick a hero direction**, then build the real home page and remove the previews.
-2. Home "desktop" with gadgets:
-   - next-deadline countdown
-   - this week's timetable
-   - workload forecast
-   - announcements
-   - course tiles grouped Year → Semester, including a **"Year 3 coming soon"**
-     tile while there are no current courses
-3. `/upcoming`: everything due in the next 14 days, across all courses.
-4. `/calendar` plus an `.ics` feed for phone and desktop calendars.
-5. `/archive` by year and semester.
+### A4 — Desktop & time views ✅
+Home "desktop" with the **Welcome Center** hero (chosen over "Aero horizon" on
+22 October 2026), `/upcoming`, `/calendar`, `/calendar.ics`, `/archive`, main
+navigation, gadgets (next deadline, this week, workload forecast,
+announcements), course tiles with a "Year 3 coming soon" placeholder, and a
+daily scheduled rebuild so time-based views stay current after launch.
 
 ### A5 — Search & polish
 1. Pagefind static search, tuned for Greek.
