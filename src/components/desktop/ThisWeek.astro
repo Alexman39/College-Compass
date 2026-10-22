@@ -11,8 +11,10 @@ import { courseUrl, url } from '~/lib/url';
 
 interface Props {
   days: TimetableDay[];
+  /** How many courses are running this semester (with or without a timetable). */
+  currentCourses: number;
 }
-const { days } = Astro.props;
+const { days, currentCourses } = Astro.props;
 const withClasses = days.filter((d) => d.slots.length > 0);
 const shortDate = (key: string) => formatLocalDate(key).replace(/\s\d{4}$/, ''); // "22 Οκτωβρίου"
 ---
@@ -20,7 +22,11 @@ const shortDate = (key: string) => formatLocalDate(key).replace(/\s\d{4}$/, '');
 <Gadget title="Αυτή την εβδομάδα" id="gadget-week" href={url('calendar')} linkLabel="Ημερολόγιο">
   {
     withClasses.length === 0 ? (
-      <p class="empty">Δεν υπάρχουν μαθήματα σε εξέλιξη αυτό το εξάμηνο.</p>
+      <p class="empty">
+        {currentCourses > 0
+          ? 'Το ωρολόγιο πρόγραμμα του εξαμήνου δεν έχει προστεθεί ακόμη.'
+          : 'Δεν υπάρχουν μαθήματα σε εξέλιξη αυτό το εξάμηνο.'}
+      </p>
     ) : (
       <ol class="days" role="list">
         {withClasses.map((d) => (

@@ -8,7 +8,7 @@ import Base from '~/layouts/Base.astro';
 import Breadcrumbs from '~/components/Breadcrumbs.astro';
 import DeadlineRow from '~/components/DeadlineRow.astro';
 import JellyButton from '~/components/JellyButton.astro';
-import { getClassSlots, getDeadlineItems, getSettings } from '~/lib/content';
+import { getClassSlots, getCourses, getDeadlineItems, getSettings } from '~/lib/content';
 import { weekTimetable, workloadForecast } from '~/lib/derive';
 import { DAY_NAMES, formatLocalDate } from '~/lib/labels';
 import { addDays, athensDateKey, formatAthens } from '~/lib/time';
@@ -16,7 +16,8 @@ import { courseUrl, url } from '~/lib/url';
 
 const now = new Date();
 const today = athensDateKey(now);
-const [slots, deadlines, settings] = await Promise.all([getClassSlots(), getDeadlineItems(), getSettings()]);
+const [slots, deadlines, settings, courses] = await Promise.all([getClassSlots(), getDeadlineItems(), getSettings(), getCourses()]);
+const currentCourses = courses.filter((c) => c.data.status === 'current').length;
 
 const week = weekTimetable(slots, now).map((d) => ({
   ...d,
@@ -82,7 +83,15 @@ const timeOf = (d: Date) => formatAthens(d, { hour: '2-digit', minute: '2-digit'
           ))
         }
       </ol>
-      {slots.length === 0 && <p class="muted note">Δεν υπάρχουν μαθήματα σε εξέλιξη αυτό το εξάμηνο.</p>}
+      {
+        slots.length === 0 && (
+          <p class="muted note">
+            {currentCourses > 0
+              ? 'Το ωρολόγιο πρόγραμμα του εξαμήνου δεν έχει προστεθεί ακόμη.'
+              : 'Δεν υπάρχουν μαθήματα σε εξέλιξη αυτό το εξάμηνο.'}
+          </p>
+        )
+      }
     </section>
 
     <section class="panel block" aria-labelledby="later-title">
