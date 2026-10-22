@@ -1,6 +1,6 @@
 # College Compass v2 — Roadmap & status
 
-_Last updated: 17 October 2026 · branch `v2`_
+_Last updated: 22 October 2026 · branch `v2`_
 
 College Compass is being rebuilt from a hand-coded HTML/CSS demo into a static
 Astro site with a structured content model. This document records **where the
@@ -14,12 +14,12 @@ The original brief is in [`PROJECT_BRIEF.md`](../PROJECT_BRIEF.md).
 | **A1** Foundations | Astro + TypeScript, design tokens, light/dark themes, base layout, CI | ✅ Done |
 | **A2** Content model | Zod schemas, build-time validation, all demo content migrated | ✅ Done |
 | **A3** Course pages | Course windows, lesson pages, live status pills, done ticks, `/styleguide` | ✅ Done |
-| **A4** Desktop & time views | Home "desktop", `/upcoming`, `/calendar` + `.ics`, `/archive` | ⏭️ Next |
+| **A4** Desktop & time views | Home "desktop", `/upcoming`, `/calendar` + `.ics`, `/archive` | 🚧 In progress (home page waits on hero choice) |
 | **A5** Search & polish | Pagefind (Greek), Start-menu orb, `/about`, Lighthouse ≥ 90 | Planned |
 | **Launch** | Switch GitHub Pages to Actions, merge `v2` → `main` | Planned |
 | **B** Admin CMS | Sveltia CMS at `/admin`, GitHub OAuth via Cloudflare Worker | Later |
 
-Quality gates on every push: `astro check` (types), **42 unit tests** (vitest),
+Quality gates on every push: `astro check` (types), **64 unit tests** (vitest),
 static build, and build-time content validation.
 
 ## What exists today
@@ -93,6 +93,7 @@ behind each.
 
 ## Open questions (waiting on the owner)
 
+- [ ] **Hero direction** for the home page: A (Aero horizon) or B (Welcome Center).
 - [ ] **Welcome announcement**: text drafted, awaiting approval before commit.
 - [ ] **Contact email** (`collegecompass@gmail.com`): keep or drop?
 - [ ] **Alt text** for the five UML diagrams: awaiting review.
@@ -116,7 +117,11 @@ behind each.
 ## Next steps
 
 ### A4 — Desktop & time views
-1. **Show two hero directions for the home page and pick one** before building it.
+Done: `/upcoming`, `/calendar`, `/calendar.ics`, `/archive`, main navigation,
+all gadgets, course tiles, daily scheduled rebuild. Two hero directions are
+up for review at `/preview/hero-a/` and `/preview/hero-b/` (sample data).
+
+1. **Pick a hero direction**, then build the real home page and remove the previews.
 2. Home "desktop" with gadgets:
    - next-deadline countdown
    - this week's timetable
