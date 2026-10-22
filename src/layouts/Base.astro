@@ -25,6 +25,8 @@ interface Props {
   title?: string;
   description?: string;
   lang?: 'el' | 'en';
+  /** Keep the page out of search engines (design previews). */
+  noindex?: boolean;
 }
 
 const SITE = 'College Compass';
@@ -32,6 +34,7 @@ const {
   title,
   description = 'Ο ανεπίσημος οδηγός μαθημάτων του Metropolitan College: μαθήματα, εβδομάδες, εργασίες και προθεσμίες σε ένα μέρος.',
   lang = 'el',
+  noindex = false,
 } = Astro.props;
 
 const fullTitle = title ? `${title} · ${SITE}` : SITE;
@@ -46,6 +49,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
     <meta name="theme-color" content="#3d9be0" media="(prefers-color-scheme: light)" />

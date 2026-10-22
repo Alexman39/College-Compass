@@ -1,0 +1,42 @@
+---
+/** Banner for design-preview pages: sample data, not real coursework. */
+import { url } from '~/lib/url';
+
+interface Props {
+  name: string;
+  other: { href: string; label: string };
+}
+const { name, other } = Astro.props;
+---
+
+<aside class="banner" aria-label="Προεπισκόπηση σχεδίου">
+  <p>
+    <strong>Προεπισκόπηση σχεδίου: {name}.</strong> Οι προθεσμίες και τα μαθήματα εδώ είναι <strong>δείγμα</strong>,
+    όχι πραγματικά.
+  </p>
+  <p class="links">
+    <a href={other.href}>{other.label}</a>
+    <a href={url()}>Πραγματική αρχική</a>
+  </p>
+</aside>
+
+<style>
+  .banner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--s-2) var(--s-4);
+    margin-top: var(--s-4);
+    padding: var(--s-3) var(--s-4);
+    border: 2px dashed var(--st-soon);
+    border-radius: var(--r-md);
+    background: var(--panel-solid);
+    font-size: var(--fs-sm);
+  }
+
+  .links {
+    display: flex;
+    gap: var(--s-4);
+    font-weight: 700;
+  }
+</style>
