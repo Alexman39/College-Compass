@@ -43,7 +43,7 @@ const here = courseUrl(c.slug);
 
 <Base title={c.title_en} description={c.summary ?? `${c.title_en} (${c.code}) — ${yearSemester(c.year, c.semester)}`} searchable>
   <div class="container page" style={`--accent:${c.accent}`}>
-    <span hidden data-pagefind-filter="course">{c.code.replace(/_\d+$/, '')}</span>
+    <span hidden data-pagefind-filter="course">{c.code}</span>
     <span hidden data-pagefind-meta="kind">Μάθημα</span>
     <Breadcrumbs items={[{ label: 'Αρχική', href: url() }, { label: c.title_en, lang: 'en' }]} />
 

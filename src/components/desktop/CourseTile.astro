@@ -26,7 +26,7 @@ const fallback = course.body?.trim() ? 'Επισκόπηση μαθήματος'
 <article class="tile" style={`--accent:${c.accent}`}>
   <div class="head">
     <CourseIcon name={c.icon} size={20} />
-    <span class="code">{c.code.replace(/_\d+$/, '')}</span>
+    <span class="code">{c.code}</span>
     {c.status === 'current' && <span class="now">Τώρα</span>}
   </div>
   <div class="body">

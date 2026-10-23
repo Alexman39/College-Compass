@@ -49,7 +49,7 @@ const heading = `Εβδομάδα ${l.week}: ${l.title}`;
 
 <Base title={`${heading} · ${c.title_en}`} description={`${c.title_en} — ${heading}`} searchable>
   <div class="container page" style={`--accent:${c.accent}`}>
-    <span hidden data-pagefind-filter="course">{c.code.replace(/_\d+$/, '')}</span>
+    <span hidden data-pagefind-filter="course">{c.code}</span>
     <span hidden data-pagefind-meta="kind">Μάθημα εβδομάδας</span>
     <Breadcrumbs
       items={[
