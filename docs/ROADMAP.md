@@ -67,7 +67,7 @@ behind each.
 | --- | --- |
 | Courses are Markdown: front-matter = data, body = overview | Long overview text belongs in prose, not YAML |
 | `title_el` optional, falls back to `title_en` | Most courses only have official English titles |
-| Course `slug` optional, default = code lowercased without `_1` (`CN4003_1` → `cn4003`) | Short, stable URLs |
+| Course codes written without Moodle's `_1` suffix (`CN4003`); `slug` optional, default = code lowercased (`cn4003`) | Short, stable URLs; the suffix adds nothing for readers (decided 23 Oct 2026) |
 | Assignments: `due` and `released` optional; new optional `week` and `teaser` | Practice exercises have no deadline; lessons list their week's exercises |
 | `lessons.date` optional | Archived lessons often have no known date |
 | Fixed list of 13 course icons | A typo fails the build instead of showing a blank tile |
