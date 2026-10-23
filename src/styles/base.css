@@ -219,14 +219,25 @@ pre {
   font-size: var(--fs-sm);
 }
 
+/* Every Markdown table sits in a .table-scroll box (added by a Markdown
+ * plugin). When a table is wider than the screen, the box scrolls sideways
+ * and the page doesn't, so words are never split mid-syllable. */
+.prose .table-scroll {
+  overflow-x: auto;
+  border-radius: var(--r-sm);
+  /* Scroll hint: a soft shadow on any side with more table to scroll to.
+   * The two surface-coloured "covers" move with the content (local) and
+   * hide each shadow once you reach that end. Pure CSS, no script. */
+  background:
+    linear-gradient(to right, var(--panel-solid) 30%, transparent) left center / 40px 100% no-repeat local,
+    linear-gradient(to left, var(--panel-solid) 30%, transparent) right center / 40px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, var(--scroll-hint), transparent) left center / 12px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, var(--scroll-hint), transparent) right center / 12px 100% no-repeat scroll;
+}
+
 .prose th,
 .prose td {
   padding: var(--s-2);
-  /* At 360px a 3-column table of Greek terms is wider than the screen;
-   * let long words hyphenate (or, failing that, break) inside cells
-   * rather than pushing the page sideways. */
-  overflow-wrap: anywhere;
-  hyphens: auto;
   border-bottom: 1px solid var(--divider);
   text-align: left;
   vertical-align: top;
@@ -236,7 +247,6 @@ pre {
   .prose th,
   .prose td {
     padding: var(--s-2) var(--s-3);
-    overflow-wrap: normal;
   }
 }
 

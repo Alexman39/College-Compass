@@ -48,6 +48,7 @@
   /* Charts: one hue for single-series bars (validated ≥3:1 vs panel). */
   --chart-bar: #1f7fcf;
   --chart-bar-hover: #155f9e;
+  --scroll-hint: rgb(8 48 80 / 0.3); /* shadow on scrollable tables */
 
   /* ---- Surfaces ------------------------------------------------------
    * glass  = decorative chrome (title bars, gadgets' frames, nav)
@@ -152,6 +153,7 @@
     --text-danger: #ff9b8f;
     --chart-bar: #3a96d2;
     --chart-bar-hover: #63b0e2;
+    --scroll-hint: rgb(140 225 255 / 0.35);
     --glass: rgb(30 90 120 / 0.28);
     --glass-strong: rgb(30 90 120 / 0.45);
     --glass-border: rgb(140 225 255 / 0.22);
@@ -183,6 +185,7 @@
   --text-danger: #ff9b8f;
   --chart-bar: #3a96d2;
   --chart-bar-hover: #63b0e2;
+  --scroll-hint: rgb(140 225 255 / 0.35);
   --glass: rgb(30 90 120 / 0.28);
   --glass-strong: rgb(30 90 120 / 0.45);
   --glass-border: rgb(140 225 255 / 0.22);
