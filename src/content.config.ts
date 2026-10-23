@@ -18,6 +18,7 @@
 import { defineCollection, reference } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { OPTION_LETTERS } from '~/lib/quiz';
 import { parseAthensDateTime, isLocalDate } from '~/lib/time';
 
 // ---------------------------------------------------------------------------
@@ -196,10 +197,21 @@ const assignments = defineCollection({
       link: blank(z.url()),
       /** How to hand it in, e.g. "Moodle — ένα .zip". */
       submission: blank(z.string()),
+      /**
+       * Answer key for a practice quiz, one letter per question, e.g.
+       * [β, γ, α]. With a key, the quiz becomes interactive: pick, submit,
+       * see the score. The key is visible in the page source, so it is
+       * only allowed on quizzes that don't count (no weight).
+       */
+      answers: blank(z.array(z.enum(OPTION_LETTERS)).min(1)),
     })
     .refine((a) => !a.released || !a.due || a.due > a.released, {
       error: 'Due date must be after the release date',
       path: ['due'],
+    })
+    .refine((a) => !a.answers || (a.type === 'quiz' && a.weight === undefined), {
+      error: 'An answer key is only allowed on a practice quiz (type: quiz, no weight)',
+      path: ['answers'],
     }),
 });
 

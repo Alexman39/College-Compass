@@ -1,0 +1,218 @@
+---
+/**
+ * An interactive practice quiz: one group of radio buttons per question,
+ * a "Υποβολή" button, then a score and right/wrong marks per question.
+ *
+ * The questions are real HTML (fieldset + legend + radios), so they read
+ * fine without JavaScript; src/scripts/quiz.ts adds the scoring and reveals
+ * the buttons. The answer key travels in data-answers. That is visible in
+ * the page source, which is accepted for practice quizzes (see the
+ * `answers` field in content.config.ts).
+ */
+import type { ParsedQuiz } from '~/lib/quiz';
+import JellyButton from './JellyButton.astro';
+
+interface Props {
+  quiz: ParsedQuiz;
+  answers: string[];
+  /** Unique per quiz on the page; keeps radio group names apart. */
+  id: string;
+}
+
+const { quiz, answers, id } = Astro.props;
+---
+
+<form class="quiz" data-quiz data-answers={answers.join(',')} novalidate>
+  {quiz.intro.map((p) => <p class="intro">{p}</p>)}
+
+  <ol class="questions">
+    {
+      quiz.questions.map((q) => (
+        <li>
+          <fieldset class="question" data-question>
+            <legend>
+              <span class="num">{q.number}.</span> {q.text}
+            </legend>
+            <div class="options">
+              {q.options.map((o) => (
+                <label class="option" data-option={o.letter}>
+                  <input type="radio" name={`${id}-q${q.number}`} value={o.letter} />
+                  <span>
+                    <span class="letter">{o.letter})</span> {o.text}
+                  </span>
+                </label>
+              ))}
+            </div>
+            <p class="feedback" data-feedback hidden></p>
+          </fieldset>
+        </li>
+      ))
+    }
+  </ol>
+
+  <!-- The score is announced to screen readers when it appears. -->
+  <p class="result" data-result role="status" tabindex="-1" hidden></p>
+
+  <div class="buttons" data-quiz-buttons hidden>
+    <JellyButton type="submit" data-submit>Υποβολή</JellyButton>
+    <JellyButton type="button" variant="glass" data-retry hidden>Ξανά από την αρχή</JellyButton>
+  </div>
+  <noscript><p class="intro">Για τη βαθμολόγηση χρειάζεται JavaScript.</p></noscript>
+</form>
+
+<script>
+  import '~/scripts/quiz';
+</script>
+
+<style>
+  .quiz {
+    display: grid;
+    gap: var(--s-4);
+  }
+
+  .intro {
+    max-width: var(--measure);
+  }
+
+  .questions {
+    display: grid;
+    gap: var(--s-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  .question {
+    display: grid;
+    gap: var(--s-2);
+    min-width: 0; /* fieldsets don't shrink by default; this keeps 360px tidy */
+    padding: var(--s-3);
+    border: 1px solid var(--divider);
+    border-left: 4px solid var(--divider);
+    border-radius: var(--r-md);
+    background: var(--panel-solid);
+  }
+
+  .question[data-mark='correct'] {
+    border-left-color: var(--st-done);
+  }
+
+  .question[data-mark='wrong'],
+  .question[data-mark='unanswered'] {
+    border-left-color: var(--st-overdue);
+  }
+
+  legend {
+    float: left; /* lets the legend sit inside the padding like a heading */
+    width: 100%;
+    padding: 0;
+    font-weight: 700;
+    overflow-wrap: break-word;
+  }
+
+  .num {
+    color: var(--text-muted);
+  }
+
+  .options {
+    display: grid;
+    gap: var(--s-1);
+    clear: both;
+  }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--s-2);
+    min-height: 44px;
+    padding: var(--s-2);
+    border: 2px solid transparent;
+    border-radius: var(--r-sm);
+    cursor: pointer;
+  }
+
+  .option:hover {
+    background: var(--panel-sunken);
+  }
+
+  .option:has(input:focus-visible) {
+    outline: 3px solid var(--focus-inner);
+    outline-offset: 2px;
+  }
+
+  .option input {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin-top: 0.15em;
+    accent-color: var(--link);
+    cursor: pointer;
+  }
+
+  .option input:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .letter {
+    font-weight: 700;
+  }
+
+  /* After submitting: the right option gets a green frame, a wrong pick a
+   * red one. The text in .feedback says the same in words. */
+  .option[data-state='correct'] {
+    border-color: var(--st-done);
+  }
+
+  .option[data-state='wrong'] {
+    border-color: var(--st-overdue);
+  }
+
+  .quiz[data-submitted] .option {
+    cursor: default;
+  }
+
+  .quiz[data-submitted] .option:hover {
+    background: none;
+  }
+
+  .feedback {
+    font-weight: 600;
+  }
+
+  /* Wider screens can afford roomier cards. */
+  @media (min-width: 40rem) {
+    .question {
+      padding: var(--s-3) var(--s-4) var(--s-4);
+    }
+
+    .option {
+      gap: var(--s-3);
+      padding: var(--s-2) var(--s-3);
+    }
+  }
+
+  .feedback[hidden] {
+    display: none;
+  }
+
+  .result {
+    padding: var(--s-3) var(--s-4);
+    border-radius: var(--r-md);
+    background: var(--panel-solid);
+    border: 1px solid var(--divider);
+    font-size: var(--fs-lg);
+    font-weight: 750;
+  }
+
+  .result[hidden],
+  .buttons[hidden],
+  .buttons :global([hidden]) {
+    display: none;
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-3);
+  }
+</style>

@@ -10,7 +10,9 @@
 import { render } from 'astro:content';
 import type { Assignment } from '~/lib/content';
 import { ASSIGNMENT_TYPES, formatDeadline } from '~/lib/labels';
+import { parseQuiz } from '~/lib/quiz';
 import { statusLabel, timeStatus } from '~/lib/status';
+import Quiz from './Quiz.astro';
 import StatusPill from './StatusPill.astro';
 
 interface Props {
@@ -22,9 +24,12 @@ interface Props {
 }
 
 const { assignment, level = 3, idSuffix } = Astro.props;
-const { title, teaser, type, released, due, weight, link, submission } = assignment.data;
+const { title, teaser, type, released, due, weight, link, submission, answers } = assignment.data;
 const { Content } = await render(assignment);
 const hasBrief = Boolean(assignment.body?.trim());
+// A practice quiz with an answer key is shown as an interactive quiz instead
+// of plain text. (validateContent has already checked the key fits.)
+const quiz = answers ? parseQuiz(assignment.body ?? '') : undefined;
 
 const now = new Date();
 const status = timeStatus({ released, due }, now);
@@ -95,13 +100,20 @@ const anchor = `task-${assignment.id.replaceAll('/', '-')}${idSuffix ? `-${idSuf
   {teaser && <p class="teaser">{teaser}</p>}
 
   {
-    hasBrief && (
+    quiz && answers ? (
       <details class="brief">
-        <summary>Εκφώνηση</summary>
-        <div class="prose">
-          <Content />
-        </div>
+        <summary>Ξεκίνα το κουίζ ({quiz.questions.length} ερωτήσεις)</summary>
+        <Quiz quiz={quiz} answers={answers} id={anchor} />
       </details>
+    ) : (
+      hasBrief && (
+        <details class="brief">
+          <summary>Εκφώνηση</summary>
+          <div class="prose">
+            <Content />
+          </div>
+        </details>
+      )
     )
   }
 
