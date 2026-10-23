@@ -67,6 +67,7 @@ src/
   scripts/            browser scripts (ticks, deadlines, search, image zoom)
   styles/             tokens.css (design tokens) and base.css
 scripts/check-build.mjs  post-build checks on the generated HTML
+materials/            raw course files (git-ignored, never published)
 docs/ROADMAP.md       status, decisions and next steps
 ```
 
@@ -94,6 +95,15 @@ least 4.5:1. `npm test` checks this.
 
 **Lecturer material.** Slides and PDFs owned by lecturers are never re-hosted
 here; link to Moodle instead.
+
+### Adding course material
+
+Raw course files (slides, PDFs, handouts) go in `materials/<course>/`, e.g.
+`materials/cn6003/lecture-01.pdf`. That folder is git-ignored: the files stay
+on your computer and are never published. Ask Claude Code to turn a file into a
+lesson or exercise; it writes the content into `src/content/`, asks you to
+approve new wording, and opens a pull request for you to merge. Work on one
+course in one chat at a time. Details: [materials/README.md](materials/README.md).
 
 ## Deployment
 
