@@ -8,6 +8,7 @@ import { render } from 'astro:content';
 import Base from '~/layouts/Base.astro';
 import Breadcrumbs from '~/components/Breadcrumbs.astro';
 import AssignmentItem from '~/components/AssignmentItem.astro';
+import WidthToggle from '~/components/WidthToggle.astro';
 import { getCourses, getWeeks, type Course, type Lesson, type Assignment } from '~/lib/content';
 import { formatLocalDate } from '~/lib/labels';
 import { courseUrl, lessonUrl, url } from '~/lib/url';
@@ -61,7 +62,10 @@ const heading = `Εβδομάδα ${l.week}: ${l.title}`;
 
     <article class="panel lesson">
       <header class="head">
-        <p class="kicker" data-pagefind-ignore><span lang="en">{c.title_en}</span> · {c.code}</p>
+        <div class="top" data-pagefind-ignore>
+          <p class="kicker"><span lang="en">{c.title_en}</span> · {c.code}</p>
+          <WidthToggle />
+        </div>
         <h1>{heading}</h1>
         {
           (l.date || l.tags.length > 0) && (
@@ -164,6 +168,26 @@ const heading = `Εβδομάδα ${l.week}: ${l.title}`;
     .lesson {
       padding: var(--s-6) var(--s-7);
     }
+  }
+
+  /* "Πλήρες πλάτος" (WidthToggle): the lesson uses the whole page width
+   * (up to .container's 76rem, the same edges as the top bar), and the text
+   * drops its comfortable-line-length limit. */
+  :global([data-width='wide']) .lesson,
+  :global([data-width='wide']) .pager {
+    max-width: none;
+  }
+
+  :global([data-width='wide']) .lesson :global(.prose) {
+    max-width: none;
+  }
+
+  .top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-2) var(--s-4);
   }
 
   .head {

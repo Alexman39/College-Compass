@@ -1,0 +1,87 @@
+---
+/**
+ * "Πλήρες πλάτος" switch for lesson pages: normal reading width (the
+ * default, about 68 characters a line) or the full width of the page.
+ *
+ * Works like ThemeToggle: the button sets <html data-width="wide"> and saves
+ * the choice in localStorage; an inline script in Base.astro restores it
+ * before first paint. The lesson page's CSS does the actual widening.
+ *
+ * Only shown on screens wide enough for it to make a difference, and only
+ * with JavaScript (without it the button couldn't do anything).
+ */
+---
+
+<button class="width-toggle" type="button" aria-pressed="false" data-width-toggle hidden>
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"></path>
+  </svg>
+  <span>Πλήρες πλάτος</span>
+</button>
+
+<script>
+  const KEY = 'cc-width';
+  const root = document.documentElement;
+
+  const save = (wide: boolean) => {
+    try {
+      if (wide) localStorage.setItem(KEY, 'wide');
+      else localStorage.removeItem(KEY);
+    } catch {}
+  };
+
+  document.querySelectorAll<HTMLButtonElement>('[data-width-toggle]').forEach((btn) => {
+    btn.hidden = false;
+    btn.setAttribute('aria-pressed', String(root.dataset.width === 'wide'));
+    btn.addEventListener('click', () => {
+      const wide = root.dataset.width !== 'wide';
+      if (wide) root.dataset.width = 'wide';
+      else delete root.dataset.width;
+      save(wide);
+      btn.setAttribute('aria-pressed', String(wide));
+    });
+  });
+</script>
+
+<style>
+  .width-toggle {
+    display: none;
+    align-items: center;
+    gap: var(--s-2);
+    min-height: 36px;
+    padding: 0 var(--s-3);
+    border: 1px solid var(--divider);
+    border-radius: var(--r-pill);
+    background: var(--panel-sunken);
+    color: var(--text);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+  }
+
+  /* Below ~60rem the lesson already fills the screen, so there's nothing
+   * to switch. */
+  @media (min-width: 60rem) {
+    .width-toggle:not([hidden]) {
+      display: inline-flex;
+    }
+  }
+
+  .width-toggle:hover {
+    border-color: var(--link);
+  }
+
+  .width-toggle[aria-pressed='true'] {
+    border-color: var(--link);
+    color: var(--link);
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+</style>

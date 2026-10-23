@@ -62,8 +62,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="theme-color" content="#3d9be0" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#03101b" media="(prefers-color-scheme: dark)" />
 
-    <!-- Runs before paint to set the theme and avoid a flash of the wrong
-         colours. Must be inline (not bundled) to run that early. -->
+    <!-- Runs before paint to set the theme (and the lesson width) and avoid
+         a flash of the wrong look. Must be inline (not bundled) to run that early. -->
     <script is:inline>
       (function () {
         var t = null;
@@ -72,6 +72,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
           t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         }
         document.documentElement.dataset.theme = t;
+        // Lesson text width (WidthToggle.astro); set early so the page
+        // doesn't jump from narrow to wide after loading.
+        var w = null;
+        try { w = localStorage.getItem('cc-width'); } catch (e) {}
+        if (w === 'wide') document.documentElement.dataset.width = 'wide';
       })();
     </script>
   </head>
