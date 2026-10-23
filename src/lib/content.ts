@@ -9,6 +9,7 @@
  *   - no two courses share a code or a URL slug
  *   - no course has two lesson files for the same week
  *   - there is exactly one settings file
+ *   - a practice quiz's answer key matches its questions
  *
  * Softer checks are printed as warnings without failing the build:
  *   - an assignment's `week` has no matching lesson file
@@ -20,6 +21,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { ClassSlot, CourseRef, DeadlineItem } from './derive';
 import type { ClassSeries } from './ics';
+import { checkAnswerKey, parseQuiz } from './quiz';
 import { addDays } from './time';
 
 export type Course = CollectionEntry<'courses'>;
@@ -123,6 +125,20 @@ async function runChecks(): Promise<void> {
     (l) => `${l.data.course.id} week ${l.data.week}`,
     (k, g) => `Two lessons for ${k}: ${files(g, 'lessons')}`,
   );
+
+  // ---- Quiz answer keys ----------------------------------------------------
+  // The key must match the questions: same count, and every letter must be
+  // one of that question's options.
+  for (const a of assignments) {
+    if (!a.data.answers) continue;
+    try {
+      for (const p of checkAnswerKey(parseQuiz(a.body ?? ''), a.data.answers)) {
+        problems.push(`${where(a, 'assignments')}: answer key ${p}`);
+      }
+    } catch (error) {
+      problems.push(`${where(a, 'assignments')}: quiz questions can't be read, ${(error as Error).message}`);
+    }
+  }
 
   // ---- Warnings (reported, but the build continues) ------------------------
   // An assignment's `week` should have a lesson page to link to. Archived
