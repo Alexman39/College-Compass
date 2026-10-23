@@ -117,9 +117,8 @@ const courses = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/courses' }),
   schema: z
     .object({
-      // Written without Moodle's "_1" suffix (CN4003). The optional suffix is
-      // still accepted until every course file has dropped it.
-      code: z.string().regex(/^[A-Z]{2,4}\d{4}(_\d+)?$/, { error: 'Course code like CN4003' }),
+      // Written without Moodle's "_1" suffix: CN4003, not CN4003_1.
+      code: z.string().regex(/^[A-Z]{2,4}\d{4}$/, { error: 'Course code like CN4003 (without the _1 suffix)' }),
       title_en: z.string().min(1),
       /** Greek title, if the course has one. Falls back to title_en. */
       title_el: blank(z.string()),
@@ -156,7 +155,7 @@ const courses = defineCollection({
     })
     .transform((c) => ({
       ...c,
-      slug: c.slug ?? c.code.toLowerCase().replace(/_\d+$/, ''),
+      slug: c.slug ?? c.code.toLowerCase(),
       title_el: c.title_el ?? c.title_en,
     })),
 });

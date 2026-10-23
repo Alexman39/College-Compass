@@ -29,7 +29,7 @@ const anchor = `task-${item.id.replaceAll('/', '-')}`;
   hidden={hidden}
   style={`--accent:${item.course.accent}`}
 >
-  <span class="chip">{item.course.code.replace(/_\d+$/, '')}</span>
+  <span class="chip">{item.course.code}</span>
   <div class="text">
     <a href={`${courseUrl(item.course.slug)}#${anchor}`} class="title">
       <span class="visually-hidden">{ASSIGNMENT_TYPES[item.type]}: </span>{item.title}
