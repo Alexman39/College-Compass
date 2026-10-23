@@ -164,7 +164,7 @@ const lessons = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/lessons' }),
   schema: z.object({
     course: reference('courses'),
-    week: z.number().int().min(1).max(20),
+    week: z.number().int().min(0).max(20),
     title: z.string().min(1),
     /** Day of the lecture, if known. */
     date: blank(localDate),
@@ -183,7 +183,7 @@ const assignments = defineCollection({
       teaser: blank(z.string()),
       type: z.enum(['exercise', 'coursework', 'exam', 'quiz']),
       /** Week it belongs to, so the lesson page can list it. */
-      week: blank(z.number().int().min(1).max(20)),
+      week: blank(z.number().int().min(0).max(20)),
       /** When it opens. Missing = available now. */
       released: blank(athensDateTime),
       /** Deadline. Missing = practice without a deadline (never "Upcoming"). */
