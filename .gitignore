@@ -3,3 +3,9 @@ node_modules/
 dist/
 .astro/
 .env*
+
+# Raw course material (lecturer slides, PDFs, handouts) stays on your own
+# computer and is never committed or published. Only the folder's README is
+# tracked. See materials/README.md.
+materials/*
+!materials/README.md
