@@ -232,6 +232,15 @@ const announcements = defineCollection({
     pinned: z.boolean().default(false),
     /** Leave empty for a site-wide announcement. */
     course: blank(reference('courses')),
+    /**
+     * A one-off event (meeting, talk) the announcement is about. With it,
+     * the event also shows on /calendar and in the calendar feed.
+     */
+    event: blank(
+      z
+        .object({ start: athensDateTime, end: athensDateTime, location: blank(z.string()) })
+        .refine((e) => e.end > e.start, { error: 'Event must end after it starts', path: ['end'] }),
+    ),
   }),
 });
 

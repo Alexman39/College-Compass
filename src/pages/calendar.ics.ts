@@ -3,13 +3,18 @@
  * time (the site rebuilds daily), so it always reflects the current content.
  */
 import type { APIRoute } from 'astro';
-import { getClassSeries, getDeadlineItems, getSettings, validateContent } from '~/lib/content';
+import { getClassSeries, getDeadlineItems, getEvents, getSettings, validateContent } from '~/lib/content';
 import { buildCalendar } from '~/lib/ics';
 import { courseUrl } from '~/lib/url';
 
 export const GET: APIRoute = async ({ site }) => {
   await validateContent();
-  const [deadlines, classes, settings] = await Promise.all([getDeadlineItems(), getClassSeries(), getSettings()]);
+  const [deadlines, classes, settings, events] = await Promise.all([
+    getDeadlineItems(),
+    getClassSeries(),
+    getSettings(),
+    getEvents(),
+  ]);
   const absolute = (path: string) => new URL(path, site).href;
 
   const body = buildCalendar({
@@ -19,6 +24,7 @@ export const GET: APIRoute = async ({ site }) => {
     deadlines,
     classes,
     holidays: settings.holidays,
+    events,
   });
 
   return new Response(body, { headers: { 'Content-Type': 'text/calendar; charset=utf-8' } });

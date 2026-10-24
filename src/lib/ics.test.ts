@@ -15,6 +15,7 @@ const base: CalendarInput = {
   deadlines: [],
   classes: [],
   holidays: [],
+  events: [],
 };
 const utf8 = (s: string) => new TextEncoder().encode(s).length;
 
@@ -79,5 +80,25 @@ describe('buildCalendar', () => {
     const ics = buildCalendar({ ...base, holidays: [{ name: 'Χριστούγεννα', start: '2026-12-23', end: '2027-01-06' }] });
     expect(ics).toContain('DTSTART;VALUE=DATE:20261223');
     expect(ics).toContain('DTEND;VALUE=DATE:20270107');
+  });
+
+  it('writes one-off events as UTC instants with a location and a reminder an hour before', () => {
+    const ics = buildCalendar({
+      ...base,
+      events: [
+        {
+          id: '2026-10-24-meeting',
+          title: 'Συνάντηση για τις πτυχιακές',
+          start: at('2026-10-27T17:00'),
+          end: at('2026-10-27T18:00'),
+          location: 'Αίθουσα 44',
+        },
+      ],
+    });
+    expect(ics).toContain('UID:event-2026-10-24-meeting@alexman39.github.io');
+    expect(ics).toContain('DTSTART:20261027T150000Z'); // 17:00 Athens (+02, after the clock change)
+    expect(ics).toContain('DTEND:20261027T160000Z');
+    expect(ics).toContain('LOCATION:Αίθουσα 44');
+    expect(ics).toContain('TRIGGER:-PT1H');
   });
 });
