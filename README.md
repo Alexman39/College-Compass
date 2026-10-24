@@ -86,6 +86,10 @@ code, invalid date).
 | A link (slides, video, tool, reading) | `resources/<course>/<name>.yaml` |
 | An announcement | `announcements/<date>-<name>.md` |
 
+**Events.** An announcement about a meeting or talk can add an `event:` with
+`start`, `end` (Athens time, `YYYY-MM-DDTHH:mm`) and an optional `location`;
+the event then also shows on `/calendar` and in `calendar.ics`.
+
 **Dates and times.** Write deadlines in Athens time as `YYYY-MM-DDTHH:mm`
 (for example `due: "2026-11-20T23:59"`), **without seconds**. Calendar dates
 are `YYYY-MM-DD`.

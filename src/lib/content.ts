@@ -20,7 +20,7 @@
  */
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { ClassSlot, CourseRef, DeadlineItem } from './derive';
-import type { ClassSeries } from './ics';
+import type { ClassSeries, EventItem } from './ics';
 import { checkAnswerKey, parseQuiz } from './quiz';
 import { addDays } from './time';
 
@@ -274,6 +274,14 @@ export async function getDeadlineItems(): Promise<DeadlineItem[]> {
         ]
       : [],
   );
+}
+
+/** One-off events from announcements (meetings, talks), soonest first. */
+export async function getEvents(): Promise<EventItem[]> {
+  const announcements = await getAnnouncements();
+  return announcements
+    .flatMap((a) => (a.data.event ? [{ id: a.id, title: a.data.title, ...a.data.event }] : []))
+    .sort((a, b) => a.start.getTime() - b.start.getTime());
 }
 
 /** Weekly class slots of the courses running this semester. */

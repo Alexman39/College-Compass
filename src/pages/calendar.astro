@@ -8,30 +8,40 @@ import Base from '~/layouts/Base.astro';
 import Breadcrumbs from '~/components/Breadcrumbs.astro';
 import DeadlineRow from '~/components/DeadlineRow.astro';
 import JellyButton from '~/components/JellyButton.astro';
-import { getClassSlots, getCourses, getDeadlineItems, getSettings } from '~/lib/content';
+import { getClassSlots, getCourses, getDeadlineItems, getEvents, getSettings } from '~/lib/content';
 import { weekTimetable, workloadForecast } from '~/lib/derive';
 import { DAY_NAMES, formatLocalDate } from '~/lib/labels';
-import { addDays, athensDateKey, formatAthens } from '~/lib/time';
+import { addDays, athensDateKey, formatAthens, weekdayOf } from '~/lib/time';
 import { courseUrl, url } from '~/lib/url';
 
 const now = new Date();
 const today = athensDateKey(now);
-const [slots, deadlines, settings, courses] = await Promise.all([getClassSlots(), getDeadlineItems(), getSettings(), getCourses()]);
+const [slots, deadlines, settings, courses, events] = await Promise.all([
+  getClassSlots(),
+  getDeadlineItems(),
+  getSettings(),
+  getCourses(),
+  getEvents(),
+]);
 const currentCourses = courses.filter((c) => c.data.status === 'current').length;
 
 const week = weekTimetable(slots, now).map((d) => ({
   ...d,
   deadlines: deadlines.filter((x) => athensDateKey(x.due) === d.date).sort((a, b) => a.due.getTime() - b.due.getTime()),
+  events: events.filter((e) => athensDateKey(e.start) === d.date),
 }));
 const later = workloadForecast(deadlines, now, 6).slice(1); // the five weeks after this one
 const horizon = addDays(week[0]!.date, 42);
 const holidays = settings.holidays.filter((h) => (h.end ?? h.start) >= today && h.start < horizon);
+const nextWeek = addDays(week[0]!.date, 7);
+const laterEvents = events.filter((e) => athensDateKey(e.start) >= nextWeek && athensDateKey(e.start) < horizon);
 
 const feedPath = url('calendar.ics');
 const feedUrl = new URL(feedPath, Astro.site).href;
 const webcal = feedUrl.replace(/^https?:/, 'webcal:');
 const short = (key: string) => formatLocalDate(key).replace(/\s\d{4}$/, '');
-const feedContents = settings.semesters.length > 0 ? 'οι προθεσμίες, τα μαθήματα και οι αργίες' : 'οι προθεσμίες και οι αργίες';
+const feedContents =
+  settings.semesters.length > 0 ? 'οι προθεσμίες, τα μαθήματα, οι εκδηλώσεις και οι αργίες' : 'οι προθεσμίες, οι εκδηλώσεις και οι αργίες';
 const timeOf = (d: Date) => formatAthens(d, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
 ---
 
@@ -56,7 +66,7 @@ const timeOf = (d: Date) => formatAthens(d, { hour: '2-digit', minute: '2-digit'
                 {DAY_NAMES[d.day]} <span class="date">{short(d.date)}</span>
                 {d.isToday && <span class="today-chip">Σήμερα</span>}
               </p>
-              {d.slots.length === 0 && d.deadlines.length === 0 ? (
+              {d.slots.length === 0 && d.deadlines.length === 0 && d.events.length === 0 ? (
                 <p class="nothing">—</p>
               ) : (
                 <ul class="events" role="list">
@@ -75,6 +85,15 @@ const timeOf = (d: Date) => formatAthens(d, { hour: '2-digit', minute: '2-digit'
                     <li class="deadline" style={`--accent:${x.course.accent}`}>
                       <span class="time">Προθεσμία {timeOf(x.due)}</span>
                       <a href={courseUrl(x.course.slug)}>{x.title}</a>
+                    </li>
+                  ))}
+                  {d.events.map((e) => (
+                    <li class="event">
+                      <span class="time">
+                        {timeOf(e.start)}–{timeOf(e.end)}
+                      </span>
+                      <span>{e.title}</span>
+                      {e.location && <span class="muted">{e.location}</span>}
                     </li>
                   ))}
                 </ul>
@@ -97,10 +116,27 @@ const timeOf = (d: Date) => formatAthens(d, { hour: '2-digit', minute: '2-digit'
     <section class="panel block" aria-labelledby="later-title">
       <h2 id="later-title">Τις επόμενες εβδομάδες</h2>
       {
-        later.every((w) => w.count === 0) && holidays.length === 0 ? (
-          <p class="muted">Καμία προθεσμία ή αργία τις επόμενες εβδομάδες.</p>
+        later.every((w) => w.count === 0) && holidays.length === 0 && laterEvents.length === 0 ? (
+          <p class="muted">Καμία προθεσμία, εκδήλωση ή αργία τις επόμενες εβδομάδες.</p>
         ) : (
           <div class="weeks">
+            {laterEvents.length > 0 && (
+              <section aria-labelledby="events-title">
+                <h3 id="events-title">Εκδηλώσεις</h3>
+                <ul class="holidays" role="list">
+                  {laterEvents.map((e) => (
+                    <li>
+                      <span class="strong">{e.title}</span>{' '}
+                      <span class="muted">
+                        {DAY_NAMES[weekdayOf(athensDateKey(e.start))]} {short(athensDateKey(e.start))}, {timeOf(e.start)}–
+                        {timeOf(e.end)}
+                        {e.location && ` · ${e.location}`}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
             {holidays.length > 0 && (
               <section aria-labelledby="holidays-title">
                 <h3 id="holidays-title">Αργίες</h3>
@@ -260,6 +296,11 @@ const timeOf = (d: Date) => formatAthens(d, { hour: '2-digit', minute: '2-digit'
 
   .deadline {
     border-left-style: dashed !important;
+  }
+
+  .event {
+    border-left-color: var(--link) !important;
+    border-left-style: dotted !important;
   }
 
   .time {

@@ -2,8 +2,9 @@
  * The calendar feed (/calendar.ics) — iCalendar, RFC 5545, written by hand.
  *
  * Phones and calendar apps subscribe to this URL and re-read it, so students
- * see deadlines (with a reminder a day before), weekly classes and holidays
- * next to their own events.
+ * see deadlines (with a reminder a day before), weekly classes, holidays and
+ * one-off events from announcements (reminder an hour before) next to their
+ * own events.
  *
  * Format details that matter (and are unit-tested):
  *  - lines end in CRLF and are "folded" at 75 bytes — counted in UTF-8 bytes,
@@ -31,6 +32,15 @@ export interface Holiday {
   end?: string | undefined;
 }
 
+/** A one-off event from an announcement, e.g. a meeting. */
+export interface EventItem {
+  id: string;
+  title: string;
+  start: Date;
+  end: Date;
+  location?: string | undefined;
+}
+
 export interface CalendarInput {
   now: Date;
   /** Absolute site URL, e.g. https://alexman39.github.io/College-Compass/ */
@@ -40,6 +50,7 @@ export interface CalendarInput {
   deadlines: DeadlineItem[];
   classes: ClassSeries[];
   holidays: Holiday[];
+  events: EventItem[];
 }
 
 const TYPE_LABEL: Record<DeadlineItem['type'], string> = {
@@ -137,6 +148,25 @@ export function buildCalendar(input: CalendarInput): string {
       `DTEND;VALUE=DATE:${addDays(h.end ?? h.start, 1).replaceAll('-', '')}`,
       `SUMMARY:${escapeText(h.name)}`,
       'TRANSP:TRANSPARENT',
+      'END:VEVENT',
+    );
+  }
+
+  for (const e of input.events) {
+    lines.push(
+      'BEGIN:VEVENT',
+      `UID:event-${e.id.replaceAll('/', '-')}@${host}`,
+      `DTSTAMP:${stamp}`,
+      `DTSTART:${utcStamp(e.start)}`,
+      `DTEND:${utcStamp(e.end)}`,
+      `SUMMARY:${escapeText(e.title)}`,
+      ...(e.location ? [`LOCATION:${escapeText(e.location)}`] : []),
+      `URL:${input.siteUrl}`,
+      'BEGIN:VALARM',
+      'ACTION:DISPLAY',
+      `DESCRIPTION:${escapeText(`Σε μία ώρα: ${e.title}`)}`,
+      'TRIGGER:-PT1H',
+      'END:VALARM',
       'END:VEVENT',
     );
   }
