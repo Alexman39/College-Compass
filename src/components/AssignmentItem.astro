@@ -21,9 +21,14 @@ interface Props {
   level?: 2 | 3 | 4;
   /** Only needed when the same assignment appears twice on one page. */
   idSuffix?: string;
+  /**
+   * The course is archived: keep the dates, but drop the live status pill.
+   * A deadline from a past year isn't "overdue", it's history.
+   */
+  archived?: boolean;
 }
 
-const { assignment, level = 3, idSuffix } = Astro.props;
+const { assignment, level = 3, idSuffix, archived = false } = Astro.props;
 const { title, teaser, type, released, due, weight, link, submission, answers } = assignment.data;
 const { Content } = await render(assignment);
 const hasBrief = Boolean(assignment.body?.trim());
@@ -50,7 +55,7 @@ const anchor = `task-${assignment.id.replaceAll('/', '-')}${idSuffix ? `-${idSuf
       <span class="type">{ASSIGNMENT_TYPES[type]}</span>
       <Heading class="title">{title}</Heading>
     </div>
-    <StatusPill status={status} label={statusLabel(status, { released, due }, now)} />
+    {!archived && <StatusPill status={status} label={statusLabel(status, { released, due }, now)} />}
   </header>
 
   <dl class="facts">

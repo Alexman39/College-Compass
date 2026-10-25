@@ -114,7 +114,7 @@ const here = courseUrl(c.slug);
                 <h2 id="deadlines">Εργασίες με προθεσμία</h2>
                 <div class="stack">
                   {withDeadline.map((a) => (
-                    <AssignmentItem assignment={a} />
+                    <AssignmentItem assignment={a} archived={c.status === 'archived'} />
                   ))}
                 </div>
               </section>
@@ -127,7 +127,7 @@ const here = courseUrl(c.slug);
                 <h2 id="practice">Ασκήσεις εξάσκησης</h2>
                 <div class="stack">
                   {practice.map((a) => (
-                    <AssignmentItem assignment={a} />
+                    <AssignmentItem assignment={a} archived={c.status === 'archived'} />
                   ))}
                 </div>
               </section>
