@@ -93,7 +93,7 @@ const heading = `Εβδομάδα ${l.week}: ${l.title}`;
             <h2 id="tasks">Ασκήσεις της εβδομάδας</h2>
             <div class="stack">
               {tasks.map((a) => (
-                <AssignmentItem assignment={a} />
+                <AssignmentItem assignment={a} archived={c.status === 'archived'} />
               ))}
             </div>
           </section>
