@@ -149,6 +149,14 @@ const anchor = `task-${assignment.id.replaceAll('/', '-')}${idSuffix ? `-${idSuf
     scroll-margin-top: 5rem;
   }
 
+  /* Grid items default to min-width: auto, so a wide table in the brief
+   * would stretch the whole card past the screen edge. 0 lets the table
+   * scroll inside its own box instead (same fix as on lesson pages). */
+  .assignment,
+  .assignment > * {
+    min-width: 0;
+  }
+
   .assignment:target {
     box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent), transparent 55%);
   }
