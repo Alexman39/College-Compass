@@ -190,9 +190,17 @@ const heading = `Εβδομάδα ${l.week}: ${l.title}`;
     gap: var(--s-2) var(--s-4);
   }
 
+  /* minmax(0, 1fr): without it, one long word in the title (e.g.
+   * «Χρονοπρογραμματισμός») sets the column's minimum width and pushes the
+   * heading past the screen edge on phones. Now the word wraps instead. */
   .head {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--s-2);
+  }
+
+  .head h1 {
+    hyphens: auto;
   }
 
   .kicker {
