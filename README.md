@@ -119,6 +119,13 @@ served under `/College-Compass/`. Every internal link goes through `url()` in
 `src/lib/url.ts`, so moving to a custom domain is a one-line change in
 `astro.config.mjs`.
 
+### Old addresses
+
+The first version of the site used addresses like `/webTechnologies.html`.
+GitHub Pages can't do server redirects, so each old address has a tiny page in
+`public/` (same path) that forwards the visitor to the new page. The links are
+relative, so they keep working if the site moves to another base path.
+
 ---
 
 Built by students, for students. This is an unofficial guide: for official
