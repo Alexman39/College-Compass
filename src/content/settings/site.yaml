@@ -16,8 +16,10 @@ semesters:
   - { semester: 1, start: 2026-10-12, end: 2027-01-15 }
   - { semester: 2, start: 2027-02-15, end: 2027-05-21 }
 
-# National holidays and breaks (no classes). Regional holidays depend on the
-# campus and are not included.
+# National holidays and breaks (no classes).
+# Campus: Athens (Ακαδημίας, near Syntagma). Athens' local holiday, Αγίου
+# Διονυσίου Αρεοπαγίτου (3 Oct), falls before teaching starts in 2026 (and on
+# a Sunday in 2027), so it doesn't affect classes this year.
 holidays:
   - { name: 28η Οκτωβρίου, start: 2026-10-28 }
   - { name: Διακοπές Χριστουγέννων, start: 2026-12-21, end: 2027-01-01 }
