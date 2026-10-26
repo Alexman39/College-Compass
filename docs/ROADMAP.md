@@ -143,3 +143,29 @@ checks, and Lighthouse verified in both themes.
 ### Phase B — Admin CMS
 Sveltia CMS at `/admin` (Git-based, `public/admin/config.yml`), with GitHub OAuth
 through a small Cloudflare Worker, so content can be edited without touching files.
+
+## Ideas for later (not planned yet)
+
+Noted on 27 October 2026. These are early ideas, not yet worked out, and none
+is scheduled. Each needs its own design pass and the owner's OK before any work
+starts.
+
+### Study timer (Pomodoro)
+A built-in Pomodoro timer for study sessions (e.g. 25 minutes of focus, then a
+short break), available while reading a lesson. To decide: where it lives
+(a floating widget, part of the Start menu or a page of its own), whether
+it keeps running across pages, and how it signals the end of a session
+(sound, a gentle visual cue, or both, respecting reduced-motion settings).
+
+### Background sound
+A choice of background music or noise to go with the timer (e.g. rain, white
+noise, calm music). To decide: which sounds, and where they come from (the
+licence must allow re-hosting, or they are generated in the browser), volume
+and on/off controls, and keeping playback opt-in so nothing starts on its own.
+
+### Focus mode
+A reading mode that strips the page down to the text: no sky background, no
+gadgets or decorative chrome, calm colours and comfortable spacing, so the eye
+can rest on the information without strain. To decide: what it hides, how it
+looks in light and dark themes, how it relates to the existing «Πλήρες πλάτος»
+switch, and whether the choice is remembered like the theme.
