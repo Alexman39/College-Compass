@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 416" width="500" height="416" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Το ίδιο δένδρο με Alpha-Beta</title>
+  <rect width="500" height="416" fill="#ffffff"/>
+  <text x="16" y="26" text-anchor="start" font-size="15" font-weight="700" fill="#4a5a65">▲ MAX</text>
+  <text x="16" y="46" text-anchor="start" font-size="15" font-weight="700" fill="#4a5a65">▼ MIN</text>
+  <line x1="250" y1="82" x2="92.5" y2="138" stroke="#7b8a94" stroke-width="2"/>
+  <line x1="250" y1="82" x2="250" y2="138" stroke="#7b8a94" stroke-width="2"/>
+  <line x1="250" y1="82" x2="407.5" y2="138" stroke="#841387" stroke-width="4"/>
+  <line x1="92.5" y1="182" x2="40" y2="262" stroke="#7b8a94" stroke-width="2"/>
+  <line x1="92.5" y1="182" x2="92.5" y2="262" stroke="#7b8a94" stroke-width="2"/>
+  <line x1="92.5" y1="182" x2="145" y2="262" stroke="#7b8a94" stroke-width="2"/>
+  <line x1="250" y1="182" x2="197.5" y2="262" stroke="#7b8a94" stroke-width="2"/>
+  <line x1="250" y1="182" x2="250" y2="262" stroke="#b9c3c9" stroke-width="2" stroke-dasharray="6 5"/>
+  <line x1="250" y1="182" x2="302.5" y2="262" stroke="#b9c3c9" stroke-width="2" stroke-dasharray="6 5"/>
+  <line x1="407.5" y1="182" x2="355" y2="262" stroke="#7b8a94" stroke-width="2"/>
+  <line x1="407.5" y1="182" x2="407.5" y2="262" stroke="#7b8a94" stroke-width="2"/>
+  <line x1="407.5" y1="182" x2="460" y2="262" stroke="#7b8a94" stroke-width="2"/>
+  <line x1="244" y1="212" x2="308.5" y2="212" stroke="#c62828" stroke-width="3" stroke-linecap="round"/>
+  <polygon points="250,36 218,82 282,82" fill="#f3e6f4" stroke="#841387" stroke-width="3"/>
+  <text x="250" y="76" text-anchor="middle" font-size="22" font-weight="800" fill="#0c2636">5</text>
+  <polygon points="60.5,138 124.5,138 92.5,184" fill="#eef3f6" stroke="#4a5a65" stroke-width="2.5"/>
+  <text x="92.5" y="161" text-anchor="middle" font-size="22" font-weight="800" fill="#0c2636">4</text>
+  <text x="136.5" y="162" text-anchor="middle" font-size="19" font-weight="700" fill="#4a5a65">A</text>
+  <polygon points="218,138 282,138 250,184" fill="#eef3f6" stroke="#4a5a65" stroke-width="2.5"/>
+  <text x="250" y="161" text-anchor="middle" font-size="22" font-weight="800" fill="#0c2636">≤3</text>
+  <text x="294" y="162" text-anchor="middle" font-size="19" font-weight="700" fill="#4a5a65">B</text>
+  <polygon points="375.5,138 439.5,138 407.5,184" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="407.5" y="161" text-anchor="middle" font-size="22" font-weight="800" fill="#0c2636">5</text>
+  <text x="451.5" y="162" text-anchor="middle" font-size="19" font-weight="700" fill="#841387">C</text>
+  <rect x="18" y="262" width="44" height="38" rx="6" fill="#ffffff" stroke="#7b8a94" stroke-width="2"/>
+  <text x="40" y="288" text-anchor="middle" font-size="20" font-weight="700" fill="#0c2636">6</text>
+  <rect x="70.5" y="262" width="44" height="38" rx="6" fill="#ffffff" stroke="#7b8a94" stroke-width="2"/>
+  <text x="92.5" y="288" text-anchor="middle" font-size="20" font-weight="700" fill="#0c2636">8</text>
+  <rect x="123" y="262" width="44" height="38" rx="6" fill="#ffffff" stroke="#7b8a94" stroke-width="2"/>
+  <text x="145" y="288" text-anchor="middle" font-size="20" font-weight="700" fill="#0c2636">4</text>
+  <rect x="175.5" y="262" width="44" height="38" rx="6" fill="#ffffff" stroke="#7b8a94" stroke-width="2"/>
+  <text x="197.5" y="288" text-anchor="middle" font-size="20" font-weight="700" fill="#0c2636">3</text>
+  <rect x="228" y="262" width="44" height="38" rx="6" fill="#f4f6f7" stroke="#b9c3c9" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="250" y="288" text-anchor="middle" font-size="20" font-weight="700" fill="#5b6a73">11</text>
+  <rect x="280.5" y="262" width="44" height="38" rx="6" fill="#f4f6f7" stroke="#b9c3c9" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="302.5" y="288" text-anchor="middle" font-size="20" font-weight="700" fill="#5b6a73">7</text>
+  <rect x="333" y="262" width="44" height="38" rx="6" fill="#ffffff" stroke="#7b8a94" stroke-width="2"/>
+  <text x="355" y="288" text-anchor="middle" font-size="20" font-weight="700" fill="#0c2636">9</text>
+  <rect x="385.5" y="262" width="44" height="38" rx="6" fill="#ffffff" stroke="#7b8a94" stroke-width="2"/>
+  <text x="407.5" y="288" text-anchor="middle" font-size="20" font-weight="700" fill="#0c2636">5</text>
+  <rect x="438" y="262" width="44" height="38" rx="6" fill="#ffffff" stroke="#7b8a94" stroke-width="2"/>
+  <text x="460" y="288" text-anchor="middle" font-size="20" font-weight="700" fill="#0c2636">10</text>
+  <text x="40" y="322" text-anchor="middle" font-size="15" font-weight="700" fill="#4a5a65">1ο</text>
+  <text x="92.5" y="322" text-anchor="middle" font-size="15" font-weight="700" fill="#4a5a65">2ο</text>
+  <text x="145" y="322" text-anchor="middle" font-size="15" font-weight="700" fill="#4a5a65">3ο</text>
+  <text x="197.5" y="322" text-anchor="middle" font-size="15" font-weight="700" fill="#4a5a65">4ο</text>
+  <text x="355" y="322" text-anchor="middle" font-size="15" font-weight="700" fill="#4a5a65">5ο</text>
+  <text x="407.5" y="322" text-anchor="middle" font-size="15" font-weight="700" fill="#4a5a65">6ο</text>
+  <text x="460" y="322" text-anchor="middle" font-size="15" font-weight="700" fill="#4a5a65">7ο</text>
+  <text x="250" y="352" text-anchor="middle" font-size="17" font-weight="400" fill="#4a5a65">A = 4 → α = 4. Στο B το 3 ≤ α → κλάδεμα.</text>
+  <text x="250" y="376" text-anchor="middle" font-size="17" font-weight="400" fill="#4a5a65">C = 5 > 4 → α = 5. Παίζει C, τιμή 5.</text>
+  <text x="250" y="400" text-anchor="middle" font-size="17" font-weight="400" fill="#4a5a65">7 φύλλα αντί για 9: τα 11 και 7 δεν αξιολογούνται.</text>
+</svg>

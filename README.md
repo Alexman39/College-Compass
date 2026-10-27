@@ -37,6 +37,7 @@ in English.
 - Plain CSS with custom properties as design tokens (no framework)
 - Small vanilla TypeScript scripts for interactivity
 - Pagefind for static search
+- KaTeX for math, typeset at build time
 - Vitest for unit tests
 - GitHub Pages via GitHub Actions
 
@@ -99,6 +100,24 @@ least 4.5:1. `npm test` checks this.
 
 **Lecturer material.** Slides and PDFs owned by lecturers are never re-hosted
 here; link to Moodle instead.
+
+### Math and diagrams in lessons
+
+Math is typeset with [KaTeX](https://katex.org/) when the site is built (no
+JavaScript in the browser, fonts bundled with the site). Write it as:
+
+- inline: a code span with dollar signs, e.g. `` `$x^2 + y^2$` ``;
+- on its own line: a fenced block with the language `math`.
+
+Plain `$…$` is deliberately **not** math, because some tasks contain prices
+like "$12.40". A typo in a formula fails the build and names the file. Keep
+words in the sentence and only symbols in the formula: KaTeX's fonts cannot
+draw Greek text.
+
+Diagrams go next to the lesson in an `images/` folder (e.g.
+`src/content/lessons/cn6005/images/`) and are referenced as
+`![description](./images/name.svg)`. The description is what screen readers
+read, so it should say what the diagram shows.
 
 ### Adding course material
 

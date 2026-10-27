@@ -255,6 +255,18 @@ pre {
   background: var(--panel-sunken);
 }
 
+/* Display math (KaTeX, see src/lib/markdown/math.ts). A formula wider
+ * than the screen scrolls inside its own box, like tables, instead of
+ * widening the page. */
+.prose .math-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.prose .math-display .katex-display {
+  margin: 0.5em 0;
+}
+
 .prose img {
   border-radius: var(--r-md);
   border: 1px solid var(--divider);

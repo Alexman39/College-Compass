@@ -5,6 +5,9 @@
  * The week's exercises follow the text, then previous/next links.
  */
 import { render } from 'astro:content';
+// KaTeX's stylesheet and fonts, bundled with the site (no CDN). Browsers only
+// download a math font when a formula on the page actually uses it.
+import 'katex/dist/katex.min.css';
 import Base from '~/layouts/Base.astro';
 import Breadcrumbs from '~/components/Breadcrumbs.astro';
 import AssignmentItem from '~/components/AssignmentItem.astro';
