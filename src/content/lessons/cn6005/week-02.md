@@ -2,6 +2,7 @@
 course: cn6005
 week: 2
 title: Τυφλή αναζήτηση
+description: "Τυφλή αναζήτηση με παραδείγματα: DFS, BFS, επαναληπτική εκβάθυνση, αναζήτηση διπλής κατεύθυνσης και Branch & Bound."
 date:
 tags: [search, dfs, bfs, iterative-deepening, branch-and-bound]
 ---

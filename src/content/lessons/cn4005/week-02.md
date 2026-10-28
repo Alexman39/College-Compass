@@ -2,6 +2,7 @@
 course: cn4005
 week: 2
 title: Διαχείριση πηγαίου κώδικα και ανάπτυξη λογισμικού
+description: "Πώς δουλεύουν πολλοί άνθρωποι στον ίδιο κώδικα: συστήματα ελέγχου εκδόσεων όπως το Git, και μια εισαγωγή στην ανάπτυξη λογισμικού."
 date:
 tags: [version-control, git, github, software-categories, cloud]
 ---

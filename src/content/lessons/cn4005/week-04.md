@@ -2,6 +2,7 @@
 course: cn4005
 week: 4
 title: Τεχνολογία απαιτήσεων
+description: "Τεχνολογία απαιτήσεων: τι κάνει μια απαίτηση καλή, ιεράρχηση με MoSCoW και κατηγοριοποίηση με το ολιστικό μοντέλο και το FURPS+."
 date:
 tags: [requirements, moscow, furps, stakeholders]
 ---

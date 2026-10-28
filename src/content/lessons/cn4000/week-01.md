@@ -2,6 +2,7 @@
 course: cn4000
 week: 1
 title: UML
+description: "Πώς διαβάζεις ένα UML Class Diagram βήμα-βήμα: κλάσεις, χαρακτηριστικά, ορατότητα, μέθοδοι και σχέσεις, και πώς γίνεται κώδικας Java."
 date:
 tags: [uml, class-diagrams, java]
 ---

@@ -2,6 +2,7 @@
 course: cn4001
 week: 4
 title: Είσοδος από τον χρήστη με τον Scanner
+description: "Είσοδος από τον χρήστη στη Java με τον Scanner: ποια μέθοδος για κάθε τύπο, έλεγχος εισόδου, δεκαδικοί με Locale και πολλές τιμές σε μία γραμμή."
 date:
 tags: [java, scanner, input-validation, locale]
 ---

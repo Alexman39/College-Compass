@@ -2,6 +2,7 @@
 course: cn4005
 week: 8
 title: Σχεδιασμός ενός Agile έργου και κόστος
+description: "Σχεδιασμός ενός Agile έργου: από το έργο στα σπριντ, user stories και product backlog, και εκτίμηση του κόστους."
 date:
 tags: [agile, scrum, sprints, user-stories, cost-estimation]
 ---

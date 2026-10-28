@@ -2,6 +2,7 @@
 course: cn4005
 week: 1
 title: Μηχανική λογισμικού και πληροφοριακά συστήματα
+description: "Η κρίση λογισμικού, τι είναι λογισμικό και μηχανική λογισμικού, και πώς τα πληροφοριακά συστήματα στηρίζουν μια επιχείρηση."
 date:
 tags: [software-engineering, software-crisis, information-systems, ethics]
 ---

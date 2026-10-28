@@ -2,6 +2,7 @@
 course: cn6005
 week: 5
 title: Μηχανική μάθηση και εξόρυξη δεδομένων
+description: "Μηχανική μάθηση, επιχειρηματική ευφυΐα και εξόρυξη δεδομένων: τα δεδομένα και τρεις τεχνικές εξόρυξης με παραδείγματα."
 date:
 tags: [machine-learning, data-mining, business-intelligence, preprocessing, classification, clustering]
 ---

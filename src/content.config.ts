@@ -171,6 +171,11 @@ const lessons = defineCollection({
     course: reference('courses'),
     week: z.number().int().min(0).max(20),
     title: z.string().min(1),
+    /**
+     * One sentence (about 110–155 characters) on what the week covers. Shown
+     * under the title in search results and link previews.
+     */
+    description: blank(z.string().max(160)),
     /** Day of the lecture, if known. */
     date: blank(localDate),
     tags: z.array(z.string()).default([]),

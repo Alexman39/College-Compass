@@ -2,6 +2,7 @@
 course: cn6005
 week: 4
 title: Παίγνια δύο αντιπάλων
+description: "Παίγνια δύο αντιπάλων: το δένδρο παιχνιδιού, οι αλγόριθμοι Minimax και Alpha-Beta με διαγράμματα, και while, continue και break στο MATLAB."
 date:
 tags: [adversarial-search, game-tree, minimax, alpha-beta, matlab]
 ---

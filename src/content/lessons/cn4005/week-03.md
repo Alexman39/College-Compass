@@ -2,6 +2,7 @@
 course: cn4005
 week: 3
 title: Μεθοδολογίες ανάπτυξης λογισμικού
+description: "Ο κύκλος ζωής ανάπτυξης λογισμικού και οι μεθοδολογίες του: Waterfall, μοντέλο V, Spiral, RAD και Agile, με σύγκριση μεταξύ τους."
 date:
 tags: [sdlc, waterfall, v-model, spiral, rad, agile, scrum]
 ---
