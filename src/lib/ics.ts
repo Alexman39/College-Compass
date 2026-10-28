@@ -131,7 +131,7 @@ export function buildCalendar(input: CalendarInput): string {
       // UNTIL must be UTC when DTSTART has a TZID: the end of the last day.
       `RRULE:FREQ=WEEKLY;UNTIL=${utcStamp(new Date(athensMidnight(addDays(c.to, 1)).getTime() - 1000))}`,
       ...(exdates.length ? [`EXDATE;TZID=Europe/Athens:${exdates.map((d) => localStamp(d, c.slot.start)).join(',')}`] : []),
-      `SUMMARY:${escapeText(c.slot.course.title)}`,
+      `SUMMARY:${escapeText(c.slot.course.title + (c.slot.course.optional ? ' (προαιρετικό)' : ''))}`,
       ...(c.slot.room ? [`LOCATION:${escapeText(c.slot.room)}`] : []),
       `URL:${input.courseUrl(c.slot.course.slug)}`,
       'END:VEVENT',

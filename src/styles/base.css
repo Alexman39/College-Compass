@@ -255,6 +255,12 @@ pre {
   background: var(--panel-sunken);
 }
 
+/* A long bare URL (e.g. a Teams link) has no spaces to break at; let it
+ * wrap anywhere rather than widen the page on a phone. */
+.prose a {
+  overflow-wrap: anywhere;
+}
+
 /* Display math (KaTeX, see src/lib/markdown/math.ts). A formula wider
  * than the screen scrolls inside its own box, like tables, instead of
  * widening the page. */
