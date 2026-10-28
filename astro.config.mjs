@@ -5,12 +5,12 @@ import { scopedHeadingIds } from './src/lib/markdown/scoped-heading-ids.ts';
 import { scrollableTables } from './src/lib/markdown/scrollable-tables.ts';
 import { mathFormulas } from './src/lib/markdown/math.ts';
 
-// Where the site is served from. To move to a custom domain later, change
-// `site` to e.g. 'https://compass.example.gr' and `base` to '/'. Every
-// internal link goes through src/lib/url.ts, so nothing else has to change.
+// Where the site is served from: its own domain, collegecompass.gr, on
+// GitHub Pages (custom domain set in Settings → Pages). Every internal link
+// goes through src/lib/url.ts, so moving it again is a change here only.
 export default defineConfig({
-  site: 'https://alexman39.github.io',
-  base: '/College-Compass/',
+  site: 'https://collegecompass.gr',
+  base: '/',
   // Every page is built as /path/index.html, so URLs always end in "/".
   // Keeping both settings in agreement avoids dev/prod differences.
   trailingSlash: 'always',

@@ -43,7 +43,7 @@ export interface EventItem {
 
 export interface CalendarInput {
   now: Date;
-  /** Absolute site URL, e.g. https://alexman39.github.io/College-Compass/ */
+  /** Absolute site URL, e.g. https://collegecompass.gr/ */
   siteUrl: string;
   /** Absolute URL of a course page, given the course slug. */
   courseUrl: (slug: string) => string;
