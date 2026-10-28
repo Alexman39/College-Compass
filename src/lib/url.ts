@@ -1,15 +1,15 @@
 /**
  * Build a site-internal URL that respects Astro's `base` setting.
  *
- * The site currently lives at /College-Compass/ on GitHub Pages, so a plain
- * href="/upcoming/" would point outside it. Always write links as
- * url('upcoming') or url('/courses/cn4003/') and this adds the base prefix.
+ * The site lives at the root of collegecompass.gr today, but it has lived
+ * under /College-Compass/ before. Always write links as url('upcoming') or
+ * url('/courses/cn4003/'), so they follow `base` wherever the site moves.
  *
  * Paths get a trailing slash (matching `trailingSlash: 'always'`) unless they
  * look like a file (contain a dot in the last segment, e.g. "calendar.ics")
  * or carry a #hash / ?query.
  */
-const BASE = import.meta.env.BASE_URL; // e.g. "/College-Compass/" — always ends in "/"
+const BASE = import.meta.env.BASE_URL; // e.g. "/" or "/College-Compass/" — always ends in "/"
 
 export function url(path = ''): string {
   const clean = path.replace(/^\/+/, '');

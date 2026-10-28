@@ -47,13 +47,13 @@ Requires Node.js 24 (see `.nvmrc`).
 
 ```sh
 npm install
-npm run dev      # http://localhost:4321/College-Compass/
+npm run dev      # http://localhost:4321/
 npm test         # unit tests
 npm run build    # type-check, build into dist/, post-build checks, search index
 npm run preview  # serve the built site
 ```
 
-`/College-Compass/styleguide/` shows every component in both themes.
+`/styleguide/` shows every component in both themes.
 
 ## Project structure
 
@@ -134,9 +134,10 @@ Every push and pull request runs type-checks, tests and a build, and uploads the
 site as a downloadable `site-preview` artifact. Deploying to GitHub Pages
 happens from `main` only, once the launch checklist in
 [docs/ROADMAP.md](docs/ROADMAP.md#launch-checklist) is done. The site is
-served under `/College-Compass/`. Every internal link goes through `url()` in
-`src/lib/url.ts`, so moving to a custom domain is a one-line change in
-`astro.config.mjs`.
+served at https://collegecompass.gr (GitHub Pages with a custom domain; the
+old `alexman39.github.io/College-Compass/` address forwards there). Every
+internal link goes through `url()` in `src/lib/url.ts`, so moving the site is
+a change to `site` and `base` in `astro.config.mjs`.
 
 ### Old addresses
 
