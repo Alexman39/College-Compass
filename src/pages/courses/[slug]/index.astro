@@ -26,7 +26,7 @@ interface Props {
 const { course } = Astro.props;
 const c = course.data;
 const [professor, weeks, assignments, resources] = await Promise.all([
-  getProfessor(c.professor.id),
+  c.professor ? getProfessor(c.professor.id) : undefined,
   getWeeks(course.id),
   getAssignments(course.id),
   getResources(course.id),
@@ -53,6 +53,7 @@ const here = courseUrl(c.slug);
         <ul class="chips" role="list">
           <li>{yearSemester(c.year, c.semester)}</li>
           {c.status === 'archived' ? <li>Αρχείο</li> : <li class="current">Τρέχον εξάμηνο</li>}
+          {c.optional && <li class="optional">Προαιρετικό μάθημα</li>}
         </ul>
         {c.summary && <p class="summary">{c.summary}</p>}
       </header>
@@ -139,16 +140,24 @@ const here = courseUrl(c.slug);
         <aside class="side" aria-label="Στοιχεία μαθήματος">
           <section class="card" aria-labelledby="professor">
             <h2 id="professor">Διδάσκων/ουσα</h2>
-            <p class="strong">{professor.data.name}</p>
             {
-              professor.data.email && (
-                <p>
-                  <a href={`mailto:${professor.data.email}`}>{professor.data.email}</a>
-                </p>
+              professor ? (
+                <>
+                  <p class="strong">{professor.data.name}</p>
+                  {professor.data.email && (
+                    <p>
+                      <a href={`mailto:${professor.data.email}`}>{professor.data.email}</a>
+                    </p>
+                  )}
+                  {professor.data.office_hours && <p>Ώρες γραφείου: {professor.data.office_hours}</p>}
+                  {!professor.data.email && !professor.data.office_hours && (
+                    <p class="muted" data-pagefind-ignore>Δεν έχουν προστεθεί στοιχεία επικοινωνίας.</p>
+                  )}
+                </>
+              ) : (
+                <p class="muted" data-pagefind-ignore>Θα ανακοινωθεί.</p>
               )
             }
-            {professor.data.office_hours && <p>Ώρες γραφείου: {professor.data.office_hours}</p>}
-            {!professor.data.email && !professor.data.office_hours && <p class="muted" data-pagefind-ignore>Δεν έχουν προστεθεί στοιχεία επικοινωνίας.</p>}
           </section>
 
           {
@@ -280,6 +289,10 @@ const here = courseUrl(c.slug);
 
   .chips .current {
     border-color: color-mix(in oklab, var(--st-done), transparent 40%);
+  }
+
+  .chips .optional {
+    border-color: var(--accent);
   }
 
   .summary {

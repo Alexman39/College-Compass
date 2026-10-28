@@ -27,6 +27,7 @@ const fallback = course.body?.trim() ? 'Επισκόπηση μαθήματος'
   <div class="head">
     <CourseIcon name={c.icon} size={20} />
     <span class="code">{c.code}</span>
+    {c.optional && <span class="now">Προαιρετικό</span>}
     {c.status === 'current' && <span class="now">Τώρα</span>}
   </div>
   <div class="body">
@@ -78,7 +79,7 @@ const fallback = course.body?.trim() ? 'Επισκόπηση μαθήματος'
     flex: 1;
   }
 
-  /* "Τώρα" chip: white on the accent's darkest shade, so it always passes. */
+  /* "Τώρα" / "Προαιρετικό" chips: white on the accent's darkest shade, so it always passes. */
   .now {
     padding: 0 var(--s-2);
     border-radius: var(--r-pill);

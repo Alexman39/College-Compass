@@ -45,6 +45,7 @@ const shortDate = (key: string) => formatLocalDate(key).replace(/\s\d{4}$/, '');
                   <a href={courseUrl(s.course.slug)} lang="en">
                     {s.course.title}
                   </a>
+                  {s.course.optional && <span class="optional">Προαιρετικό</span>}
                   {s.room && <span class="room">{s.room}</span>}
                 </li>
               ))}
@@ -131,5 +132,16 @@ const shortDate = (key: string) => formatLocalDate(key).replace(/\s\d{4}$/, '');
 
   .room {
     color: var(--text-muted);
+  }
+
+  /* Optional class (e.g. a free seminar): a quiet pill next to the title. */
+  .optional {
+    justify-self: start;
+    padding: 0 var(--s-2);
+    border: 1px solid var(--divider);
+    border-radius: var(--r-pill);
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
+    font-weight: 700;
   }
 </style>

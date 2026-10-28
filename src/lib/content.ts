@@ -73,7 +73,7 @@ async function runChecks(): Promise<void> {
 
   // ---- References ----------------------------------------------------------
   for (const c of courses) {
-    if (!professorIds.has(c.data.professor.id)) {
+    if (c.data.professor && !professorIds.has(c.data.professor.id)) {
       problems.push(
         `${where(c, 'courses')}: professor "${c.data.professor.id}" does not exist. ` +
           `Known professors: ${known(professorIds)}`,
@@ -252,7 +252,14 @@ export async function getWeeks(courseId: string): Promise<Week[]> {
 // ---------------------------------------------------------------------------
 
 export function courseRef(c: Course): CourseRef {
-  return { id: c.id, code: c.data.code, title: c.data.title_en, slug: c.data.slug, accent: c.data.accent };
+  return {
+    id: c.id,
+    code: c.data.code,
+    title: c.data.title_en,
+    slug: c.data.slug,
+    accent: c.data.accent,
+    ...(c.data.optional && { optional: true }),
+  };
 }
 
 /** Every assignment that has a deadline, with its course attached. */

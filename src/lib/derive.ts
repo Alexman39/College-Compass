@@ -27,6 +27,8 @@ export interface CourseRef {
   title: string;
   slug: string;
   accent: string;
+  /** An optional class (see `optional` in the course schema). */
+  optional?: boolean;
 }
 
 export interface ClassSlot {

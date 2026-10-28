@@ -78,6 +78,7 @@ const timeOf = (d: Date) => formatAthens(d, { hour: '2-digit', minute: '2-digit'
                       <a href={courseUrl(s.course.slug)} lang="en">
                         {s.course.title}
                       </a>
+                      {s.course.optional && <span class="optional">Προαιρετικό</span>}
                       {s.room && <span class="muted">{s.room}</span>}
                     </li>
                   ))}
@@ -301,6 +302,17 @@ const timeOf = (d: Date) => formatAthens(d, { hour: '2-digit', minute: '2-digit'
   .event {
     border-left-color: var(--link) !important;
     border-left-style: dotted !important;
+  }
+
+  /* Optional class (e.g. a free seminar): a quiet pill next to the title. */
+  .optional {
+    justify-self: start;
+    padding: 0 var(--s-2);
+    border: 1px solid var(--divider);
+    border-radius: var(--r-pill);
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
+    font-weight: 700;
   }
 
   .time {

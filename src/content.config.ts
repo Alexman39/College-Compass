@@ -127,7 +127,8 @@ const courses = defineCollection({
       slug: blank(slug),
       year: z.number().int().min(1).max(3),
       semester: z.number().int().min(1).max(2),
-      professor: reference('professors'),
+      /** Leave empty while the lecturer isn't known; the page says «Θα ανακοινωθεί». */
+      professor: blank(reference('professors')),
       schedule: z
         .array(
           z
@@ -152,6 +153,8 @@ const courses = defineCollection({
           error: 'Assessment weights must add up to 100',
         }),
       moodle_url: blank(z.url()),
+      /** An optional class offered to us (e.g. a free seminar), not part of the degree. */
+      optional: z.boolean().default(false),
       status: z.enum(['current', 'archived']),
     })
     .transform((c) => ({
