@@ -2,6 +2,7 @@
 course: cn4001
 week: 8
 title: Μέθοδοι, κλάσεις και αντικείμενα
+description: "Στατικές μέθοδοι και μια πρώτη ματιά στον αντικειμενοστραφή προγραμματισμό στη Java: κλάσεις, αντικείμενα και πώς συνδέονται."
 date:
 tags: [java, static-methods, oop, classes, objects, constructors]
 ---

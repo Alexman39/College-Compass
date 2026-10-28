@@ -2,6 +2,7 @@
 course: cn4001
 week: 6
 title: Βρόχοι και πίνακες
+description: "Βρόχοι for, while και do-while στη Java, break και continue, πίνακες και ο enhanced for, με ερωτήσεις αυτοαξιολόγησης."
 date:
 tags: [java, loops, break-continue, arrays]
 ---

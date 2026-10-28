@@ -2,6 +2,7 @@
 course: cn6000
 week: 1
 title: Ο Οδηγός της Πτυχιακής Εργασίας
+description: "Ο Οδηγός της Πτυχιακής Εργασίας: πώς οργανώνεται η χρονιά, τι βαθμολογείται, η κύρια έκθεση, παρουσίαση, poster και επιλογή θέματος."
 date:
 tags: [final-year-project, report-structure, formatting, supervisor]
 ---

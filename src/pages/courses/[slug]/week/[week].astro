@@ -51,7 +51,7 @@ const { Content } = await render(lesson);
 const heading = `Εβδομάδα ${l.week}: ${l.title}`;
 ---
 
-<Base title={`${heading} · ${c.title_en}`} description={`${c.title_en} — ${heading}`} searchable>
+<Base title={`${heading} · ${c.title_en}`} description={lesson.data.description ?? `${c.title_en} — ${heading}`} searchable>
   <div class="container page" style={`--accent:${c.accent}`}>
     <span hidden data-pagefind-filter="course">{c.code}</span>
     <span hidden data-pagefind-meta="kind">Μάθημα εβδομάδας</span>

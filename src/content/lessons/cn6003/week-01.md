@@ -2,6 +2,7 @@
 course: cn6003
 week: 1
 title: Εισαγωγικές έννοιες
+description: "Βασικές έννοιες ασφάλειας πληροφοριών: είδη επιθέσεων και απειλών, ο κύβος του McCumber, κίνδυνος και διαχείρισή του, και ποιοι επιτίθενται."
 date: 2026-10-23
 tags: [infosec, cia, attacks, threats, risk, mccumber, hackers, security-design]
 ---

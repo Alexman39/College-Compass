@@ -2,6 +2,7 @@
 course: cn6003
 week: 2
 title: Μορφές επιθέσεων, ευπάθειες δικτύων και δέντρα επιθέσεων
+description: "Ευπάθειες δικτύων, πρωτόκολλα και θύρες, έκθεση θυρών και DMZ, γνωστά πρωτόκολλα που εκτίθενται και δέντρα επιθέσεων (attack trees)."
 date: 2026-10-30
 tags: [vulnerabilities, protocols, ports, dmz, attack-trees, threat-modeling]
 ---

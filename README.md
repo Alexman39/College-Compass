@@ -139,6 +139,23 @@ old `alexman39.github.io/College-Compass/` address forwards there). Every
 internal link goes through `url()` in `src/lib/url.ts`, so moving the site is
 a change to `site` and `base` in `astro.config.mjs`.
 
+### Search engines and link previews
+
+- `sitemap-index.xml` lists every page (`@astrojs/sitemap`), and
+  `robots.txt` points to it. A page marked `noindex` (only `/styleguide/`)
+  must also be left out in the sitemap `filter` in `astro.config.mjs`.
+- Every page gets a title, a description, a canonical URL and Open Graph
+  tags from `src/layouts/Base.astro`; the home page also carries `WebSite`
+  structured data so results show the site's name.
+- Lessons: write a `description` in the front-matter, one sentence of about
+  110–155 characters on what the week covers. It appears under the title in
+  search results.
+- The preview card for shared links is `public/og-image.png`
+  (1200×630), drawn from `scripts/og-image.html`.
+- Google Search Console (a Domain property, verified with a TXT record at
+  papaki) and Bing Webmaster Tools are where the sitemap is submitted and
+  indexing is checked.
+
 ### Old addresses
 
 The first version of the site used addresses like `/webTechnologies.html`.

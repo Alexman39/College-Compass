@@ -2,6 +2,7 @@
 course: cn4005
 week: 6
 title: Ιδεασμός και διαχείριση έργων
+description: "Ιδεασμός, δηλαδή πώς παράγονται δημιουργικές ιδέες για τους στόχους ενός έργου, και οι βάσεις της διαχείρισης έργων."
 date:
 tags: [ideation, project-management, gantt, critical-path, pert]
 ---

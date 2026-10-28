@@ -2,6 +2,7 @@
 course: cn6005
 week: 3
 title: Ευριστική αναζήτηση
+description: "Ευριστική αναζήτηση: ευριστικές συναρτήσεις, Greedy Best-First, Hill Climbing, Beam Search και ο αλγόριθμος A*, βήμα-βήμα σε ένα παράδειγμα."
 date:
 tags: [heuristics, best-first, hill-climbing, beam-search, a-star, matlab]
 ---

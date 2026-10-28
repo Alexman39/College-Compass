@@ -2,6 +2,7 @@
 course: cn4005
 week: 5
 title: Εργαλεία και διαδικασίες απαιτήσεων
+description: "Πώς βγάζεις απαιτήσεις από το κείμενο ενός πελάτη: συστημική ανάλυση κειμένου και ανάλυση απόψεων, με ερωτήσεις αυτοαξιολόγησης."
 date:
 tags: [requirements, textual-analysis, viewpoint-analysis]
 ---

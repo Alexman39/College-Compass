@@ -2,6 +2,7 @@
 course: cn4005
 week: 7
 title: Χρονοπρογραμματισμός στην πράξη με το ProjectLibre
+description: "Χρονοπρογραμματισμός έργου στο ProjectLibre: δραστηριότητες, εξαρτήσεις, πόροι, κόστος και παρακολούθηση, και PERT για αβέβαιες διάρκειες."
 date:
 tags: [project-management, gantt, projectlibre, pert, resources]
 ---

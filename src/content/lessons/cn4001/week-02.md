@@ -2,6 +2,7 @@
 course: cn4001
 week: 2
 title: Αποφάσεις και χειρισμός σφαλμάτων
+description: "Αποφάσεις στη Java με if, else if και switch, και χειρισμός σφαλμάτων με try, catch και finally, με ερωτήσεις αυτοαξιολόγησης."
 date:
 tags: [java, if-else, switch, exceptions]
 ---

@@ -46,6 +46,20 @@ const {
 
 const fullTitle = title ? `${title} · ${SITE}` : SITE;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+// Preview card for shared links (Viber, Messenger, Discord, LinkedIn…).
+// public/og-image.png; source in scripts/og-image.html.
+const ogImage = new URL(url('og-image.png'), Astro.site);
+const isHome = Astro.url.pathname === url();
+// Tells search engines the site's name, so results show "College Compass"
+// rather than the bare domain. Home page only, as Google asks.
+const siteData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE,
+  alternateName: 'collegecompass.gr',
+  url: new URL(url(), Astro.site).href,
+  inLanguage: 'el',
+};
 ---
 
 <!doctype html>
@@ -58,6 +72,18 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE} />
+    <meta property="og:locale" content={lang === 'en' ? 'en_GB' : 'el_GR'} />
+    <meta property="og:title" content={title ?? SITE} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="College Compass: Η πυξίδα σου για το πτυχίο" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {isHome && <script type="application/ld+json" set:html={JSON.stringify(siteData)} />}
     <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
     <meta name="theme-color" content="#3d9be0" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#03101b" media="(prefers-color-scheme: dark)" />
