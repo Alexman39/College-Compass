@@ -3,6 +3,7 @@ course: cn6003
 week: 3
 title: Κρυπτογραφία και στεγανογραφία
 description: "Κλασικοί αλγόριθμοι (Καίσαρας, αντικατάσταση, Vigenère) και πώς σπάνε, ο RSA βήμα-βήμα με αριθμούς, το SSL/TLS και η στεγανογραφία LSB σε εικόνες."
+date: 2026-11-06
 tags: [cryptography, caesar, substitution, vigenere, cryptanalysis, rsa, tls, steganography, lsb]
 ---
 
