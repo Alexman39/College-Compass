@@ -1,0 +1,88 @@
+/* Search explorer: what it adds to the shared demo look (water-jug.css). */
+
+/* Six algorithm buttons wrap on narrow screens instead of overflowing. */
+.sx-algs {
+  flex-wrap: wrap;
+}
+
+.sx .sx-algs button {
+  margin-left: -1px;
+  border-radius: 0;
+}
+
+.sx .sx-algs button:first-child {
+  margin-left: 0;
+  border-radius: var(--r-pill) 0 0 var(--r-pill);
+}
+
+.sx .sx-algs button:last-child {
+  border-radius: 0 var(--r-pill) var(--r-pill) 0;
+}
+
+.sx-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-2);
+}
+
+.sx-metric {
+  display: grid;
+  gap: 2px;
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--divider);
+  border-radius: var(--r-md);
+  background: var(--panel-solid);
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+}
+
+.sx-metric strong {
+  color: var(--text);
+  font-size: var(--fs-md);
+}
+
+.sx-node .name {
+  font-size: 17px;
+}
+
+.sx-cost {
+  fill: var(--text-muted);
+  font-size: 13px;
+  font-weight: 700;
+  paint-order: stroke;
+  stroke: var(--panel-solid);
+  stroke-width: 4px;
+}
+
+.sx-limit {
+  stroke: var(--st-overdue);
+  stroke-width: 2;
+  stroke-dasharray: 8 6;
+}
+
+.sx-limit-label {
+  fill: var(--st-overdue);
+  font-size: 13px;
+  font-weight: 800;
+  paint-order: stroke;
+  stroke: var(--panel-solid);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+
+.jug-node.pruned .box {
+  fill: color-mix(in oklab, var(--st-overdue) 18%, var(--panel-solid));
+  stroke: var(--st-overdue);
+  stroke-width: 3;
+  stroke-dasharray: 6 4;
+}
+
+.jug.is-full .sx-metrics {
+  font-size: var(--fs-xs);
+}
+
+@media (max-width: 48rem), (max-height: 32rem) {
+  .jug.is-full .sx-metrics {
+    display: none;
+  }
+}

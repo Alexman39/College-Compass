@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 562" width="500" height="562" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Η σκακιέρα με τους κόκκους ρυζιού</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="562" fill="#ffffff"/>
+  <rect x="26" y="20" width="56" height="56" fill="#eef3f6"/>
+  <text x="54" y="55" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">0</tspan></text>
+  <rect x="82" y="20" width="56" height="56" fill="#2b3a44"/>
+  <text x="110" y="55" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">1</tspan></text>
+  <rect x="138" y="20" width="56" height="56" fill="#eef3f6"/>
+  <text x="166" y="55" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">2</tspan></text>
+  <rect x="194" y="20" width="56" height="56" fill="#2b3a44"/>
+  <text x="222" y="55" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">3</tspan></text>
+  <rect x="250" y="20" width="56" height="56" fill="#eef3f6"/>
+  <text x="278" y="55" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">4</tspan></text>
+  <rect x="306" y="20" width="56" height="56" fill="#2b3a44"/>
+  <text x="334" y="55" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">5</tspan></text>
+  <rect x="362" y="20" width="56" height="56" fill="#eef3f6"/>
+  <text x="390" y="55" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">6</tspan></text>
+  <rect x="418" y="20" width="56" height="56" fill="#2b3a44"/>
+  <text x="446" y="55" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">7</tspan></text>
+  <rect x="26" y="76" width="56" height="56" fill="#2b3a44"/>
+  <text x="54" y="111" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">8</tspan></text>
+  <rect x="82" y="76" width="56" height="56" fill="#eef3f6"/>
+  <text x="110" y="111" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">9</tspan></text>
+  <rect x="138" y="76" width="56" height="56" fill="#2b3a44"/>
+  <text x="166" y="111" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">10</tspan></text>
+  <rect x="194" y="76" width="56" height="56" fill="#eef3f6"/>
+  <text x="222" y="111" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">11</tspan></text>
+  <rect x="250" y="76" width="56" height="56" fill="#2b3a44"/>
+  <text x="278" y="111" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">12</tspan></text>
+  <rect x="306" y="76" width="56" height="56" fill="#eef3f6"/>
+  <text x="334" y="111" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">13</tspan></text>
+  <rect x="362" y="76" width="56" height="56" fill="#2b3a44"/>
+  <text x="390" y="111" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">14</tspan></text>
+  <rect x="418" y="76" width="56" height="56" fill="#eef3f6"/>
+  <text x="446" y="111" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">15</tspan></text>
+  <rect x="26" y="132" width="56" height="56" fill="#eef3f6"/>
+  <text x="54" y="167" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">16</tspan></text>
+  <rect x="82" y="132" width="56" height="56" fill="#2b3a44"/>
+  <text x="110" y="167" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">17</tspan></text>
+  <rect x="138" y="132" width="56" height="56" fill="#eef3f6"/>
+  <text x="166" y="167" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">18</tspan></text>
+  <rect x="194" y="132" width="56" height="56" fill="#2b3a44"/>
+  <text x="222" y="167" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">19</tspan></text>
+  <rect x="250" y="132" width="56" height="56" fill="#eef3f6"/>
+  <text x="278" y="167" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">20</tspan></text>
+  <rect x="306" y="132" width="56" height="56" fill="#2b3a44"/>
+  <text x="334" y="167" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">21</tspan></text>
+  <rect x="362" y="132" width="56" height="56" fill="#eef3f6"/>
+  <text x="390" y="167" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">22</tspan></text>
+  <rect x="418" y="132" width="56" height="56" fill="#2b3a44"/>
+  <text x="446" y="167" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">23</tspan></text>
+  <rect x="26" y="188" width="56" height="56" fill="#2b3a44"/>
+  <text x="54" y="223" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">24</tspan></text>
+  <rect x="82" y="188" width="56" height="56" fill="#eef3f6"/>
+  <text x="110" y="223" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">25</tspan></text>
+  <rect x="138" y="188" width="56" height="56" fill="#2b3a44"/>
+  <text x="166" y="223" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">26</tspan></text>
+  <rect x="194" y="188" width="56" height="56" fill="#eef3f6"/>
+  <text x="222" y="223" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">27</tspan></text>
+  <rect x="250" y="188" width="56" height="56" fill="#2b3a44"/>
+  <text x="278" y="223" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">28</tspan></text>
+  <rect x="306" y="188" width="56" height="56" fill="#eef3f6"/>
+  <text x="334" y="223" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">29</tspan></text>
+  <rect x="362" y="188" width="56" height="56" fill="#2b3a44"/>
+  <text x="390" y="223" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">30</tspan></text>
+  <rect x="418" y="188" width="56" height="56" fill="#eef3f6"/>
+  <text x="446" y="223" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">31</tspan></text>
+  <rect x="26" y="244" width="56" height="56" fill="#eef3f6"/>
+  <text x="54" y="279" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">32</tspan></text>
+  <rect x="82" y="244" width="56" height="56" fill="#2b3a44"/>
+  <text x="110" y="279" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">33</tspan></text>
+  <rect x="138" y="244" width="56" height="56" fill="#eef3f6"/>
+  <text x="166" y="279" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">34</tspan></text>
+  <rect x="194" y="244" width="56" height="56" fill="#2b3a44"/>
+  <text x="222" y="279" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">35</tspan></text>
+  <rect x="250" y="244" width="56" height="56" fill="#eef3f6"/>
+  <text x="278" y="279" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">36</tspan></text>
+  <rect x="306" y="244" width="56" height="56" fill="#2b3a44"/>
+  <text x="334" y="279" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">37</tspan></text>
+  <rect x="362" y="244" width="56" height="56" fill="#eef3f6"/>
+  <text x="390" y="279" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">38</tspan></text>
+  <rect x="418" y="244" width="56" height="56" fill="#841387"/>
+  <text x="446" y="279" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">39</tspan></text>
+  <rect x="26" y="300" width="56" height="56" fill="#2b3a44"/>
+  <text x="54" y="335" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">40</tspan></text>
+  <rect x="82" y="300" width="56" height="56" fill="#eef3f6"/>
+  <text x="110" y="335" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">41</tspan></text>
+  <rect x="138" y="300" width="56" height="56" fill="#2b3a44"/>
+  <text x="166" y="335" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">42</tspan></text>
+  <rect x="194" y="300" width="56" height="56" fill="#eef3f6"/>
+  <text x="222" y="335" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">43</tspan></text>
+  <rect x="250" y="300" width="56" height="56" fill="#2b3a44"/>
+  <text x="278" y="335" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">44</tspan></text>
+  <rect x="306" y="300" width="56" height="56" fill="#eef3f6"/>
+  <text x="334" y="335" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">45</tspan></text>
+  <rect x="362" y="300" width="56" height="56" fill="#2b3a44"/>
+  <text x="390" y="335" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">46</tspan></text>
+  <rect x="418" y="300" width="56" height="56" fill="#eef3f6"/>
+  <text x="446" y="335" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">47</tspan></text>
+  <rect x="26" y="356" width="56" height="56" fill="#eef3f6"/>
+  <text x="54" y="391" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">48</tspan></text>
+  <rect x="82" y="356" width="56" height="56" fill="#2b3a44"/>
+  <text x="110" y="391" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">49</tspan></text>
+  <rect x="138" y="356" width="56" height="56" fill="#eef3f6"/>
+  <text x="166" y="391" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">50</tspan></text>
+  <rect x="194" y="356" width="56" height="56" fill="#2b3a44"/>
+  <text x="222" y="391" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">51</tspan></text>
+  <rect x="250" y="356" width="56" height="56" fill="#eef3f6"/>
+  <text x="278" y="391" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">52</tspan></text>
+  <rect x="306" y="356" width="56" height="56" fill="#2b3a44"/>
+  <text x="334" y="391" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">53</tspan></text>
+  <rect x="362" y="356" width="56" height="56" fill="#eef3f6"/>
+  <text x="390" y="391" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">54</tspan></text>
+  <rect x="418" y="356" width="56" height="56" fill="#2b3a44"/>
+  <text x="446" y="391" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">55</tspan></text>
+  <rect x="26" y="412" width="56" height="56" fill="#2b3a44"/>
+  <text x="54" y="447" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">56</tspan></text>
+  <rect x="82" y="412" width="56" height="56" fill="#eef3f6"/>
+  <text x="110" y="447" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">57</tspan></text>
+  <rect x="138" y="412" width="56" height="56" fill="#2b3a44"/>
+  <text x="166" y="447" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">58</tspan></text>
+  <rect x="194" y="412" width="56" height="56" fill="#eef3f6"/>
+  <text x="222" y="447" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">59</tspan></text>
+  <rect x="250" y="412" width="56" height="56" fill="#2b3a44"/>
+  <text x="278" y="447" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">60</tspan></text>
+  <rect x="306" y="412" width="56" height="56" fill="#eef3f6"/>
+  <text x="334" y="447" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">2<tspan dy="-8" font-size="12">61</tspan></text>
+  <rect x="362" y="412" width="56" height="56" fill="#2b3a44"/>
+  <text x="390" y="447" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">62</tspan></text>
+  <rect x="418" y="412" width="56" height="56" fill="#841387"/>
+  <text x="446" y="447" text-anchor="middle" font-size="18" font-weight="800" fill="#ffffff">2<tspan dy="-8" font-size="12">63</tspan></text>
+  <rect x="26" y="20" width="448" height="448" fill="none" stroke="#0c2636" stroke-width="2"/>
+  <text x="250" y="498" text-anchor="middle" font-size="15" font-weight="400" fill="#4a5a65">Τετράγωνο k: 2ᵏ⁻¹ κόκκοι. Τονισμένα το 40ό και το 64ο.</text>
+  <text x="250" y="522" text-anchor="middle" font-size="15" font-weight="700" fill="#0c2636">40ό: 2³⁹ ≈ 5,5 · 10¹¹ · 64ο: 2⁶³ ≈ 9,2 · 10¹⁸</text>
+  <text x="250" y="546" text-anchor="middle" font-size="15" font-weight="400" fill="#4a5a65">Σύνολο και στα 64: 2⁶⁴ − 1 ≈ 1,8 · 10¹⁹ κόκκοι.</text>
+</svg>
