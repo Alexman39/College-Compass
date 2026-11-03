@@ -1,0 +1,305 @@
+/* The water-jug DFS/BFS demo (src/scripts/demos/water-jug.ts). Built from
+ * the site's tokens, so it follows light/dark mode and the course accent. */
+
+.jug {
+  display: grid;
+  gap: var(--s-3);
+  margin-block: var(--s-4);
+  padding: var(--s-4);
+  border: 1px solid var(--divider);
+  border-top: 4px solid var(--accent);
+  border-radius: var(--r-md);
+  background: var(--panel-solid);
+}
+
+.jug > * {
+  min-width: 0;
+  margin: 0;
+}
+
+.jug-sub {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.jug .jug-h {
+  margin-top: var(--s-2);
+  font-size: var(--fs-md);
+}
+
+.jug-toolbar,
+.jug-controls,
+.jug-legend,
+.jug-mode {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.jug-toolbar {
+  justify-content: space-between;
+  gap: var(--s-3);
+}
+
+.jug button,
+.jug select {
+  min-height: 44px;
+  padding: 0 var(--s-4);
+  border: 1px solid var(--divider);
+  border-radius: var(--r-pill);
+  background: var(--panel-solid);
+  color: var(--text);
+  font-weight: 700;
+}
+
+.jug select {
+  padding-inline: var(--s-3);
+  cursor: pointer;
+}
+
+.jug button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* DFS / BFS as one segmented switch */
+.jug-seg {
+  display: inline-flex;
+}
+
+.jug-seg button:first-child {
+  border-radius: var(--r-pill) 0 0 var(--r-pill);
+}
+
+.jug-seg button:last-child {
+  margin-left: -1px;
+  border-radius: 0 var(--r-pill) var(--r-pill) 0;
+}
+
+.jug button[aria-pressed='true'],
+.jug button.primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--text-on-accent);
+}
+
+.jug-mode label {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+}
+
+.jug-panel {
+  display: grid;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-md);
+  background: var(--panel-sunken);
+}
+
+.jug-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s-2);
+}
+
+.jug-status {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+:root[data-theme='dark'] .jug-status {
+  color: var(--text);
+}
+
+.jug-progress {
+  height: 6px;
+  overflow: hidden;
+  border-radius: var(--r-pill);
+  background: var(--divider);
+}
+
+.jug-progress div {
+  width: 0;
+  height: 100%;
+  background: var(--accent);
+  transition: width var(--dur-med, 0.2s);
+}
+
+.jug-note {
+  display: block;
+  line-height: 1.6;
+}
+
+/* The tree and the table scroll inside their own box on narrow screens. */
+.jug-scroll {
+  overflow: auto;
+  border: 1px solid var(--divider);
+  border-radius: var(--r-md);
+}
+
+.jug-tree svg {
+  display: block;
+  width: 100%;
+  min-width: 640px;
+  height: auto;
+  background: var(--panel-solid);
+}
+
+.jug-edge {
+  stroke: var(--text-muted);
+  stroke-width: 1.5;
+  opacity: 0.5;
+}
+
+.jug-edge.child {
+  stroke: var(--st-soon);
+  opacity: 1;
+}
+
+.jug-edge.path {
+  stroke: var(--accent);
+  stroke-width: 3.5;
+  opacity: 1;
+}
+
+.jug-node .box {
+  fill: var(--panel-sunken);
+  stroke: var(--text-muted);
+  stroke-width: 1.2;
+}
+
+.jug-node.current .box {
+  fill: color-mix(in oklab, var(--accent) 18%, var(--panel-solid));
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.jug-node.child .box {
+  fill: color-mix(in oklab, var(--st-soon) 28%, var(--panel-solid));
+  stroke: var(--st-soon);
+}
+
+.jug-node.goal .box {
+  fill: color-mix(in oklab, var(--st-done) 28%, var(--panel-solid));
+  stroke: var(--st-done);
+  stroke-width: 2.5;
+}
+
+.jug-node .glass {
+  fill: var(--panel-solid);
+  stroke: var(--text);
+  stroke-width: 1.5;
+}
+
+.jug-node .water {
+  fill: var(--c-sky-500);
+}
+
+/* A halo in the background colour keeps labels readable where an edge
+ * passes behind them. */
+.jug-node .name,
+.jug-node .ml {
+  paint-order: stroke;
+  stroke: var(--panel-solid);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+.jug-node .name {
+  fill: var(--text);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.jug-node .ml {
+  fill: var(--text-muted);
+  font-size: 12px;
+}
+
+.jug-node .dot {
+  fill: var(--accent);
+  stroke: var(--panel-solid);
+  stroke-width: 2;
+}
+
+.jug-legend {
+  gap: var(--s-1) var(--s-4);
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+}
+
+.jug-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+}
+
+.jug-swatch {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid;
+  border-radius: 3px;
+}
+
+.jug-swatch.current {
+  border-color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 18%, var(--panel-solid));
+}
+
+.jug-swatch.child {
+  border-color: var(--st-soon);
+  background: color-mix(in oklab, var(--st-soon) 28%, var(--panel-solid));
+}
+
+.jug-swatch.goal {
+  border-color: var(--st-done);
+  background: color-mix(in oklab, var(--st-done) 28%, var(--panel-solid));
+}
+
+.jug-swatch.path {
+  height: 4px;
+  border: 0;
+  background: var(--accent);
+}
+
+.jug-table {
+  max-height: 28rem;
+}
+
+.jug-table table {
+  width: 100%;
+  min-width: 34rem;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.jug-table th,
+.jug-table td {
+  padding: var(--s-2) var(--s-3);
+  border-bottom: 1px solid var(--divider);
+  text-align: left;
+  vertical-align: top;
+}
+
+.jug-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--panel-sunken);
+}
+
+.jug-table tr.current td {
+  background: color-mix(in oklab, var(--accent) 12%, var(--panel-solid));
+}
+
+.jug-table tr.goal td {
+  background: color-mix(in oklab, var(--st-done) 18%, var(--panel-solid));
+  font-weight: 700;
+}
+
+.jug-table td.hidden-cell {
+  color: var(--text-muted);
+}
