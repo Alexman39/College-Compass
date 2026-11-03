@@ -105,7 +105,8 @@ function grid(id: ProblemId, label: string, rows: string[], goalName: string): P
         walls.push(cell);
         continue;
       }
-      nodes.push({ id: cell, label: cell, h: Math.abs(x - gx) + Math.abs(y - gy), x, y });
+      // Shown as <x,y>, like the book's tables (which write 34⁸ for <3,4> with h = 8).
+      nodes.push({ id: cell, label: `<${x},${y}>`, h: Math.abs(x - gx) + Math.abs(y - gy), x, y });
       next[cell] = MOVES.map(([dx, dy]) => [x + dx, y + dy] as const)
         .filter(([a, b]) => a >= 1 && a <= W && b >= 1 && b <= H && !wall(a, b))
         .map(([a, b]) => [`${a}-${b}`, 1]);

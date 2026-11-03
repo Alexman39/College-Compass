@@ -255,8 +255,8 @@ def maze_runs():
     assert not bok and (7, 5) not in bclosed and len(bclosed) == 18
     panels = (
         ('Greedy BestFS', f'βρίσκει το F · διαδρομή {len(gpath) - 1} βήματα · επέκτεινε {len(gclosed)} θέσεις', gpath, set(gclosed), ACC),
-        ('Hill Climbing', 'από το 6-3 ξαναγυρνά στο 7-3 (h = 2): πηγαινοέρχεται, δεν φτάνει ποτέ', hpath + [back], set(hpath), BAD),
-        ('Beam Search, N = 2', f'πετάει το 7-5 · χάνεται αριστερά · επέκτεινε {len(bclosed)}, δεν βρίσκει το F', None, set(bclosed), WARN))
+        ('Hill Climbing', 'από το <6,3> ξαναγυρνά στο <7,3> (h = 2): πηγαινοέρχεται, δεν φτάνει ποτέ', hpath + [back], set(hpath), BAD),
+        ('Beam Search, N = 2', f'πετάει το <7,5> · χάνεται αριστερά · επέκτεινε {len(bclosed)}, δεν βρίσκει το F', None, set(bclosed), WARN))
     for k, (title, note, path, seen, color) in enumerate(panels):
         y0 = 66 + k * 330
         b.append(text(x0 - 30, y0 - 36, title, 19, 800, color, 'start'))

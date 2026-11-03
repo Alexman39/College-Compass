@@ -35,6 +35,9 @@ const CELLS = 4; // frontier, closed, state, children
 // children (on screen the columns are frontier, closed, …), as in Week 2.
 const REVEAL = [1, 0, 2, 3];
 const CELL_NAMES = ['Κλειστό σύνολο', 'Μέτωπο', 'Κατάσταση', 'Παιδιά'];
+const SUP = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+/** 12 → ¹², for the book's notation <3,4>⁸. */
+const sup = (n: number) => [...String(n)].map((d) => SUP[Number(d)]).join('');
 
 function h<K extends keyof HTMLElementTagNameMap>(tag: K, attrs: Record<string, string> = {}, text?: string) {
   const e = document.createElement(tag);
@@ -58,8 +61,8 @@ const ABOUT: Record<AlgorithmId, string> = {
 };
 
 const NOTE: Record<ProblemId, string> = {
-  maze: 'Ο λαβύρινθος της διάλεξης (διαφάνεια 14): S = 5-5, F = 9-3, h = απόσταση Manhattan, κάθε κίνηση κοστίζει 1. Σειρά κινήσεων: αριστερά, πάνω, δεξιά, κάτω.',
-  book: 'Ο λαβύρινθος του βιβλίου (Σχήμα 4.5): S = 3-4, G = 7-8, h = απόσταση Manhattan, κάθε κίνηση κοστίζει 1. Ο Greedy BestFS αναπαράγει τον Πίνακα 4.1 του βιβλίου.',
+  maze: 'Ο λαβύρινθος της διάλεξης (διαφάνεια 14): S = <5,5>, F = <9,3>, h = απόσταση Manhattan, κάθε κίνηση κοστίζει 1. Σειρά κινήσεων: αριστερά, πάνω, δεξιά, κάτω.',
+  book: 'Ο λαβύρινθος του βιβλίου (Σχήμα 4.5): S = <3,4>, G = <7,8>, h = απόσταση Manhattan, κάθε κίνηση κοστίζει 1. Ο Greedy BestFS αναπαράγει τον Πίνακα 4.1 του βιβλίου.',
   roads: 'Το οδικό δίκτυο των σημειώσεων (δικό μας παράδειγμα). Αριθμοί στους δρόμους: κόστος· h = εκτίμηση της απόστασης ως το G.',
   ex1: 'Η Άσκηση 1 της διάλεξης (διαφάνεια 24). Δοκίμασε πρώτα μόνος σου και μετά έλεγξε εδώ. Τερματικοί κόμβοι: όσοι έχουν h = 0.',
   ex2: 'Η Άσκηση 2 της διάλεξης (διαφάνεια 25). Η διαφάνεια έχει δύο κόμβους «i» (h = 3 και h = 9)· είναι διαφορετικοί κόμβοι.',
@@ -72,11 +75,18 @@ export function mount(root: HTMLElement): void {
   let alg: AlgorithmId = isAlg(root.dataset.algorithm) && ALGORITHMS.find((a) => a.id === root.dataset.algorithm)!.problems.includes(prob) ? root.dataset.algorithm : 'GREEDY';
   let mode: 'row' | 'cell' = 'row';
   let step = 0;
+  const uid = Math.random().toString(36).slice(2, 8);
   let rows: Row[] = run(prob, alg);
   const P = () => problem(prob);
   const label = (id: string) => P().nodes.find((n) => n.id === id)!.label;
-  const value = (it: FrontierItem) => (alg === 'ASTAR' ? `${label(it.id)}(${it.g}+${hOf(P(), it.id)})` : `${label(it.id)}(${hOf(P(), it.id)})`);
-  const list = (xs: FrontierItem[]) => (xs.length ? `<${xs.map(value).join(', ')}>` : '∅');
+  // Mazes use the book's notation: <x,y> with h as an exponent, <3,4>⁸ (A*: g+h, <3,5>¹⁺⁷).
+  const value = (it: FrontierItem) => {
+    const hv = hOf(P(), it.id);
+    if (P().grid) return alg === 'ASTAR' ? `${label(it.id)}${sup(it.g)}⁺${sup(hv)}` : `${label(it.id)}${sup(hv)}`;
+    return alg === 'ASTAR' ? `${label(it.id)}(${it.g}+${hv})` : `${label(it.id)}(${hv})`;
+  };
+  const state = (id: string, g: number) => (P().grid ? value({ id, g }) : label(id));
+  const list = (xs: FrontierItem[]) => (xs.length ? `⟨${xs.map(value).join(', ')}⟩` : '∅');
   const set = (xs: string[]) => (xs.length ? `{${xs.map(label).join(', ')}}` : '∅');
 
   root.replaceChildren();
@@ -205,9 +215,13 @@ export function mount(root: HTMLElement): void {
     svg.setAttribute('viewBox', `0 0 ${g.w * cs + 40} ${g.h * cs + 34}`);
     const X = (x: number) => 30 + (x - 1) * cs;
     const Y = (y: number) => 4 + (g.h - y) * cs;
+    const hatch = `hx-hatch-${uid}`;
+    const pat = s('pattern', { id: hatch, width: 10, height: 10, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, s('defs', {}, svg));
+    s('rect', { width: 10, height: 10, class: 'hx-wall-bg' }, pat);
+    s('line', { x1: 0, y1: 0, x2: 0, y2: 10, class: 'hx-wall-line' }, pat);
     for (const w of g.walls) {
       const [x, y] = w.split('-').map(Number) as [number, number];
-      s('rect', { x: X(x), y: Y(y), width: cs, height: cs, class: 'hx-wall' }, svg);
+      s('rect', { x: X(x), y: Y(y), width: cs, height: cs, class: 'hx-wall', fill: `url(#${hatch})` }, svg);
     }
     for (const n of P().nodes) {
       const goal = n.h === 0;
@@ -285,6 +299,13 @@ export function mount(root: HTMLElement): void {
     }
   }
 
+  // «Ανά κελί»: one sentence per cell, in the order closed set, frontier, state.
+  function explainCell(r: Row, cells: number): string {
+    if (cells === 1) return `Γραμμή ${rows.indexOf(r) + 1}. Κλειστό σύνολο: ${set(r.closed)}.`;
+    if (cells === 2) return alg === 'HC' ? `Τρέχουσα κατάσταση: ${state(r.id, r.g)}.` : `Μέτωπο: ${list(r.frontier)}. Εξετάζεται η πρώτη του κατάσταση.`;
+    return `Κατάσταση: ${state(r.id, r.g)}.${r.kind === 'loop' ? ' Είναι ήδη στο κλειστό σύνολο.' : r.kind === 'goal' ? ' Είναι τελική.' : ' Ποια είναι τα παιδιά της;'}`;
+  }
+
   function lastCell(r: Row): string {
     if (r.kind === 'goal') return 'ΤΕΛΙΚΗ';
     if (r.kind === 'loop') return 'Βρόχος';
@@ -297,7 +318,7 @@ export function mount(root: HTMLElement): void {
     const id = current?.id ?? P().start;
     const g = current?.g ?? 0;
     const cards: [string, string][] = [
-      ['Τρέχουσα', label(id)],
+      ['Τρέχουσα', state(id, g)],
       [alg === 'ASTAR' ? 'f = g + h' : 'h', alg === 'ASTAR' ? `${g} + ${hOf(P(), id)} = ${g + hOf(P(), id)}` : String(hOf(P(), id))],
       ['Κόστος g ως εδώ', String(g)],
     ];
@@ -329,14 +350,20 @@ export function mount(root: HTMLElement): void {
     const active = step ? Math.floor((step - 1) / per) : -1;
     const done = mode === 'cell' ? Math.floor(step / CELLS) : step;
     const current = rows[active];
-    const reached = rows.slice(0, active + 1).some((r) => r.kind === 'goal');
+    // «Ανά κελί»: how many cells of the active row are shown (1 closed set,
+    // 2 frontier, 3 state, 4 children). The tree, the cards and the chips
+    // follow the table: until the state cell, they still show the previous row.
+    const cells = mode === 'cell' && step ? ((step - 1) % CELLS) + 1 : CELLS;
+    const prev = rows[active - 1];
+    const shownRow = !current ? undefined : cells >= 3 ? (cells >= 4 ? current : { ...current, children: [] }) : prev;
+    const reached = rows.slice(0, active + 1).some((r) => r.kind === 'goal') && cells >= 3;
     seen = new Set([P().start]);
     for (const r of rows.slice(0, active + 1)) {
       seen.add(r.id);
       r.frontier.forEach((f) => seen.add(f.id));
       r.children.forEach((c) => seen.add(c.id));
     }
-    const closed = new Set(current ? [...current.closed, current.id] : []);
+    const closed = new Set(shownRow ? [...shownRow.closed, shownRow.id] : []);
     const last = rows.at(-1);
 
     sub.textContent = ABOUT[alg];
@@ -351,22 +378,23 @@ export function mount(root: HTMLElement): void {
     fill.style.width = `${max ? (step / max) * 100 : 0}%`;
     bar.setAttribute('aria-valuemax', String(max));
     bar.setAttribute('aria-valuenow', String(step));
-    status.textContent = !current ? 'Αρχική κατάσταση' : current.kind === 'goal' ? 'Βρέθηκε λύση' : current.kind === 'stuck' && alg === 'HC' ? 'Αδιέξοδο' : current.kind === 'cycle' ? 'Βρόχος' : `Κατάσταση ${label(current.id)}`;
+    status.textContent = !shownRow ? 'Αρχική κατάσταση' : shownRow.kind === 'goal' && reached ? 'Βρέθηκε λύση' : shownRow.kind === 'stuck' && alg === 'HC' ? 'Αδιέξοδο' : shownRow.kind === 'cycle' ? 'Βρόχος' : `Κατάσταση ${label(shownRow.id)}`;
     resetBtn.disabled = prevBtn.disabled = step === 0;
     nextBtn.disabled = endBtn.disabled = step === max;
 
     svg.replaceChildren();
-    if (P().grid) drawMaze(current, closed, reached);
-    else drawGraph(current, closed, reached);
-    svg.setAttribute('aria-label', current ? `Τρέχουσα κατάσταση ${label(current.id)}.` : 'Αρχική κατάσταση.');
+    if (P().grid) drawMaze(shownRow, closed, reached);
+    else drawGraph(shownRow, closed, reached);
+    svg.setAttribute('aria-label', shownRow ? `Τρέχουσα κατάσταση ${label(shownRow.id)}.` : 'Αρχική κατάσταση.');
 
-    renderMetrics(current);
+    renderMetrics(shownRow);
+    const hidden = ['…'];
     memory.replaceChildren(
-      chips(alg === 'HC' ? 'Τρέχουσα' : `Μέτωπο (αύξον ${alg === 'ASTAR' ? 'f' : 'h'})`, current ? current.frontier.map(value) : [value({ id: P().start, g: 0 })], 'front'),
       chips('Κλειστό σύνολο', current ? current.closed.map(label) : [], 'closed'),
-      chips('Παιδιά', current ? current.children.map(value) : [], 'kids'),
+      chips(alg === 'HC' ? 'Τρέχουσα' : `Μέτωπο (αύξον ${alg === 'ASTAR' ? 'f' : 'h'})`, !current ? [value({ id: P().start, g: 0 })] : cells >= 2 ? current.frontier.map(value) : hidden, cells >= 2 ? 'front' : 'pending'),
+      chips('Παιδιά', !current ? [] : cells >= 4 ? current.children.map(value) : hidden, cells >= 4 ? 'kids' : 'pending'),
     );
-    let text = explain(current);
+    let text = current && cells < 4 ? explainCell(current, cells) : explain(current);
     if (step === max && last && last.kind !== 'goal' && alg !== 'HC') text += ' Το μέτωπο άδειασε χωρίς να βρεθεί τελική κατάσταση: αποτυχία.';
     explanation.textContent = text;
 
@@ -380,7 +408,7 @@ export function mount(root: HTMLElement): void {
       if (i === active) tr.classList.add('current');
       if (r.kind === 'goal' && i <= active) tr.classList.add('goal');
       tr.append(h('td', {}, String(i + 1)));
-      [list(r.frontier), set(r.closed), label(r.id), lastCell(r)].forEach((v, j) => {
+      [list(r.frontier), set(r.closed), state(r.id, r.g), lastCell(r)].forEach((v, j) => {
         const shown = mode === 'row' ? i < step : i * CELLS + REVEAL.indexOf(j) < step;
         tr.append(h('td', shown ? {} : { class: 'hidden-cell' }, shown ? v : '—'));
       });
@@ -389,7 +417,9 @@ export function mount(root: HTMLElement): void {
     const row = tbody.children[active] as HTMLElement | undefined;
     if (row) tableWrap.scrollTop = Math.max(0, row.offsetTop - tableWrap.clientHeight / 2);
 
-    foot.textContent = `${NOTE[prob]} Στο μέτωπο, δίπλα σε κάθε κατάσταση η τιμή με την οποία ταξινομείται: ${alg === 'ASTAR' ? 'g + h' : 'h'}.`;
+    foot.textContent = P().grid
+      ? `${NOTE[prob]} Κάθε θέση γράφεται <x,y> (στήλη, γραμμή), όπως στο βιβλίο, με εκθέτη ${alg === 'ASTAR' ? 'g + h' : 'την h της: <5,4>⁵ σημαίνει h = 5'}.`
+      : `${NOTE[prob]} Στο μέτωπο, δίπλα σε κάθε κατάσταση η τιμή με την οποία ταξινομείται: ${alg === 'ASTAR' ? 'g + h' : 'h'}.`;
   }
 
   function setProblem(next: ProblemId) {
