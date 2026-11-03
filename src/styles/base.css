@@ -274,6 +274,7 @@ pre {
 }
 
 .prose img {
+  margin-inline: auto; /* the reset above zeroes margins; centre narrow diagrams */
   border-radius: var(--r-md);
   border: 1px solid var(--divider);
   background: #fff; /* diagrams are drawn on white; keep them legible in dark mode */
@@ -283,4 +284,10 @@ pre {
   padding-left: var(--s-4);
   border-left: 3px solid var(--accent);
   color: var(--text-muted);
+}
+
+/* A caption written as a lone italic line right under an image
+ * («*Σχήμα 1. …*») is centred with it. */
+.prose p:has(> img, > .zoom) + p:has(> em:only-child) {
+  text-align: center;
 }
