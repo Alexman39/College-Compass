@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 508" width="500" height="508" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Χειραψία TCP και SYN flood</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c62828"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="508" fill="#ffffff"/>
+  <text x="20" y="22" text-anchor="start" font-size="18" font-weight="800" fill="#2e7d32">Κανονική χειραψία</text>
+  <rect x="40" y="36" width="140" height="34" rx="8" fill="#eef3f6" stroke="#7b8a94" stroke-width="2"/>
+  <text x="110" y="59" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">Πελάτης</text>
+  <line x1="110" y1="70" x2="110" y2="210" stroke="#c9d3d9" stroke-width="2" stroke-dasharray="4 4"/>
+  <rect x="320" y="36" width="140" height="34" rx="8" fill="#eef3f6" stroke="#7b8a94" stroke-width="2"/>
+  <text x="390" y="59" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">Διακομιστής</text>
+  <line x1="390" y1="70" x2="390" y2="210" stroke="#c9d3d9" stroke-width="2" stroke-dasharray="4 4"/>
+  <line x1="114" y1="100" x2="386" y2="110" stroke="#0c2636" stroke-width="2.5" marker-end="url(#a-ink)"/>
+  <text x="250" y="98" text-anchor="middle" font-size="15" font-weight="700" fill="#0c2636">SYN</text>
+  <line x1="386" y1="136" x2="114" y2="146" stroke="#0c2636" stroke-width="2.5" marker-end="url(#a-ink)"/>
+  <text x="250" y="134" text-anchor="middle" font-size="15" font-weight="700" fill="#0c2636">SYN-ACK</text>
+  <line x1="114" y1="172" x2="386" y2="182" stroke="#0c2636" stroke-width="2.5" marker-end="url(#a-ink)"/>
+  <text x="250" y="170" text-anchor="middle" font-size="15" font-weight="700" fill="#0c2636">ACK</text>
+  <rect x="175" y="200" width="150" height="30" rx="15" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="250" y="220" text-anchor="middle" font-size="15" font-weight="700" fill="#2e7d32">σύνδεση ανοιχτή</text>
+  <text x="20" y="262" text-anchor="start" font-size="18" font-weight="800" fill="#c62828">SYN flood</text>
+  <rect x="40" y="276" width="140" height="34" rx="8" fill="#eef3f6" stroke="#7b8a94" stroke-width="2"/>
+  <text x="110" y="299" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">Πλαστές IP</text>
+  <line x1="110" y1="310" x2="110" y2="480" stroke="#c9d3d9" stroke-width="2" stroke-dasharray="4 4"/>
+  <rect x="320" y="276" width="140" height="34" rx="8" fill="#eef3f6" stroke="#7b8a94" stroke-width="2"/>
+  <text x="390" y="299" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">Διακομιστής</text>
+  <line x1="390" y1="310" x2="390" y2="480" stroke="#c9d3d9" stroke-width="2" stroke-dasharray="4 4"/>
+  <line x1="114" y1="338" x2="386" y2="346" stroke="#c62828" stroke-width="2.5" marker-end="url(#a-bad)"/>
+  <line x1="386" y1="352" x2="170" y2="358" stroke="#7b8a94" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#a-muted)"/>
+  <line x1="114" y1="372" x2="386" y2="380" stroke="#c62828" stroke-width="2.5" marker-end="url(#a-bad)"/>
+  <line x1="386" y1="386" x2="170" y2="392" stroke="#7b8a94" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#a-muted)"/>
+  <line x1="114" y1="406" x2="386" y2="414" stroke="#c62828" stroke-width="2.5" marker-end="url(#a-bad)"/>
+  <line x1="386" y1="420" x2="170" y2="426" stroke="#7b8a94" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#a-muted)"/>
+  <line x1="114" y1="440" x2="386" y2="448" stroke="#c62828" stroke-width="2.5" marker-end="url(#a-bad)"/>
+  <line x1="386" y1="454" x2="170" y2="460" stroke="#7b8a94" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#a-muted)"/>
+  <text x="250" y="332" text-anchor="middle" font-size="15" font-weight="700" fill="#c62828">SYN, SYN, SYN, …</text>
+  <text x="250" y="494" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">SYN-ACK που δεν παίρνουν ποτέ ACK</text>
+  <text x="444" y="320" text-anchor="middle" font-size="12" font-weight="700" fill="#c62828">μισάνοιχτες</text>
+  <rect x="408" y="328" width="72" height="20" rx="3" fill="#fdecea" stroke="#c62828" stroke-width="1.5"/>
+  <rect x="408" y="352" width="72" height="20" rx="3" fill="#fdecea" stroke="#c62828" stroke-width="1.5"/>
+  <rect x="408" y="376" width="72" height="20" rx="3" fill="#fdecea" stroke="#c62828" stroke-width="1.5"/>
+  <rect x="408" y="400" width="72" height="20" rx="3" fill="#fdecea" stroke="#c62828" stroke-width="1.5"/>
+  <rect x="408" y="424" width="72" height="20" rx="3" fill="#ffffff" stroke="#c62828" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="444" y="464" text-anchor="middle" font-size="13" font-weight="700" fill="#c62828">γεμίζει</text>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 354" width="500" height="354" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Η αλυσίδα μιας επίθεσης</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c62828"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="354" fill="#ffffff"/>
+  <rect x="60" y="20" width="380" height="64" rx="10" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="250" y="47" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">Αδυναμία</text>
+  <text x="250" y="70" text-anchor="middle" font-size="18" font-weight="400" fill="#0c2636">λανθασμένη ρύθμιση ή σφάλμα</text>
+  <line x1="250" y1="86" x2="250" y2="112" stroke="#0c2636" stroke-width="2.5" marker-end="url(#a-ink)"/>
+  <rect x="60" y="116" width="380" height="64" rx="10" fill="#eef3f6" stroke="#7b8a94" stroke-width="2.5"/>
+  <text x="250" y="143" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">Εκμετάλλευση</text>
+  <text x="250" y="166" text-anchor="middle" font-size="18" font-weight="400" fill="#0c2636">ο επιτιθέμενος αξιοποιεί το κενό</text>
+  <line x1="250" y1="182" x2="250" y2="208" stroke="#0c2636" stroke-width="2.5" marker-end="url(#a-ink)"/>
+  <rect x="60" y="212" width="380" height="64" rx="10" fill="#fdecea" stroke="#c62828" stroke-width="2.5"/>
+  <text x="250" y="239" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">Επίπτωση</text>
+  <text x="250" y="262" text-anchor="middle" font-size="18" font-weight="400" fill="#0c2636">υποκλοπή, διακοπή ή πρόσβαση</text>
+  <text x="250" y="314" text-anchor="middle" font-size="16" font-weight="700" fill="#841387">Η πρόληψη στοχεύει στον πρώτο κρίκο:</text>
+  <text x="250" y="336" text-anchor="middle" font-size="16" font-weight="400" fill="#4a5a65">κλείνει τις αδυναμίες πριν τις βρει κάποιος.</text>
+</svg>

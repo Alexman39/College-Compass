@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="500" height="400" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>DNS: κανονική επίλυση και δηλητηρίαση cache</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c62828"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="400" fill="#ffffff"/>
+  <text x="20" y="28" text-anchor="start" font-size="18" font-weight="800" fill="#2e7d32">Κανονική επίλυση</text>
+  <rect x="14" y="44" width="110" height="60" rx="10" fill="#eef3f6" stroke="#7b8a94" stroke-width="2.5"/>
+  <text x="69" y="79" text-anchor="middle" font-size="16" font-weight="700" fill="#0c2636">Χρήστης</text>
+  <rect x="200" y="44" width="130" height="60" rx="10" fill="#eef3f6" stroke="#7b8a94" stroke-width="2.5"/>
+  <text x="265" y="69" text-anchor="middle" font-size="16" font-weight="700" fill="#0c2636">Διακομιστής</text>
+  <text x="265" y="90" text-anchor="middle" font-size="16" font-weight="400" fill="#0c2636">DNS</text>
+  <rect x="356" y="44" width="130" height="60" rx="10" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2.5"/>
+  <text x="421" y="69" text-anchor="middle" font-size="16" font-weight="700" fill="#0c2636">Νόμιμος</text>
+  <text x="421" y="90" text-anchor="middle" font-size="16" font-weight="400" fill="#0c2636">διακομιστής</text>
+  <rect x="181" y="112" width="168" height="28" rx="6" fill="#ffffff" stroke="#2e7d32" stroke-width="2"/>
+  <text x="265" y="131" text-anchor="middle" font-size="13" font-weight="700" fill="#2e7d32">cache: σωστή εγγραφή</text>
+  <line x1="126" y1="62" x2="196" y2="62" stroke="#0c2636" stroke-width="2.5" marker-end="url(#a-ink)"/>
+  <text x="162" y="51" text-anchor="middle" font-size="13" font-weight="700" fill="#4a5a65">① όνομα;</text>
+  <line x1="198" y1="90" x2="128" y2="90" stroke="#0c2636" stroke-width="2.5" marker-end="url(#a-ink)"/>
+  <text x="162" y="108" text-anchor="middle" font-size="13" font-weight="700" fill="#4a5a65">② IP</text>
+  <path d="M69 104 V162 H421 V108" fill="none" stroke="#2e7d32" stroke-width="2.5" marker-end="url(#a-ok)"/>
+  <text x="245" y="184" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">③ ο χρήστης πηγαίνει στη διεύθυνση που πήρε</text>
+  <text x="20" y="228" text-anchor="start" font-size="18" font-weight="800" fill="#c62828">Δηλητηρίαση cache (DNS cache poisoning)</text>
+  <rect x="14" y="244" width="110" height="60" rx="10" fill="#eef3f6" stroke="#7b8a94" stroke-width="2.5"/>
+  <text x="69" y="279" text-anchor="middle" font-size="16" font-weight="700" fill="#0c2636">Χρήστης</text>
+  <rect x="200" y="244" width="130" height="60" rx="10" fill="#eef3f6" stroke="#7b8a94" stroke-width="2.5"/>
+  <text x="265" y="269" text-anchor="middle" font-size="16" font-weight="700" fill="#0c2636">Διακομιστής</text>
+  <text x="265" y="290" text-anchor="middle" font-size="16" font-weight="400" fill="#0c2636">DNS</text>
+  <rect x="356" y="244" width="130" height="60" rx="10" fill="#fdecea" stroke="#c62828" stroke-width="2.5"/>
+  <text x="421" y="269" text-anchor="middle" font-size="16" font-weight="700" fill="#0c2636">Κακόβουλος</text>
+  <text x="421" y="290" text-anchor="middle" font-size="16" font-weight="400" fill="#0c2636">διακομιστής</text>
+  <rect x="181" y="312" width="168" height="28" rx="6" fill="#fdecea" stroke="#c62828" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="265" y="331" text-anchor="middle" font-size="13" font-weight="700" fill="#c62828">cache: ψευδής εγγραφή</text>
+  <line x1="126" y1="262" x2="196" y2="262" stroke="#0c2636" stroke-width="2.5" marker-end="url(#a-ink)"/>
+  <text x="162" y="251" text-anchor="middle" font-size="13" font-weight="700" fill="#4a5a65">① όνομα;</text>
+  <line x1="198" y1="290" x2="128" y2="290" stroke="#0c2636" stroke-width="2.5" marker-end="url(#a-ink)"/>
+  <text x="162" y="308" text-anchor="middle" font-size="13" font-weight="700" fill="#4a5a65">② IP</text>
+  <path d="M69 304 V362 H421 V308" fill="none" stroke="#c62828" stroke-width="2.5" marker-end="url(#a-bad)"/>
+  <text x="245" y="384" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">③ ο χρήστης πηγαίνει στη διεύθυνση που πήρε</text>
+</svg>
