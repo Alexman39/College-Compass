@@ -4,11 +4,13 @@
  *   upcomingDeadlines   what's due in the next N days
  *   weekTimetable       this week's classes, Monday → Sunday
  *   workloadForecast    deadlines per week for the next few weeks
+ *   calendarWeeks       every week of the academic year, day by day
  *   archiveGroups       courses grouped Year → Semester
  *
  * Everything takes plain data and an explicit `now`, so it can be tested
  * without Astro and re-run in the browser where freshness matters.
  */
+import type { ClassSeries, EventItem, Holiday } from './ics';
 import { addDays, athensDateKey, athensMidnight, mondayOf, weekdayOf, type WeekdayKey } from './time';
 
 export interface DeadlineItem {
@@ -123,4 +125,88 @@ export function archiveGroups<T extends { year: number; semester: number }>(cour
     const semesters = [...new Set(inYear.map((c) => c.semester))].sort((a, b) => a - b);
     return { year, semesters: semesters.map((semester) => ({ semester, courses: inYear.filter((c) => c.semester === semester) })) };
   });
+}
+
+export interface CalendarDay {
+  date: string; // "2026-11-06"
+  day: WeekdayKey;
+  isToday: boolean;
+  isPast: boolean;
+  /** Name of the holiday on this day, if any (no classes then). */
+  holiday?: string | undefined;
+  classes: ClassSlot[];
+  deadlines: DeadlineItem[];
+  events: EventItem[];
+}
+
+export interface CalendarWeek {
+  /** Monday, "YYYY-MM-DD". */
+  start: string;
+  isCurrent: boolean;
+  /** Teaching week within a semester, if the week falls in one. */
+  semester?: { semester: number; week: number } | undefined;
+  days: CalendarDay[];
+}
+
+export interface CalendarWeeksInput {
+  now: Date;
+  series: ClassSeries[];
+  deadlines: DeadlineItem[];
+  events: EventItem[];
+  holidays: Holiday[];
+  semesters: { semester: number; start: string; end: string }[];
+}
+
+/**
+ * Every Monday–Sunday week from the first semester's start to the end of
+ * the last semester (or the last deadline/event, if later). A class appears
+ * on a date only inside its semester and not on a holiday, exactly as in
+ * the calendar feed.
+ */
+export function calendarWeeks({ now, series, deadlines, events, holidays, semesters }: CalendarWeeksInput): CalendarWeek[] {
+  const today = athensDateKey(now);
+  const thisMonday = mondayOf(today);
+  const starts = semesters.map((s) => s.start);
+  const ends = [
+    ...semesters.map((s) => s.end),
+    ...deadlines.map((d) => athensDateKey(d.due)),
+    ...events.map((e) => athensDateKey(e.start)),
+  ];
+  const first = mondayOf([...starts, today].sort()[0]!);
+  const last = mondayOf([...ends, today].sort().at(-1)!);
+
+  const holidayOn = new Map<string, string>();
+  for (const h of holidays) {
+    for (let d = h.start; d <= (h.end ?? h.start); d = addDays(d, 1)) holidayOn.set(d, h.name);
+  }
+
+  const weeks: CalendarWeek[] = [];
+  for (let monday = first; monday <= last; monday = addDays(monday, 7)) {
+    const sem = semesters.find((s) => s.start <= addDays(monday, 6) && s.end >= monday);
+    const days = Array.from({ length: 7 }, (_, i): CalendarDay => {
+      const date = addDays(monday, i);
+      const day = weekdayOf(date);
+      const holiday = holidayOn.get(date);
+      return {
+        date,
+        day,
+        isToday: date === today,
+        isPast: date < today,
+        holiday,
+        classes: series
+          .filter((c) => c.slot.day === day && c.from <= date && date <= c.to && !c.except.includes(date))
+          .map((c) => c.slot)
+          .sort((a, b) => a.start.localeCompare(b.start)),
+        deadlines: deadlines.filter((d) => athensDateKey(d.due) === date).sort((a, b) => a.due.getTime() - b.due.getTime()),
+        events: events.filter((e) => athensDateKey(e.start) === date),
+      };
+    });
+    weeks.push({
+      start: monday,
+      isCurrent: monday === thisMonday,
+      semester: sem && { semester: sem.semester, week: Math.round((Date.parse(monday) - Date.parse(mondayOf(sem.start))) / 6048e5) + 1 },
+      days,
+    });
+  }
+  return weeks;
 }

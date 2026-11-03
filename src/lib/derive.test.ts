@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { archiveGroups, upcomingDeadlines, weekTimetable, workloadForecast, type ClassSlot, type DeadlineItem } from './derive';
+import { archiveGroups, calendarWeeks, upcomingDeadlines, weekTimetable, workloadForecast, type ClassSlot, type DeadlineItem } from './derive';
 import { addDays, athensDateKey, mondayOf, parseAthensDateTime, weekdayOf } from './time';
 
 vi.stubEnv('TZ', 'America/New_York'); // results must not depend on the machine's zone
@@ -114,5 +114,46 @@ describe('archiveGroups', () => {
       [1, [[1, ['c']], [2, ['a']]]],
       [2, [[1, ['b']]]],
     ]);
+  });
+});
+
+describe('calendarWeeks', () => {
+  const slot: ClassSlot = { day: 'fri', start: '18:10', end: '21:40', room: '41CL-27', course };
+  const base = {
+    now: at('2026-11-03T12:00'),
+    series: [{ slot, from: '2026-10-12', to: '2027-01-15', except: ['2026-10-30'] }],
+    deadlines: [item('mission', '2026-11-06T18:10')],
+    events: [],
+    holidays: [{ name: 'Αργία', start: '2026-10-30' }],
+    semesters: [{ semester: 1, start: '2026-10-12', end: '2027-01-15' }],
+  };
+
+  it('covers the semester Monday to Sunday and marks the current week', () => {
+    const weeks = calendarWeeks(base);
+    expect(weeks[0]!.start).toBe('2026-10-12');
+    expect(weeks.at(-1)!.start).toBe('2027-01-11');
+    expect(weeks.filter((w) => w.isCurrent).map((w) => w.start)).toEqual(['2026-11-02']);
+    expect(weeks.every((w) => w.days.length === 7 && weekdayOf(w.start) === 'mon')).toBe(true);
+  });
+
+  it('numbers teaching weeks from the semester start', () => {
+    const w = calendarWeeks(base).find((w) => w.start === '2026-11-02')!;
+    expect(w.semester).toEqual({ semester: 1, week: 4 });
+  });
+
+  it('puts classes on their weekday, but not on a holiday', () => {
+    const days = calendarWeeks(base).flatMap((w) => w.days);
+    const day = (d: string) => days.find((x) => x.date === d)!;
+    expect(day('2026-11-06').classes).toEqual([slot]);
+    expect(day('2026-10-30').classes).toEqual([]);
+    expect(day('2026-10-30').holiday).toBe('Αργία');
+    expect(day('2026-11-05').classes).toEqual([]);
+  });
+
+  it('places deadlines on their Athens day and marks past days', () => {
+    const days = calendarWeeks(base).flatMap((w) => w.days);
+    expect(days.find((d) => d.date === '2026-11-06')!.deadlines.map((d) => d.id)).toEqual(['mission']);
+    expect(days.find((d) => d.date === '2026-11-02')!.isPast).toBe(true);
+    expect(days.find((d) => d.date === '2026-11-03')).toMatchObject({ isToday: true, isPast: false });
   });
 });
