@@ -1,0 +1,110 @@
+---
+/**
+ * /courses/<slug>/assignments/<file>/ — one assignment on its own page: the
+ * card's facts (deadline, status, weight, Moodle, done tick) and the whole
+ * brief, at lesson width. Every assignment with a brief gets one, except a
+ * practice quiz, which stays interactive on its card.
+ */
+// Briefs can contain math, like lessons.
+import 'katex/dist/katex.min.css';
+import Base from '~/layouts/Base.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import AssignmentItem from '~/components/AssignmentItem.astro';
+import Lightbox from '~/components/Lightbox.astro';
+import { getAssignments, getCourses, getLessons, type Assignment, type Course, type Lesson } from '~/lib/content';
+import { courseUrl, lessonUrl, url } from '~/lib/url';
+
+export async function getStaticPaths() {
+  const courses = await getCourses();
+  const [assignments, lessons] = await Promise.all([getAssignments(), getLessons()]);
+  return assignments
+    .filter((a) => a.body?.trim() && !a.data.answers)
+    .map((assignment) => {
+      const course = courses.find((c) => c.id === assignment.data.course.id)!;
+      const lesson = lessons.find((l) => l.data.course.id === course.id && l.data.week === assignment.data.week);
+      return {
+        params: { slug: course.data.slug, task: assignment.id.split('/').pop()! },
+        props: { assignment, course, lesson },
+      };
+    });
+}
+
+interface Props {
+  assignment: Assignment;
+  course: Course;
+  /** The lesson of the assignment's week, if there is one. */
+  lesson?: Lesson;
+}
+
+const { assignment, course, lesson } = Astro.props;
+const c = course.data;
+const a = assignment.data;
+---
+
+<Base title={`${a.title} · ${c.title_en}`} description={a.teaser ?? `${c.title_en}: ${a.title}`} searchable>
+  <div class="container page" style={`--accent:${c.accent}`}>
+    <span hidden data-pagefind-filter="course">{c.code}</span>
+    <span hidden data-pagefind-meta="kind">Εργασία</span>
+    <Breadcrumbs
+      items={[
+        { label: 'Αρχική', href: url() },
+        { label: c.title_en, href: courseUrl(c.slug), lang: 'en' },
+        { label: a.title },
+      ]}
+    />
+
+    <div class="task">
+      <AssignmentItem assignment={assignment} level={1} archived={c.status === 'archived'} full />
+    </div>
+
+    <nav class="back" aria-label="Επιστροφή">
+      {
+        lesson && (
+          <a href={lessonUrl(c.slug, lesson.data.week)}>
+            ← Εβδομάδα {lesson.data.week}: {lesson.data.title}
+          </a>
+        )
+      }
+      <a href={courseUrl(c.slug)} lang="en">← {c.title_en}</a>
+    </nav>
+  </div>
+
+  <Lightbox />
+</Base>
+
+<style>
+  .page {
+    display: grid;
+    gap: var(--s-4);
+    padding-top: var(--s-5);
+  }
+
+  .page > * {
+    min-width: 0;
+  }
+
+  /* Same width as a lesson: a brief is text to read, not a card in a list. */
+  .task,
+  .back {
+    width: 100%;
+    max-width: 52rem;
+    margin-inline: auto;
+  }
+
+  .task :global(.title) {
+    font-size: var(--fs-xl);
+  }
+
+  .back {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2) var(--s-5);
+  }
+
+  .back a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 700;
+  }
+</style>

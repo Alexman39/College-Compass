@@ -1,24 +1,27 @@
 ---
 /**
- * One assignment, in full: type, title, status pill, deadline, teaser, the
- * brief (in a disclosure so long briefs don't swamp the page), the Moodle
- * link and the visitor's "done" tick.
+ * One assignment: type, title, status pill, deadline, teaser, the Moodle
+ * link and the visitor's "done" tick. The brief has its own page
+ * (/courses/<slug>/assignments/<file>/), which this card links to as
+ * «Εκφώνηση»; that page renders this component with `full`, brief included.
+ * A practice quiz stays on the card, as an interactive quiz.
  *
  * The pill is computed at build time here and kept current in the browser
  * by src/scripts/ticks.ts (see the data-* attributes it reads).
  */
 import { render } from 'astro:content';
-import type { Assignment } from '~/lib/content';
+import { getCourses, type Assignment } from '~/lib/content';
 import { ASSIGNMENT_TYPES, formatDeadline } from '~/lib/labels';
 import { parseQuiz } from '~/lib/quiz';
 import { statusLabel, timeStatus } from '~/lib/status';
+import { assignmentUrl } from '~/lib/url';
 import Quiz from './Quiz.astro';
 import StatusPill from './StatusPill.astro';
 
 interface Props {
   assignment: Assignment;
   /** Heading level for the title, to fit the surrounding outline. */
-  level?: 2 | 3 | 4;
+  level?: 1 | 2 | 3 | 4;
   /** Only needed when the same assignment appears twice on one page. */
   idSuffix?: string;
   /**
@@ -26,19 +29,22 @@ interface Props {
    * A deadline from a past year isn't "overdue", it's history.
    */
   archived?: boolean;
+  /** The assignment's own page: show the brief here instead of linking to it. */
+  full?: boolean;
 }
 
-const { assignment, level = 3, idSuffix, archived = false } = Astro.props;
+const { assignment, level = 3, idSuffix, archived = false, full = false } = Astro.props;
 const { title, teaser, type, released, due, weight, link, submission, answers } = assignment.data;
 const { Content } = await render(assignment);
 const hasBrief = Boolean(assignment.body?.trim());
 // A practice quiz with an answer key is shown as an interactive quiz instead
 // of plain text. (validateContent has already checked the key fits.)
 const quiz = answers ? parseQuiz(assignment.body ?? '') : undefined;
+const slug = (await getCourses()).find((c) => c.id === assignment.data.course.id)!.data.slug;
 
 const now = new Date();
 const status = timeStatus({ released, due }, now);
-const Heading = `h${level}` as 'h2' | 'h3' | 'h4';
+const Heading = `h${level}` as 'h1' | 'h2' | 'h3' | 'h4';
 // A stable, URL-safe anchor so other pages can link here.
 const anchor = `task-${assignment.id.replaceAll('/', '-')}${idSuffix ? `-${idSuffix}` : ''}`;
 ---
@@ -111,14 +117,16 @@ const anchor = `task-${assignment.id.replaceAll('/', '-')}${idSuffix ? `-${idSuf
         <Quiz quiz={quiz} answers={answers} id={anchor} />
       </details>
     ) : (
-      hasBrief && (
-        <details class="brief">
-          <summary>Εκφώνηση</summary>
-          <div class="prose">
-            <Content />
-          </div>
-        </details>
-      )
+      hasBrief &&
+      (full ? (
+        <div class="prose full">
+          <Content />
+        </div>
+      ) : (
+        <a class="open-brief" href={assignmentUrl(slug, assignment.id)}>
+          Εκφώνηση<span class="visually-hidden">: {title}</span>&nbsp;→
+        </a>
+      ))
     )
   }
 
@@ -232,10 +240,23 @@ const anchor = `task-${assignment.id.replaceAll('/', '-')}${idSuffix ? `-${idSuf
     margin-bottom: var(--s-2);
   }
 
+  .open-brief {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    min-height: 44px;
+    font-weight: 700;
+  }
+
   .brief .prose {
     padding: var(--s-4);
     border-radius: var(--r-md);
     background: var(--panel-sunken);
+  }
+
+  .full {
+    padding-top: var(--s-2);
+    border-top: 1px solid var(--divider);
   }
 
   .brief .prose :global(h2) {
