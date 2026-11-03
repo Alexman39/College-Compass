@@ -32,6 +32,9 @@ function splitSuffix(path: string): [string, string] {
 /** Links to course pages, so the URL scheme lives in one place. */
 export const courseUrl = (slug: string) => url(`courses/${slug}/`);
 export const lessonUrl = (slug: string, week: number) => url(`courses/${slug}/week/${week}/`);
+/** An assignment's own page. Its id is "<course>/<file>"; the file name is the URL segment. */
+export const assignmentUrl = (slug: string, assignmentId: string) =>
+  url(`courses/${slug}/assignments/${assignmentId.split('/').pop()}/`);
 
 /**
  * True when `href` (as produced by url()) is the page currently shown.

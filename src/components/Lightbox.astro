@@ -1,0 +1,93 @@
+---
+/**
+ * The enlarged view for images in lesson and assignment text: a native
+ * <dialog> plus src/scripts/lightbox.ts, which wraps every `.prose img` in
+ * a zoom button. Put it once on any page whose text has images.
+ */
+---
+
+<dialog class="lightbox" data-lightbox aria-label="Μεγέθυνση εικόνας">
+  <form method="dialog">
+    <button class="close" type="submit">Κλείσιμο</button>
+  </form>
+  <img alt="" />
+</dialog>
+
+<script>
+  import '~/scripts/lightbox';
+</script>
+
+<style>
+  /* ---- Image zoom ---------------------------------------------------- */
+  :global(.prose .zoom) {
+    display: block;
+    margin-inline: auto;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: zoom-in;
+  }
+
+  /* A modal <dialog> is centred by the browser's margin: auto, which the
+   * reset in base.css zeroes; put it back. */
+  .lightbox {
+    margin: auto;
+    max-width: min(96vw, 1400px);
+    max-height: 92vh;
+    padding: var(--s-3);
+    border: 0;
+    border-radius: var(--r-lg);
+    background: #fff;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .lightbox::backdrop {
+    background: rgb(3 16 27 / 0.75);
+  }
+
+  /* A fixed, large box that the picture fills without distortion, so a
+   * 500px-wide diagram really does get bigger when enlarged. */
+  .lightbox img {
+    width: min(calc(96vw - 2 * var(--s-3)), 1100px);
+    height: calc(92vh - 5rem);
+    object-fit: contain;
+  }
+
+  /* On a phone the screen width is the limit, so "fit the screen" would not
+   * enlarge anything. Show the picture at a fixed larger width instead and
+   * let it pan inside the dialog; the close button stays in view. */
+  @media (max-width: 40rem) {
+    .lightbox {
+      overflow: auto;
+      overscroll-behavior: contain;
+    }
+
+    .lightbox img {
+      width: 56rem;
+      max-width: none;
+      height: auto;
+    }
+
+    .lightbox form {
+      position: sticky;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .lightbox form {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: var(--s-2);
+  }
+
+  .close {
+    min-height: 40px;
+    padding: 0 var(--s-4);
+    border: 1px solid #c9d6de;
+    border-radius: var(--r-pill);
+    background: #f2f7fa;
+    color: #0c2636;
+    font-weight: 700;
+  }
+</style>
