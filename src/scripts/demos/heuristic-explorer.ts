@@ -6,6 +6,11 @@
  * come from src/lib/heuristic-explorer.ts (tested); this file only draws them.
  * Styles: water-jug.css and search-explorer.css (shared look, full screen) +
  * heuristic-explorer.css.
+ *
+ * Optional presets: data-problem="ex2" data-algorithm="GREEDY" open the
+ * explorer on that problem and algorithm. The «Ανά κελί» mode, the slider,
+ * the frontier/closed/children chips and the faded unseen states come from
+ * the user's greedy-best-first-visualizer.html (Άσκηση 2).
  */
 import './water-jug.css';
 import './search-explorer.css';
@@ -25,6 +30,11 @@ import {
 } from '~/lib/heuristic-explorer';
 
 const SVG = 'http://www.w3.org/2000/svg';
+const CELLS = 4; // frontier, closed, state, children
+// In «Ανά κελί» a row is revealed closed set first, then frontier, state and
+// children (on screen the columns are frontier, closed, …), as in Week 2.
+const REVEAL = [1, 0, 2, 3];
+const CELL_NAMES = ['Κλειστό σύνολο', 'Μέτωπο', 'Κατάσταση', 'Παιδιά'];
 
 function h<K extends keyof HTMLElementTagNameMap>(tag: K, attrs: Record<string, string> = {}, text?: string) {
   const e = document.createElement(tag);
@@ -55,8 +65,11 @@ const NOTE: Record<ProblemId, string> = {
 };
 
 export function mount(root: HTMLElement): void {
-  let prob: ProblemId = 'maze';
-  let alg: AlgorithmId = 'GREEDY';
+  const isProblem = (x: string | undefined): x is ProblemId => PROBLEMS.some((p) => p.id === x);
+  const isAlg = (x: string | undefined): x is AlgorithmId => ALGORITHMS.some((a) => a.id === x);
+  let prob: ProblemId = isProblem(root.dataset.problem) ? root.dataset.problem : 'maze';
+  let alg: AlgorithmId = isAlg(root.dataset.algorithm) && ALGORITHMS.find((a) => a.id === root.dataset.algorithm)!.problems.includes(prob) ? root.dataset.algorithm : 'GREEDY';
+  let mode: 'row' | 'cell' = 'row';
   let step = 0;
   let rows: Row[] = run(prob, alg);
   const P = () => problem(prob);
@@ -84,8 +97,17 @@ export function mount(root: HTMLElement): void {
     algGroup.append(b);
     return b;
   });
+  const modeLabel = h('span', { class: 'jug-mode-label', id: `hx-mode-${Math.random().toString(36).slice(2, 8)}` }, 'Εκτέλεση:');
+  const modeGroup = h('div', { class: 'jug-seg', role: 'group', 'aria-labelledby': modeLabel.id });
+  const rowBtn = h('button', { type: 'button', 'aria-pressed': 'true' }, 'Ανά γραμμή');
+  const cellBtn = h('button', { type: 'button', 'aria-pressed': 'false' }, 'Ανά κελί');
+  modeGroup.append(rowBtn, cellBtn);
+  const modeWrap = h('div', { class: 'jug-mode' });
+  modeWrap.append(modeLabel, modeGroup);
   const fsBtn = h('button', { type: 'button', class: 'jug-fs', 'aria-pressed': 'false' }, '⛶ Πλήρης οθόνη');
-  toolbar.append(probGroup, algGroup, fsBtn);
+  const tools = h('div', { class: 'jug-mode' });
+  tools.append(modeWrap, fsBtn);
+  toolbar.append(probGroup, algGroup, tools);
 
   const panel = h('div', { class: 'jug-panel' });
   const head = h('div', { class: 'jug-head' });
@@ -100,8 +122,10 @@ export function mount(root: HTMLElement): void {
   const prevBtn = h('button', { type: 'button' }, '← Πίσω');
   const nextBtn = h('button', { type: 'button', class: 'primary' }, 'Επόμενο →');
   const endBtn = h('button', { type: 'button' }, 'Τέλος ⇥');
-  controls.append(resetBtn, prevBtn, nextBtn, endBtn);
-  panel.append(head, bar, controls);
+  const scrub = h('input', { type: 'range', min: '0', value: '0', class: 'hx-scrub', 'aria-label': 'Μετάβαση σε βήμα' });
+  controls.append(resetBtn, prevBtn, nextBtn, endBtn, scrub);
+  const hint = h('p', { class: 'jug-sub hx-hint' });
+  panel.append(head, bar, controls, hint);
 
   const treeTitle = h('h3', { class: 'jug-h' });
   const treeWrap = h('div', { class: 'jug-scroll jug-tree' });
@@ -115,6 +139,7 @@ export function mount(root: HTMLElement): void {
     legend.append(item);
   }
   const metrics = h('div', { class: 'sx-metrics' });
+  const memory = h('div', { class: 'hx-memory' });
   const explanation = h('p', { class: 'jug-panel jug-note', 'aria-live': 'polite' });
   const tableTitle = h('h3', { class: 'jug-h' }, 'Πίνακας εκτέλεσης');
   const tableWrap = h('div', { class: 'jug-scroll jug-table', tabindex: '0', role: 'region', 'aria-label': 'Πίνακας εκτέλεσης' });
@@ -128,7 +153,7 @@ export function mount(root: HTMLElement): void {
   const left = h('div', { class: 'jug-left' });
   left.append(treeTitle, treeWrap, legend);
   const right = h('div', { class: 'jug-right' });
-  right.append(metrics, explanation, tableTitle, tableWrap);
+  right.append(metrics, memory, explanation, tableTitle, tableWrap);
   const body = h('div', { class: 'jug-body' });
   body.append(left, right);
   root.append(sub, toolbar, panel, body, foot);
@@ -154,7 +179,16 @@ export function mount(root: HTMLElement): void {
   });
 
   // ---- drawing ---------------------------------------------------------
+  // States the search has not met yet (never in a frontier or a child list
+  // up to this step) are faded, so the tree «opens up» as the search goes.
+  let seen = new Set<string>();
+
   function classOf(id: string, current: Row | undefined, closed: Set<string>, reached: boolean) {
+    const fade = seen.has(id) ? '' : ' hx-unseen';
+    return base(id, current, closed, reached) + fade;
+  }
+
+  function base(id: string, current: Row | undefined, closed: Set<string>, reached: boolean) {
     if (current?.id === id) {
       if (reached && current.kind === 'goal') return 'goal';
       return current.kind === 'stuck' || current.kind === 'cycle' ? 'current hx-stuck' : 'current';
@@ -275,17 +309,44 @@ export function mount(root: HTMLElement): void {
     );
   }
 
+  const perRow = () => (mode === 'cell' ? CELLS : 1);
+  const maxStep = () => rows.length * perRow();
+
+  function chips(title: string, items: string[], cls = '') {
+    const box = h('div', { class: 'hx-chips-box' });
+    box.append(h('span', { class: 'hx-chips-title' }, title));
+    const wrap = h('div', { class: 'hx-chips' });
+    if (!items.length) wrap.append(h('span', { class: 'hx-chip empty' }, '∅'));
+    items.forEach((t, i) => wrap.append(h('span', { class: `hx-chip ${cls} ${i === 0 && cls === 'front' ? 'first' : ''}` }, t)));
+    box.append(wrap);
+    return box;
+  }
+
   function render() {
-    const max = rows.length;
-    const active = step - 1;
+    const per = perRow();
+    const max = maxStep();
+    const active = step ? Math.floor((step - 1) / per) : -1;
+    const done = mode === 'cell' ? Math.floor(step / CELLS) : step;
     const current = rows[active];
-    const reached = rows.slice(0, step).some((r) => r.kind === 'goal');
+    const reached = rows.slice(0, active + 1).some((r) => r.kind === 'goal');
+    seen = new Set([P().start]);
+    for (const r of rows.slice(0, active + 1)) {
+      seen.add(r.id);
+      r.frontier.forEach((f) => seen.add(f.id));
+      r.children.forEach((c) => seen.add(c.id));
+    }
     const closed = new Set(current ? [...current.closed, current.id] : []);
     const last = rows.at(-1);
 
     sub.textContent = ABOUT[alg];
     treeTitle.textContent = P().grid ? 'Λαβύρινθος' : prob === 'roads' ? 'Οδικό δίκτυο' : `Δένδρο της ${P().label === 'Άσκηση 1' ? 'Άσκησης 1' : 'Άσκησης 2'}`;
-    stepLabel.textContent = `Βήμα ${step} / ${max}`;
+    stepLabel.textContent = `Βήμα ${done} / ${rows.length}`;
+    scrub.max = String(max);
+    scrub.value = String(step);
+    hint.textContent =
+      step === max ? (last?.kind === 'goal' ? 'Τέλος: βρέθηκε τελική κατάσταση.' : 'Τέλος.')
+        : mode === 'cell' ? `Επόμενο κελί: ${CELL_NAMES[step % CELLS]}, γραμμή ${Math.floor(step / CELLS) + 1}.`
+          : `Επόμενη γραμμή: ${step + 1}.`;
     fill.style.width = `${max ? (step / max) * 100 : 0}%`;
     bar.setAttribute('aria-valuemax', String(max));
     bar.setAttribute('aria-valuenow', String(step));
@@ -299,6 +360,11 @@ export function mount(root: HTMLElement): void {
     svg.setAttribute('aria-label', current ? `Τρέχουσα κατάσταση ${label(current.id)}.` : 'Αρχική κατάσταση.');
 
     renderMetrics(current);
+    memory.replaceChildren(
+      chips(alg === 'HC' ? 'Τρέχουσα' : `Μέτωπο (αύξον ${alg === 'ASTAR' ? 'f' : 'h'})`, current ? current.frontier.map(value) : [value({ id: P().start, g: 0 })], 'front'),
+      chips('Κλειστό σύνολο', current ? current.closed.map(label) : [], 'closed'),
+      chips('Παιδιά', current ? current.children.map(value) : [], 'kids'),
+    );
     let text = explain(current);
     if (step === max && last && last.kind !== 'goal' && alg !== 'HC') text += ' Το μέτωπο άδειασε χωρίς να βρεθεί τελική κατάσταση: αποτυχία.';
     explanation.textContent = text;
@@ -312,9 +378,11 @@ export function mount(root: HTMLElement): void {
       const tr = h('tr');
       if (i === active) tr.classList.add('current');
       if (r.kind === 'goal' && i <= active) tr.classList.add('goal');
-      const shown = i < step;
       tr.append(h('td', {}, String(i + 1)));
-      for (const v of [list(r.frontier), set(r.closed), label(r.id), lastCell(r)]) tr.append(h('td', shown ? {} : { class: 'hidden-cell' }, shown ? v : '—'));
+      [list(r.frontier), set(r.closed), label(r.id), lastCell(r)].forEach((v, j) => {
+        const shown = mode === 'row' ? i < step : i * CELLS + REVEAL.indexOf(j) < step;
+        tr.append(h('td', shown ? {} : { class: 'hidden-cell' }, shown ? v : '—'));
+      });
       tbody.append(tr);
     });
     const row = tbody.children[active] as HTMLElement | undefined;
@@ -347,10 +415,20 @@ export function mount(root: HTMLElement): void {
     render();
   }
 
-  nextBtn.addEventListener('click', () => { step = Math.min(rows.length, step + 1); render(); });
+  const setMode = (next: 'row' | 'cell') => {
+    mode = next;
+    step = 0;
+    rowBtn.setAttribute('aria-pressed', String(mode === 'row'));
+    cellBtn.setAttribute('aria-pressed', String(mode === 'cell'));
+    render();
+  };
+  rowBtn.addEventListener('click', () => setMode('row'));
+  cellBtn.addEventListener('click', () => setMode('cell'));
+  scrub.addEventListener('input', () => { step = Number(scrub.value); render(); });
+  nextBtn.addEventListener('click', () => { step = Math.min(maxStep(), step + 1); render(); });
   prevBtn.addEventListener('click', () => { step = Math.max(0, step - 1); render(); });
   resetBtn.addEventListener('click', () => { step = 0; render(); });
-  endBtn.addEventListener('click', () => { step = rows.length; render(); });
+  endBtn.addEventListener('click', () => { step = maxStep(); render(); });
 
   reset();
 }
