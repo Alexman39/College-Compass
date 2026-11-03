@@ -16,7 +16,7 @@ import { getClassSeries, getCourses, getDeadlineItems, getEvents, getSettings } 
 import { calendarWeeks, workloadForecast } from '~/lib/derive';
 import { DAY_NAMES, formatLocalDate } from '~/lib/labels';
 import { addDays, athensDateKey, formatAthens, mondayOf, weekdayOf } from '~/lib/time';
-import { courseUrl, url } from '~/lib/url';
+import { courseUrl, deadlineUrl, url } from '~/lib/url';
 
 const now = new Date();
 const today = athensDateKey(now);
@@ -47,7 +47,6 @@ const feedContents =
   settings.semesters.length > 0 ? 'οι προθεσμίες, τα μαθήματα, οι εκδηλώσεις και οι αργίες' : 'οι προθεσμίες, οι εκδηλώσεις και οι αργίες';
 const timeOf = (d: Date) => formatAthens(d, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
 const range = (monday: string) => `${short(monday)} – ${formatLocalDate(addDays(monday, 6))}`;
-const anchor = (id: string) => `task-${id.replaceAll('/', '-')}`;
 ---
 
 <Base title="Ημερολόγιο" description="Μαθήματα, προθεσμίες και αργίες, και συνδρομή στο ημερολόγιό σου.">
@@ -126,7 +125,7 @@ const anchor = (id: string) => `task-${id.replaceAll('/', '-')}`;
                         {d.deadlines.map((x) => (
                           <li class="item deadline" style={`--accent:${x.course.accent}`}>
                             <span class="time">Προθεσμία {timeOf(x.due)}</span>
-                            <a href={`${courseUrl(x.course.slug)}#${anchor(x.id)}`}>{x.title}</a>
+                            <a href={deadlineUrl(x)}>{x.title}</a>
                             <span class="muted">{x.course.code}</span>
                           </li>
                         ))}

@@ -37,6 +37,13 @@ export const assignmentUrl = (slug: string, assignmentId: string) =>
   url(`courses/${slug}/assignments/${assignmentId.split('/').pop()}/`);
 
 /**
+ * Where a deadline links to: the assignment's own page when it has one,
+ * otherwise its card on the course page.
+ */
+export const deadlineUrl = (d: { id: string; hasPage?: boolean; course: { slug: string } }) =>
+  d.hasPage ? assignmentUrl(d.course.slug, d.id) : `${courseUrl(d.course.slug)}#task-${d.id.replaceAll('/', '-')}`;
+
+/**
  * True when `href` (as produced by url()) is the page currently shown.
  * Used to set aria-current="page" in navigation.
  */

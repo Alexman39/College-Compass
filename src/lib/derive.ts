@@ -21,6 +21,8 @@ export interface DeadlineItem {
   released?: Date | undefined;
   weight?: number | undefined;
   course: CourseRef;
+  /** Has a brief, so it has its own page (/courses/<slug>/assignments/<file>/). */
+  hasPage?: boolean;
 }
 
 export interface CourseRef {

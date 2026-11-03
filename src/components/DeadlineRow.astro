@@ -8,7 +8,7 @@ import StatusPill from './StatusPill.astro';
 import type { DeadlineItem } from '~/lib/derive';
 import { ASSIGNMENT_TYPES, formatDeadline } from '~/lib/labels';
 import { statusLabel, timeStatus } from '~/lib/status';
-import { courseUrl } from '~/lib/url';
+import { deadlineUrl } from '~/lib/url';
 
 interface Props {
   item: DeadlineItem;
@@ -17,7 +17,6 @@ interface Props {
 }
 const { item, now, hidden = false } = Astro.props;
 const status = timeStatus(item, now);
-const anchor = `task-${item.id.replaceAll('/', '-')}`;
 ---
 
 <li
@@ -31,7 +30,7 @@ const anchor = `task-${item.id.replaceAll('/', '-')}`;
 >
   <span class="chip">{item.course.code}</span>
   <div class="text">
-    <a href={`${courseUrl(item.course.slug)}#${anchor}`} class="title">
+    <a href={deadlineUrl(item)} class="title">
       <span class="visually-hidden">{ASSIGNMENT_TYPES[item.type]}: </span>{item.title}
     </a>
     <time datetime={item.due.toISOString()}>{formatDeadline(item.due)}</time>

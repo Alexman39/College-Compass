@@ -262,6 +262,12 @@ export function courseRef(c: Course): CourseRef {
   };
 }
 
+/**
+ * Assignments with a brief get a page of their own; a practice quiz stays
+ * interactive on its card instead.
+ */
+export const hasOwnPage = (a: Assignment): boolean => Boolean(a.body?.trim()) && !a.data.answers;
+
 /** Every assignment that has a deadline, with its course attached. */
 export async function getDeadlineItems(): Promise<DeadlineItem[]> {
   const [courses, assignments] = await Promise.all([getCourses(), getAssignments()]);
@@ -277,6 +283,7 @@ export async function getDeadlineItems(): Promise<DeadlineItem[]> {
             released: a.data.released,
             weight: a.data.weight,
             course: courseRef(byId.get(a.data.course.id)!),
+            hasPage: hasOwnPage(a),
           },
         ]
       : [],

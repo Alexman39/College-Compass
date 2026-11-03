@@ -42,8 +42,7 @@
   gap: var(--s-3);
 }
 
-.jug button,
-.jug select {
+.jug button {
   min-height: 44px;
   padding: 0 var(--s-4);
   border: 1px solid var(--divider);
@@ -51,11 +50,6 @@
   background: var(--panel-solid);
   color: var(--text);
   font-weight: 700;
-}
-
-.jug select {
-  padding-inline: var(--s-3);
-  cursor: pointer;
 }
 
 .jug button:disabled {
@@ -84,7 +78,7 @@
   color: var(--text-on-accent);
 }
 
-.jug-mode label {
+.jug-mode-label {
   font-size: var(--fs-sm);
   font-weight: 700;
 }
@@ -414,14 +408,13 @@
     gap: var(--s-1);
   }
 
-  .jug.is-full button,
-  .jug.is-full select {
+  .jug.is-full button {
     min-height: 40px;
     padding-inline: var(--s-3);
     font-size: var(--fs-sm);
   }
 
-  .jug.is-full .jug-mode label {
+  .jug.is-full .jug-mode-label {
     display: none;
   }
 

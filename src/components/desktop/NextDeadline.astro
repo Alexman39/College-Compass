@@ -12,7 +12,7 @@ import Gadget from './Gadget.astro';
 import type { DeadlineItem } from '~/lib/derive';
 import { ASSIGNMENT_TYPES, formatDeadline } from '~/lib/labels';
 import { formatCountdown } from '~/lib/status';
-import { courseUrl, url } from '~/lib/url';
+import { deadlineUrl, url } from '~/lib/url';
 
 interface Props {
   items: DeadlineItem[];
@@ -20,7 +20,6 @@ interface Props {
 }
 const { items, now } = Astro.props;
 const future = items.filter((i) => i.due > now).sort((a, b) => a.due.getTime() - b.due.getTime());
-const anchor = (id: string) => `task-${id.replaceAll('/', '-')}`;
 ---
 
 <Gadget title="Επόμενη προθεσμία" id="gadget-next" href={url('upcoming')} linkLabel="Όλες">
@@ -39,7 +38,7 @@ const anchor = (id: string) => `task-${id.replaceAll('/', '-')}`;
             {formatCountdown(d.due.getTime() - now.getTime())}
           </p>
           <h3 class="title">
-            <a href={`${courseUrl(d.course.slug)}#${anchor(d.id)}`}>{d.title}</a>
+            <a href={deadlineUrl(d)}>{d.title}</a>
           </h3>
           <p class="meta">
             <span class="course">

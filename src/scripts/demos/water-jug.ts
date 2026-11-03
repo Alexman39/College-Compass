@@ -44,12 +44,15 @@ export function mount(root: HTMLElement): void {
   const dfsBtn = h('button', { type: 'button', 'aria-pressed': 'true' }, 'DFS · Στοίβα');
   const bfsBtn = h('button', { type: 'button', 'aria-pressed': 'false' }, 'BFS · Ουρά');
   algGroup.append(dfsBtn, bfsBtn);
-  const modeId = `jug-mode-${Math.random().toString(36).slice(2, 8)}`;
-  const modeLabel = h('label', { for: modeId }, 'Εκτέλεση:');
-  const modeSelect = h('select', { id: modeId });
-  modeSelect.append(h('option', { value: 'row' }, 'Ανά γραμμή'), h('option', { value: 'cell' }, 'Ανά κελί'));
+  // Playback mode: a two-button switch like DFS/BFS (a native <select>'s
+  // option list can't be styled to match the site).
+  const modeLabel = h('span', { class: 'jug-mode-label', id: `jug-mode-${Math.random().toString(36).slice(2, 8)}` }, 'Εκτέλεση:');
+  const modeGroup = h('div', { class: 'jug-seg', role: 'group', 'aria-labelledby': modeLabel.id });
+  const rowBtn = h('button', { type: 'button', 'aria-pressed': 'true' }, 'Ανά γραμμή');
+  const cellBtn = h('button', { type: 'button', 'aria-pressed': 'false' }, 'Ανά κελί');
+  modeGroup.append(rowBtn, cellBtn);
   const modeWrap = h('div', { class: 'jug-mode' });
-  modeWrap.append(modeLabel, modeSelect);
+  modeWrap.append(modeLabel, modeGroup);
   const fsBtn = h('button', { type: 'button', class: 'jug-fs', 'aria-pressed': 'false' }, '⛶ Πλήρης οθόνη');
   const tools = h('div', { class: 'jug-mode' });
   tools.append(modeWrap, fsBtn);
@@ -239,11 +242,15 @@ export function mount(root: HTMLElement): void {
 
   dfsBtn.addEventListener('click', () => setAlg('DFS'));
   bfsBtn.addEventListener('click', () => setAlg('BFS'));
-  modeSelect.addEventListener('change', () => {
-    mode = modeSelect.value as 'row' | 'cell';
+  const setMode = (next: 'row' | 'cell') => {
+    mode = next;
     step = 0;
+    rowBtn.setAttribute('aria-pressed', String(mode === 'row'));
+    cellBtn.setAttribute('aria-pressed', String(mode === 'cell'));
     render();
-  });
+  };
+  rowBtn.addEventListener('click', () => setMode('row'));
+  cellBtn.addEventListener('click', () => setMode('cell'));
   nextBtn.addEventListener('click', () => { step = Math.min(maxStep(), step + 1); render(); });
   prevBtn.addEventListener('click', () => { step = Math.max(0, step - 1); render(); });
   resetBtn.addEventListener('click', () => { step = 0; render(); });
