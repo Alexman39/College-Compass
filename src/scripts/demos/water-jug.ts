@@ -50,7 +50,10 @@ export function mount(root: HTMLElement): void {
   modeSelect.append(h('option', { value: 'row' }, 'Ανά γραμμή'), h('option', { value: 'cell' }, 'Ανά κελί'));
   const modeWrap = h('div', { class: 'jug-mode' });
   modeWrap.append(modeLabel, modeSelect);
-  toolbar.append(algGroup, modeWrap);
+  const fsBtn = h('button', { type: 'button', class: 'jug-fs', 'aria-pressed': 'false' }, '⛶ Πλήρης οθόνη');
+  const tools = h('div', { class: 'jug-mode' });
+  tools.append(modeWrap, fsBtn);
+  toolbar.append(algGroup, tools);
 
   const panel = h('div', { class: 'jug-panel' });
   const head = h('div', { class: 'jug-head' });
@@ -69,7 +72,7 @@ export function mount(root: HTMLElement): void {
   panel.append(head, bar, controls);
 
   const treeTitle = h('h3', { class: 'jug-h' }, 'Δέντρο καταστάσεων');
-  const treeWrap = h('div', { class: 'jug-scroll jug-tree', tabindex: '0', role: 'region', 'aria-label': 'Δέντρο καταστάσεων' });
+  const treeWrap = h('div', { class: 'jug-scroll jug-tree' });
   const svg = document.createElementNS(SVG, 'svg');
   svg.setAttribute('viewBox', '0 0 800 590');
   svg.setAttribute('role', 'img');
@@ -101,7 +104,37 @@ export function mount(root: HTMLElement): void {
     'Η εκτέλεση του DFS είναι ο πίνακας της διάλεξης (διαφάνεια 21). Ο BFS εφαρμόζεται με τον ίδιο αλγόριθμο στο ίδιο δέντρο. «Βρόχος» σημαίνει ότι η κατάσταση έχει ήδη εξεταστεί (είναι στο κλειστό σύνολο), άρα δεν επεκτείνεται ξανά.',
   );
 
-  root.append(sub, toolbar, panel, treeTitle, treeWrap, legend, explanation, tableTitle, tableWrap, foot);
+  // Tree on one side, explanation and table on the other (side by side in
+  // full screen; stacked in the page).
+  const left = h('div', { class: 'jug-left' });
+  left.append(treeTitle, treeWrap, legend);
+  const right = h('div', { class: 'jug-right' });
+  right.append(explanation, tableTitle, tableWrap);
+  const body = h('div', { class: 'jug-body' });
+  body.append(left, right);
+  root.append(sub, toolbar, panel, body, foot);
+
+  // Full screen: the real Fullscreen API where there is one, and in any case
+  // a fixed overlay, so it also works on phones that only allow it for video.
+  const setFull = (on: boolean) => {
+    root.classList.toggle('is-full', on);
+    document.documentElement.classList.toggle('jug-lock', on);
+    fsBtn.setAttribute('aria-pressed', String(on));
+    fsBtn.textContent = on ? '✕ Έξοδος' : '⛶ Πλήρης οθόνη';
+    render();
+  };
+  fsBtn.addEventListener('click', () => {
+    const on = !root.classList.contains('is-full');
+    if (on) void root.requestFullscreen?.().catch(() => {});
+    else if (document.fullscreenElement) void document.exitFullscreen();
+    setFull(on);
+  });
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement && root.classList.contains('is-full')) setFull(false);
+  });
+  root.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && root.classList.contains('is-full')) setFull(false);
+  });
 
   const perRow = () => (mode === 'cell' ? CELLS : 1);
   const maxStep = () => rows.length * perRow();
@@ -162,11 +195,6 @@ export function mount(root: HTMLElement): void {
     nextBtn.disabled = endBtn.disabled = step === max;
 
     drawTree(current, reached);
-    // On a narrow screen the tree scrolls sideways: keep the current state in view.
-    if (current && treeWrap.scrollWidth > treeWrap.clientWidth) {
-      const scale = svg.clientWidth / 800;
-      treeWrap.scrollLeft = node(current.id).x * scale - treeWrap.clientWidth / 2;
-    }
 
     const n = current && node(current.id);
     explanation.textContent = !current
