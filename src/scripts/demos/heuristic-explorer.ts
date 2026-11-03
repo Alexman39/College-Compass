@@ -59,6 +59,7 @@ const ABOUT: Record<AlgorithmId, string> = {
 
 const NOTE: Record<ProblemId, string> = {
   maze: 'Ο λαβύρινθος της διάλεξης (διαφάνεια 14): S = 5-5, F = 9-3, h = απόσταση Manhattan, κάθε κίνηση κοστίζει 1. Σειρά κινήσεων: αριστερά, πάνω, δεξιά, κάτω.',
+  book: 'Ο λαβύρινθος του βιβλίου (Σχήμα 4.5): S = 3-4, G = 7-8, h = απόσταση Manhattan, κάθε κίνηση κοστίζει 1. Ο Greedy BestFS αναπαράγει τον Πίνακα 4.1 του βιβλίου.',
   roads: 'Το οδικό δίκτυο των σημειώσεων (δικό μας παράδειγμα). Αριθμοί στους δρόμους: κόστος· h = εκτίμηση της απόστασης ως το G.',
   ex1: 'Η Άσκηση 1 της διάλεξης (διαφάνεια 24). Δοκίμασε πρώτα μόνος σου και μετά έλεγξε εδώ. Τερματικοί κόμβοι: όσοι έχουν h = 0.',
   ex2: 'Η Άσκηση 2 της διάλεξης (διαφάνεια 25). Η διαφάνεια έχει δύο κόμβους «i» (h = 3 και h = 9)· είναι διαφορετικοί κόμβοι.',
@@ -213,7 +214,7 @@ export function mount(root: HTMLElement): void {
       const cls = classOf(n.id, current, closed, reached);
       const gEl = s('g', { class: `jug-node hx-cell ${cls} ${goal ? 'hx-target' : ''}` }, svg);
       s('rect', { x: X(n.x), y: Y(n.y), width: cs, height: cs, class: 'box' }, gEl);
-      const name = n.id === P().start ? 'S' : goal ? 'F' : '';
+      const name = n.id === P().start ? 'S' : goal ? g.goal : '';
       if (name) s('text', { x: X(n.x) + cs / 2, y: Y(n.y) + 26, 'text-anchor': 'middle', class: 'name' }, gEl).textContent = name;
       s('text', { x: X(n.x) + cs / 2, y: Y(n.y) + (name ? 48 : 38), 'text-anchor': 'middle', class: 'ml' }, gEl).textContent =
         alg === 'ASTAR' && current?.children.some((c) => c.id === n.id)
@@ -267,7 +268,7 @@ export function mount(root: HTMLElement): void {
       case 'loop':
         return `Η ${L} είναι ήδη στο κλειστό σύνολο: βρόχος, δεν επεκτείνεται ξανά.`;
       case 'goal':
-        return `Η ${L} είναι τελική κατάσταση (h = 0). Διαδρομή ${r.path.map(label).join(' → ')}${prob === 'maze' || prob === 'roads' ? `, κόστος ${r.g}` : ''}.`;
+        return `Η ${L} είναι τελική κατάσταση (h = 0). Διαδρομή ${r.path.map(label).join(' → ')}${P().grid || prob === 'roads' ? `, κόστος ${r.g}` : ''}.`;
       case 'stuck':
         return alg === 'HC'
           ? `Η ${L} δεν έχει παιδιά και δεν είναι τελική. Ο Hill Climbing έχει πετάξει όλες τις άλλες επιλογές: αποτυχία.`
@@ -339,7 +340,7 @@ export function mount(root: HTMLElement): void {
     const last = rows.at(-1);
 
     sub.textContent = ABOUT[alg];
-    treeTitle.textContent = P().grid ? 'Λαβύρινθος' : prob === 'roads' ? 'Οδικό δίκτυο' : `Δένδρο της ${P().label === 'Άσκηση 1' ? 'Άσκησης 1' : 'Άσκησης 2'}`;
+    treeTitle.textContent = P().grid ? P().label : prob === 'roads' ? 'Οδικό δίκτυο' : `Δένδρο της ${P().label === 'Άσκηση 1' ? 'Άσκησης 1' : 'Άσκησης 2'}`;
     stepLabel.textContent = `Βήμα ${done} / ${rows.length}`;
     scrub.max = String(max);
     scrub.value = String(step);
