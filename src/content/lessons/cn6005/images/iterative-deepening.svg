@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" width="500" height="320" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Επαναληπτική εκβάθυνση: τρεις γύροι DFS με όριο βάθους</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="320" fill="#ffffff"/>
+  <text x="95" y="24" text-anchor="middle" font-size="15" font-weight="800" fill="#0c2636">Όριο βάθους 1</text>
+  <rect x="20" y="40" width="150" height="186" rx="10" fill="#ffffff" stroke="#c9d3d9" stroke-width="1.5"/>
+  <line x1="95" y1="64" x2="64.5" y2="108" stroke="#841387" stroke-width="2.5"/>
+  <line x1="95" y1="64" x2="125.5" y2="108" stroke="#841387" stroke-width="2.5"/>
+  <line x1="64.5" y1="108" x2="46.2" y2="152" stroke="#c9d3d9" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <line x1="64.5" y1="108" x2="80.36" y2="152" stroke="#c9d3d9" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <line x1="125.5" y1="108" x2="109.64" y2="152" stroke="#c9d3d9" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <line x1="125.5" y1="108" x2="143.8" y2="152" stroke="#c9d3d9" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <line x1="80.36" y1="152" x2="80.36" y2="196" stroke="#c9d3d9" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <line x1="109.64" y1="152" x2="109.64" y2="196" stroke="#c9d3d9" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <circle cx="95" cy="64" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="95" y="69" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Α</text>
+  <circle cx="64.5" cy="108" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="64.5" y="113" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Β</text>
+  <circle cx="125.5" cy="108" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="125.5" y="113" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Γ</text>
+  <circle cx="46.2" cy="152" r="11" fill="#ffffff" stroke="#c9d3d9" stroke-width="2"/>
+  <text x="46.2" y="157" text-anchor="middle" font-size="13" font-weight="800" fill="#7b8a94">Δ</text>
+  <circle cx="80.36" cy="152" r="11" fill="#ffffff" stroke="#c9d3d9" stroke-width="2"/>
+  <text x="80.36" y="157" text-anchor="middle" font-size="13" font-weight="800" fill="#7b8a94">Ε</text>
+  <circle cx="109.64" cy="152" r="11" fill="#ffffff" stroke="#c9d3d9" stroke-width="2"/>
+  <text x="109.64" y="157" text-anchor="middle" font-size="13" font-weight="800" fill="#7b8a94">Ζ</text>
+  <circle cx="143.8" cy="152" r="11" fill="#ffffff" stroke="#c9d3d9" stroke-width="2"/>
+  <text x="143.8" y="157" text-anchor="middle" font-size="13" font-weight="800" fill="#7b8a94">Η</text>
+  <circle cx="80.36" cy="196" r="11" fill="#ffffff" stroke="#c9d3d9" stroke-width="2"/>
+  <text x="80.36" y="201" text-anchor="middle" font-size="13" font-weight="800" fill="#7b8a94">Θ</text>
+  <circle cx="109.64" cy="196" r="11" fill="#ffffff" stroke="#c9d3d9" stroke-width="2"/>
+  <text x="109.64" y="201" text-anchor="middle" font-size="13" font-weight="800" fill="#7b8a94">Ι</text>
+  <line x1="26" y1="128" x2="164" y2="128" stroke="#c62828" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="95" y="248" text-anchor="middle" font-size="14" font-weight="700" fill="#4a5a65">3 κόμβοι</text>
+  <text x="255" y="24" text-anchor="middle" font-size="15" font-weight="800" fill="#0c2636">Όριο βάθους 2</text>
+  <rect x="180" y="40" width="150" height="186" rx="10" fill="#ffffff" stroke="#c9d3d9" stroke-width="1.5"/>
+  <line x1="255" y1="64" x2="224.5" y2="108" stroke="#841387" stroke-width="2.5"/>
+  <line x1="255" y1="64" x2="285.5" y2="108" stroke="#841387" stroke-width="2.5"/>
+  <line x1="224.5" y1="108" x2="206.2" y2="152" stroke="#841387" stroke-width="2.5"/>
+  <line x1="224.5" y1="108" x2="240.36" y2="152" stroke="#841387" stroke-width="2.5"/>
+  <line x1="285.5" y1="108" x2="269.64" y2="152" stroke="#841387" stroke-width="2.5"/>
+  <line x1="285.5" y1="108" x2="303.8" y2="152" stroke="#841387" stroke-width="2.5"/>
+  <line x1="240.36" y1="152" x2="240.36" y2="196" stroke="#c9d3d9" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <line x1="269.64" y1="152" x2="269.64" y2="196" stroke="#c9d3d9" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <circle cx="255" cy="64" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="255" y="69" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Α</text>
+  <circle cx="224.5" cy="108" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="224.5" y="113" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Β</text>
+  <circle cx="285.5" cy="108" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="285.5" y="113" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Γ</text>
+  <circle cx="206.2" cy="152" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="206.2" y="157" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Δ</text>
+  <circle cx="240.36" cy="152" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="240.36" y="157" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Ε</text>
+  <circle cx="269.64" cy="152" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="269.64" y="157" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Ζ</text>
+  <circle cx="303.8" cy="152" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="303.8" y="157" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Η</text>
+  <circle cx="240.36" cy="196" r="11" fill="#ffffff" stroke="#c9d3d9" stroke-width="2"/>
+  <text x="240.36" y="201" text-anchor="middle" font-size="13" font-weight="800" fill="#7b8a94">Θ</text>
+  <circle cx="269.64" cy="196" r="11" fill="#ffffff" stroke="#c9d3d9" stroke-width="2"/>
+  <text x="269.64" y="201" text-anchor="middle" font-size="13" font-weight="800" fill="#7b8a94">Ι</text>
+  <line x1="186" y1="172" x2="324" y2="172" stroke="#c62828" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="255" y="248" text-anchor="middle" font-size="14" font-weight="700" fill="#4a5a65">7 κόμβοι</text>
+  <text x="415" y="24" text-anchor="middle" font-size="15" font-weight="800" fill="#0c2636">Όριο βάθους 3</text>
+  <rect x="340" y="40" width="150" height="186" rx="10" fill="#ffffff" stroke="#c9d3d9" stroke-width="1.5"/>
+  <line x1="415" y1="64" x2="384.5" y2="108" stroke="#841387" stroke-width="2.5"/>
+  <line x1="415" y1="64" x2="445.5" y2="108" stroke="#841387" stroke-width="2.5"/>
+  <line x1="384.5" y1="108" x2="366.2" y2="152" stroke="#841387" stroke-width="2.5"/>
+  <line x1="384.5" y1="108" x2="400.36" y2="152" stroke="#841387" stroke-width="2.5"/>
+  <line x1="445.5" y1="108" x2="429.64" y2="152" stroke="#841387" stroke-width="2.5"/>
+  <line x1="445.5" y1="108" x2="463.8" y2="152" stroke="#841387" stroke-width="2.5"/>
+  <line x1="400.36" y1="152" x2="400.36" y2="196" stroke="#841387" stroke-width="2.5"/>
+  <line x1="429.64" y1="152" x2="429.64" y2="196" stroke="#841387" stroke-width="2.5"/>
+  <circle cx="415" cy="64" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="415" y="69" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Α</text>
+  <circle cx="384.5" cy="108" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="384.5" y="113" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Β</text>
+  <circle cx="445.5" cy="108" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="445.5" y="113" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Γ</text>
+  <circle cx="366.2" cy="152" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="366.2" y="157" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Δ</text>
+  <circle cx="400.36" cy="152" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="400.36" y="157" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Ε</text>
+  <circle cx="429.64" cy="152" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="429.64" y="157" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Ζ</text>
+  <circle cx="463.8" cy="152" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="463.8" y="157" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Η</text>
+  <circle cx="400.36" cy="196" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="400.36" y="201" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Θ</text>
+  <circle cx="429.64" cy="196" r="11" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="429.64" y="201" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">Ι</text>
+  <line x1="346" y1="216" x2="484" y2="216" stroke="#c62828" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="415" y="248" text-anchor="middle" font-size="14" font-weight="700" fill="#4a5a65">9 κόμβοι</text>
+  <text x="250" y="282" text-anchor="middle" font-size="15" font-weight="400" fill="#4a5a65">Κάθε γύρος είναι ένας DFS από την αρχή, με όριο κατά 1</text>
+  <text x="250" y="304" text-anchor="middle" font-size="15" font-weight="400" fill="#4a5a65">μεγαλύτερο. Κάτω από την κόκκινη γραμμή δεν κατεβαίνει.</text>
+</svg>
