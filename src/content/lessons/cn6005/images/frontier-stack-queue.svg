@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 306" width="500" height="306" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Το μέτωπο αναζήτησης ως στοίβα και ως ουρά</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="306" fill="#ffffff"/>
+  <text x="20" y="30" text-anchor="start" font-size="16" font-weight="700" fill="#0c2636">Πριν: το μέτωπο είναι &lt;Α, Β&gt;.</text>
+  <text x="20" y="54" text-anchor="start" font-size="16" font-weight="400" fill="#4a5a65">Βγαίνει το Α· τα παιδιά του είναι Γ, Δ.</text>
+  <text x="20" y="108" text-anchor="start" font-size="20" font-weight="800" fill="#841387">DFS</text>
+  <text x="20" y="130" text-anchor="start" font-size="14" font-weight="400" fill="#4a5a65">στοίβα</text>
+  <rect x="150" y="90" width="48" height="40" rx="6" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="174" y="117" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">Γ</text>
+  <rect x="206" y="90" width="48" height="40" rx="6" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="230" y="117" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">Δ</text>
+  <rect x="262" y="90" width="48" height="40" rx="6" fill="#eef3f6" stroke="#7b8a94" stroke-width="2"/>
+  <text x="286" y="117" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">Β</text>
+  <text x="150" y="152" text-anchor="start" font-size="14" font-weight="700" fill="#841387">↑ στην αρχή: επόμενο εξετάζεται το Γ</text>
+  <text x="20" y="210" text-anchor="start" font-size="20" font-weight="800" fill="#841387">BFS</text>
+  <text x="20" y="232" text-anchor="start" font-size="14" font-weight="400" fill="#4a5a65">ουρά</text>
+  <rect x="150" y="192" width="48" height="40" rx="6" fill="#eef3f6" stroke="#7b8a94" stroke-width="2"/>
+  <text x="174" y="219" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">Β</text>
+  <rect x="206" y="192" width="48" height="40" rx="6" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="230" y="219" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">Γ</text>
+  <rect x="262" y="192" width="48" height="40" rx="6" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="286" y="219" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636">Δ</text>
+  <text x="150" y="254" text-anchor="start" font-size="14" font-weight="700" fill="#841387">στο τέλος ↑: επόμενο εξετάζεται το Β</text>
+  <text x="250" y="290" text-anchor="middle" font-size="16" font-weight="400" fill="#4a5a65">Μόνο αυτό αλλάζει: σε ποιο σημείο μπαίνουν τα παιδιά.</text>
+</svg>

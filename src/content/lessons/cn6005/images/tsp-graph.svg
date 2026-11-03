@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 368" width="500" height="368" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Ο πλανόδιος πωλητής με 4 πόλεις</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="368" fill="#ffffff"/>
+  <line x1="100" y1="70" x2="400" y2="70" stroke="#841387" stroke-width="2.5"/>
+  <circle cx="250" cy="70" r="15" fill="#ffffff" stroke="#c9d3d9" stroke-width="1.5"/>
+  <text x="250" y="76" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">3</text>
+  <line x1="100" y1="70" x2="400" y2="270" stroke="#7b8a94" stroke-width="2.5"/>
+  <circle cx="325" cy="220" r="15" fill="#ffffff" stroke="#c9d3d9" stroke-width="1.5"/>
+  <text x="325" y="226" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">5</text>
+  <line x1="100" y1="70" x2="100" y2="270" stroke="#841387" stroke-width="2.5"/>
+  <circle cx="100" cy="170" r="15" fill="#ffffff" stroke="#c9d3d9" stroke-width="1.5"/>
+  <text x="100" y="176" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">3</text>
+  <line x1="400" y1="70" x2="400" y2="270" stroke="#841387" stroke-width="2.5"/>
+  <circle cx="400" cy="170" r="15" fill="#ffffff" stroke="#c9d3d9" stroke-width="1.5"/>
+  <text x="400" y="176" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">5</text>
+  <line x1="400" y1="70" x2="100" y2="270" stroke="#7b8a94" stroke-width="2.5"/>
+  <circle cx="325" cy="120" r="15" fill="#ffffff" stroke="#c9d3d9" stroke-width="1.5"/>
+  <text x="325" y="126" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">9</text>
+  <line x1="400" y1="270" x2="100" y2="270" stroke="#841387" stroke-width="2.5"/>
+  <circle cx="250" cy="270" r="15" fill="#ffffff" stroke="#c9d3d9" stroke-width="1.5"/>
+  <text x="250" y="276" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">5</text>
+  <circle cx="100" cy="70" r="24" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="100" y="77" text-anchor="middle" font-size="20" font-weight="800" fill="#0c2636">α</text>
+  <circle cx="400" cy="70" r="24" fill="#eef3f6" stroke="#7b8a94" stroke-width="2.5"/>
+  <text x="400" y="77" text-anchor="middle" font-size="20" font-weight="800" fill="#0c2636">β</text>
+  <circle cx="400" cy="270" r="24" fill="#eef3f6" stroke="#7b8a94" stroke-width="2.5"/>
+  <text x="400" y="277" text-anchor="middle" font-size="20" font-weight="800" fill="#0c2636">γ</text>
+  <circle cx="100" cy="270" r="24" fill="#eef3f6" stroke="#7b8a94" stroke-width="2.5"/>
+  <text x="100" y="277" text-anchor="middle" font-size="20" font-weight="800" fill="#0c2636">δ</text>
+  <text x="250" y="330" text-anchor="middle" font-size="15" font-weight="400" fill="#4a5a65">Αφετηρία η α. Τονισμένη η βέλτιστη διαδρομή</text>
+  <text x="250" y="352" text-anchor="middle" font-size="15" font-weight="400" fill="#4a5a65">α → β → γ → δ → α: 3 + 5 + 5 + 3 = 16.</text>
+</svg>
