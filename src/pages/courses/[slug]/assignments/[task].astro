@@ -2,7 +2,8 @@
 /**
  * /courses/<slug>/assignments/<file>/ — one assignment on its own page: the
  * card's facts (deadline, status, weight, Moodle, done tick) and the whole
- * brief, at lesson width. Every assignment with a brief gets one, except a
+ * brief, laid out like a lesson (same panel, same «Πλήρες πλάτος» switch).
+ * Every assignment with a brief gets one, except a
  * practice quiz, which stays interactive on its card.
  */
 // Briefs can contain math, like lessons.
@@ -11,6 +12,7 @@ import Base from '~/layouts/Base.astro';
 import Breadcrumbs from '~/components/Breadcrumbs.astro';
 import AssignmentItem from '~/components/AssignmentItem.astro';
 import Lightbox from '~/components/Lightbox.astro';
+import WidthToggle from '~/components/WidthToggle.astro';
 import { getAssignments, getCourses, getLessons, type Assignment, type Course, type Lesson } from '~/lib/content';
 import { courseUrl, lessonUrl, url } from '~/lib/url';
 
@@ -53,9 +55,13 @@ const a = assignment.data;
       ]}
     />
 
-    <div class="task">
+    <article class="panel lesson">
+      <div class="top" data-pagefind-ignore>
+        <p class="kicker"><span lang="en">{c.title_en}</span> · {c.code}</p>
+        <WidthToggle />
+      </div>
       <AssignmentItem assignment={assignment} level={1} archived={c.status === 'archived'} full />
-    </div>
+    </article>
 
     <nav class="back" aria-label="Επιστροφή">
       {
@@ -83,16 +89,60 @@ const a = assignment.data;
     min-width: 0;
   }
 
-  /* Same width as a lesson: a brief is text to read, not a card in a list. */
-  .task,
+  /* The same panel as a lesson page: a brief is text to read, not a card
+   * in a list. */
+  .lesson,
   .back {
     width: 100%;
     max-width: 52rem;
     margin-inline: auto;
   }
 
-  .task :global(.title) {
+  .lesson {
+    display: grid;
+    gap: var(--s-4);
+    padding: var(--s-5) var(--s-4);
+    border-top: 4px solid var(--accent);
+  }
+
+  .lesson > * {
+    min-width: 0;
+  }
+
+  @media (min-width: 40rem) {
+    .lesson {
+      padding: var(--s-6) var(--s-7);
+    }
+  }
+
+  /* «Πλήρες πλάτος» (WidthToggle), as on lessons. */
+  :global([data-width='wide']) .lesson,
+  :global([data-width='wide']) .back {
+    max-width: none;
+  }
+
+  :global([data-width='wide']) .lesson :global(.prose),
+  :global([data-width='wide']) .lesson :global(.teaser) {
+    max-width: none;
+  }
+
+  .top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-2) var(--s-4);
+  }
+
+  .kicker {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+  }
+
+  .lesson :global(.title) {
     font-size: var(--fs-xl);
+    hyphens: auto;
   }
 
   .back {

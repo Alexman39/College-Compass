@@ -139,12 +139,100 @@
   border-radius: var(--r-md);
 }
 
+.jug-tree {
+  overflow: hidden;
+  background: var(--panel-solid);
+}
+
+/* The whole tree always fits its box, so every state is visible at once.
+ * (Phones: «Πλήρης οθόνη» gives it the most room.) */
 .jug-tree svg {
   display: block;
   width: 100%;
-  min-width: 640px;
   height: auto;
-  background: var(--panel-solid);
+}
+
+.jug-body,
+.jug-left,
+.jug-right {
+  display: grid;
+  gap: var(--s-3);
+  min-width: 0;
+}
+
+.jug-left > *,
+.jug-right > * {
+  min-width: 0;
+  margin: 0;
+}
+
+/* ---- Full screen ------------------------------------------------------
+ * Fills the viewport: controls on top, the tree on the left (as large as
+ * fits), the explanation and the execution table on the right. */
+:root.jug-lock {
+  overflow: hidden;
+}
+
+.jug.is-full {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  width: 100%;
+  height: 100dvh;
+  margin: 0;
+  padding: var(--s-3) var(--s-4);
+  border: 0;
+  border-radius: 0;
+  overflow: auto;
+}
+
+.jug.is-full:fullscreen {
+  width: 100%;
+  height: 100%;
+}
+
+.jug.is-full .jug-body {
+  flex: 1;
+  min-height: 0;
+  grid-template-columns: minmax(0, 3fr) minmax(19rem, 2fr);
+}
+
+.jug.is-full .jug-left,
+.jug.is-full .jug-right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  min-height: 0;
+}
+
+.jug.is-full .jug-tree {
+  flex: 1;
+  min-height: 0;
+}
+
+.jug.is-full .jug-tree svg {
+  height: 100%;
+}
+
+.jug.is-full .jug-table {
+  flex: 1;
+  min-height: 0;
+  max-height: none;
+}
+
+.jug.is-full .jug-panel {
+  padding-block: var(--s-2);
+}
+
+/* Portrait phones: tree on top, table below, each half of the space. */
+@media (max-width: 48rem) and (orientation: portrait) {
+  .jug.is-full .jug-body {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  }
 }
 
 .jug-edge {
@@ -270,7 +358,7 @@
 
 .jug-table table {
   width: 100%;
-  min-width: 34rem;
+  min-width: 30rem;
   border-collapse: collapse;
   font-size: var(--fs-sm);
   font-variant-numeric: tabular-nums;
@@ -302,4 +390,69 @@
 
 .jug-table td.hidden-cell {
   color: var(--text-muted);
+}
+
+.jug.is-full > .jug-sub:last-child {
+  display: none;
+}
+
+/* Small screens in full screen: every pixel goes to the tree and the table.
+ * Drop the subtitle, section titles and legend; tighten the controls. */
+@media (max-width: 48rem), (max-height: 32rem) {
+  .jug.is-full {
+    gap: var(--s-1);
+    padding: var(--s-2);
+  }
+
+  .jug.is-full > .jug-sub,
+  .jug.is-full .jug-h,
+  .jug.is-full .jug-legend {
+    display: none;
+  }
+
+  .jug.is-full .jug-toolbar {
+    gap: var(--s-1);
+  }
+
+  .jug.is-full button,
+  .jug.is-full select {
+    min-height: 40px;
+    padding-inline: var(--s-3);
+    font-size: var(--fs-sm);
+  }
+
+  .jug.is-full .jug-mode label {
+    display: none;
+  }
+
+  .jug.is-full .jug-panel {
+    gap: var(--s-1);
+    padding: var(--s-2);
+  }
+
+  .jug.is-full .jug-controls {
+    gap: var(--s-1);
+  }
+
+  .jug.is-full .jug-note {
+    padding: var(--s-2);
+    font-size: var(--fs-sm);
+    line-height: 1.4;
+  }
+
+  .jug.is-full .jug-right {
+    gap: var(--s-1);
+  }
+}
+
+/* Landscape phones: tree and table side by side again. */
+@media (max-height: 32rem) and (orientation: landscape) {
+  .jug.is-full .jug-body {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .jug.is-full .jug-note {
+    display: none;
+  }
 }
