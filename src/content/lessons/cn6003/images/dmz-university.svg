@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 408" width="500" height="408" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>DMZ σε πανεπιστήμιο</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c62828"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="408" fill="#ffffff"/>
+  <rect x="130" y="12" width="240" height="58" rx="29" fill="#eef3f6" stroke="#7b8a94" stroke-width="2.5"/>
+  <text x="250" y="37" text-anchor="middle" font-size="17" font-weight="800" fill="#0c2636">Διαδίκτυο</text>
+  <text x="250" y="59" text-anchor="middle" font-size="17" font-weight="400" fill="#0c2636">εξωτερικοί χρήστες</text>
+  <rect x="185" y="128" width="130" height="44" rx="8" fill="#0c2636" stroke="#0c2636" stroke-width="2"/>
+  <text x="250" y="156" text-anchor="middle" font-size="17" font-weight="800" fill="#ffffff">Firewall</text>
+  <line x1="250" y1="70" x2="250" y2="126" stroke="#0c2636" stroke-width="3"/>
+  <rect x="20" y="250" width="200" height="96" rx="10" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2.5"/>
+  <text x="120" y="280" text-anchor="middle" font-size="17" font-weight="800" fill="#0c2636">DMZ</text>
+  <text x="120" y="302" text-anchor="middle" font-size="17" font-weight="400" fill="#0c2636">web server</text>
+  <text x="120" y="324" text-anchor="middle" font-size="17" font-weight="400" fill="#0c2636">mail server</text>
+  <line x1="204.5" y1="172" x2="120" y2="248" stroke="#0c2636" stroke-width="3"/>
+  <rect x="280" y="250" width="200" height="96" rx="10" fill="#eef3f6" stroke="#7b8a94" stroke-width="2.5"/>
+  <text x="380" y="280" text-anchor="middle" font-size="17" font-weight="800" fill="#0c2636">LAN</text>
+  <text x="380" y="302" text-anchor="middle" font-size="17" font-weight="400" fill="#0c2636">προσωπικό</text>
+  <text x="380" y="324" text-anchor="middle" font-size="17" font-weight="400" fill="#0c2636">και φοιτητές</text>
+  <line x1="295.5" y1="172" x2="380" y2="248" stroke="#0c2636" stroke-width="3"/>
+  <path d="M160 70 C 135 130, 118 190, 112 244" fill="none" stroke="#2e7d32" stroke-width="3" marker-end="url(#a-ok)"/>
+  <text x="14" y="160" text-anchor="start" font-size="15" font-weight="800" fill="#2e7d32">επιτρέπεται</text>
+  <path d="M340 70 C 365 120, 378 160, 382 196" fill="none" stroke="#c62828" stroke-width="3" stroke-dasharray="7 6"/>
+  <path d="M370 196 l24 24 M394 196 l-24 24" stroke="#c62828" stroke-width="4" stroke-linecap="round"/>
+  <text x="486" y="160" text-anchor="end" font-size="15" font-weight="800" fill="#c62828">αποκλείεται</text>
+  <text x="250" y="372" text-anchor="middle" font-size="15" font-weight="400" fill="#4a5a65">Αν παραβιαστεί ο web server, η επίθεση</text>
+  <text x="250" y="392" text-anchor="middle" font-size="15" font-weight="400" fill="#4a5a65">μένει στη DMZ· το LAN παραμένει προστατευμένο.</text>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 310" width="500" height="310" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Η πιθανότητα της ρίζας για τρεις επιλογές τελεστών</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c62828"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="310" fill="#ffffff"/>
+  <text x="20" y="36" text-anchor="start" font-size="16" font-weight="700" fill="#0c2636">OR παντού</text>
+  <rect x="20" y="46" width="380" height="26" rx="4" fill="#eef3f6"/>
+  <rect x="20" y="46" width="304.8" height="26" rx="4" fill="#841387"/>
+  <text x="332.76" y="65" text-anchor="start" font-size="16" font-weight="800" fill="#841387">80,2%</text>
+  <text x="20" y="112" text-anchor="start" font-size="16" font-weight="700" fill="#0c2636">AND στους κλάδους, OR στη ρίζα</text>
+  <rect x="20" y="122" width="380" height="26" rx="4" fill="#eef3f6"/>
+  <rect x="20" y="122" width="5.3" height="26" rx="4" fill="#841387"/>
+  <text x="33.282" y="141" text-anchor="start" font-size="16" font-weight="800" fill="#841387">1,4%</text>
+  <text x="20" y="188" text-anchor="start" font-size="16" font-weight="700" fill="#0c2636">OR στους κλάδους, AND στη ρίζα</text>
+  <rect x="20" y="198" width="380" height="26" rx="4" fill="#eef3f6"/>
+  <rect x="20" y="198" width="21.3" height="26" rx="4" fill="#841387"/>
+  <text x="49.28" y="217" text-anchor="start" font-size="16" font-weight="800" fill="#841387">5,6%</text>
+  <line x1="20" y1="244" x2="20" y2="250" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="20" y="266" text-anchor="middle" font-size="13" font-weight="400" fill="#4a5a65">0%</text>
+  <line x1="210" y1="244" x2="210" y2="250" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="210" y="266" text-anchor="middle" font-size="13" font-weight="400" fill="#4a5a65">50%</text>
+  <line x1="400" y1="244" x2="400" y2="250" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="400" y="266" text-anchor="middle" font-size="13" font-weight="400" fill="#4a5a65">100%</text>
+  <text x="250" y="294" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">Πιθανότητα επιτυχίας της ρίζας. Υπόθεση: ανεξάρτητα γεγονότα.</text>
+</svg>
