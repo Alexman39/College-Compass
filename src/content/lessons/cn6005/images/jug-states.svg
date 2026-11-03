@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 256" width="500" height="256" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Το πρόβλημα των ποτηριών: αρχική και τελικές καταστάσεις</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="256" fill="#ffffff"/>
+  <rect x="20" y="40" width="140" height="120" rx="10" fill="#ffffff" stroke="#c9d3d9" stroke-width="1.5"/>
+  <rect x="38" y="58" width="54" height="70" fill="#ffffff" stroke="#0c2636" stroke-width="2"/>
+  <text x="65" y="148" text-anchor="middle" font-size="12" font-weight="700" fill="#4a5a65">70 ml</text>
+  <rect x="106" y="80" width="38" height="48" fill="#ffffff" stroke="#0c2636" stroke-width="2"/>
+  <text x="125" y="148" text-anchor="middle" font-size="12" font-weight="700" fill="#4a5a65">50 ml</text>
+  <text x="90" y="26" text-anchor="middle" font-size="15" font-weight="800" fill="#0c2636">Αρχική κατάσταση</text>
+  <rect x="196" y="40" width="140" height="120" rx="10" fill="#ffffff" stroke="#c9d3d9" stroke-width="1.5"/>
+  <rect x="214" y="58" width="54" height="70" fill="#ffffff" stroke="#0c2636" stroke-width="2"/>
+  <rect x="215" y="88.1429" width="52" height="38.8571" fill="#2f8fdc"/>
+  <text x="241" y="122" text-anchor="middle" font-size="13" font-weight="800" fill="#ffffff">40</text>
+  <text x="241" y="148" text-anchor="middle" font-size="12" font-weight="700" fill="#4a5a65">70 ml</text>
+  <rect x="282" y="80" width="38" height="48" fill="#ffffff" stroke="#0c2636" stroke-width="2"/>
+  <text x="301" y="110" text-anchor="middle" font-size="18" font-weight="800" fill="#4a5a65">?</text>
+  <text x="301" y="148" text-anchor="middle" font-size="12" font-weight="700" fill="#4a5a65">50 ml</text>
+  <text x="350" y="108" text-anchor="middle" font-size="18" font-weight="700" fill="#4a5a65">ή</text>
+  <rect x="340" y="40" width="140" height="120" rx="10" fill="#ffffff" stroke="#c9d3d9" stroke-width="1.5"/>
+  <rect x="358" y="58" width="54" height="70" fill="#ffffff" stroke="#0c2636" stroke-width="2"/>
+  <text x="385" y="99" text-anchor="middle" font-size="18" font-weight="800" fill="#4a5a65">?</text>
+  <text x="385" y="148" text-anchor="middle" font-size="12" font-weight="700" fill="#4a5a65">70 ml</text>
+  <rect x="426" y="80" width="38" height="48" fill="#ffffff" stroke="#0c2636" stroke-width="2"/>
+  <rect x="427" y="90.2" width="36" height="36.8" fill="#2f8fdc"/>
+  <text x="445" y="122" text-anchor="middle" font-size="13" font-weight="800" fill="#ffffff">40</text>
+  <text x="445" y="148" text-anchor="middle" font-size="12" font-weight="700" fill="#4a5a65">50 ml</text>
+  <text x="343" y="26" text-anchor="middle" font-size="15" font-weight="800" fill="#0c2636">Τελικές καταστάσεις</text>
+  <text x="250" y="196" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">Γεμίζεις ένα ποτήρι μέχρι το χείλος (μόνο όταν είναι άδειο),</text>
+  <text x="250" y="218" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">το αδειάζεις στο άλλο ή στον νεροχύτη. Στόχος: ακριβώς</text>
+  <text x="250" y="240" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">40 ml σε οποιοδήποτε από τα δύο. «?» = οτιδήποτε.</text>
+</svg>

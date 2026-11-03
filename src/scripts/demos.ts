@@ -1,13 +1,13 @@
 /**
  * Interactive demos inside lesson text. A lesson places one with raw HTML:
  *
- *   <div data-demo="water-jug">…fallback text for no JavaScript…</div>
+ *   <div data-demo="search-explorer">…fallback text for no JavaScript…</div>
  *
  * Each demo's code (and CSS) is a separate chunk, loaded only on pages that
  * use it.
  */
 const demos: Record<string, () => Promise<{ mount: (root: HTMLElement) => void }>> = {
-  'water-jug': () => import('./demos/water-jug'),
+  'search-explorer': () => import('./demos/search-explorer'),
 };
 
 for (const root of document.querySelectorAll<HTMLElement>('[data-demo]')) {

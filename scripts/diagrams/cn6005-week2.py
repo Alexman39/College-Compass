@@ -50,27 +50,103 @@ def circle(x, y, r, fill='#ffffff', stroke=EDGE, sw=2):
     return f'<circle cx="{x:g}" cy="{y:g}" r="{r}" fill="{fill}" stroke="{stroke}" stroke-width="{sw}"/>'
 
 
-# ---- Σχήμα: the tree grows exponentially (b = 2) -------------------------
+# ---- Σχήμα: a state, its operators and its children (slide 2) ----------
+def expansion():
+    b = []
+    px, py = 250, 50
+    kids = [110, 250, 390]
+    for x in kids:
+        b.append(line(px, py + 26, x, 186, ACC, 2.5, arrow='acc'))
+    b.append(circle(px, py, 26, ACC_BG, ACC, 3))
+    b.append(text(px, py + 6, 'S', 18, 800))
+    b.append(text(px + 40, py + 6, 'κατάσταση (γονέας)', 15, 700, INK, 'start'))
+    for i, x in enumerate(kids):
+        b.append(circle(x, 212, 24, BOX, EDGE, 2))
+        b.append(text(x, 218, f'S{i + 1}', 16, 800))
+    b.append(text(24, 120, 'τελεστές', 15, 700, ACC, 'start'))
+    b.append(text(24, 140, 'μετάβασης', 15, 700, ACC, 'start'))
+    b.append(text(W / 2, 268, 'νέες καταστάσεις (παιδιά)', 15, 700, INK))
+    b.append(text(W / 2, 302, 'Επέκταση: παράγονται όλα τα παιδιά μιας κατάστασης.', 15, 400, MUTED))
+    b.append(text(W / 2, 324, 'Παράγοντας διακλάδωσης: πόσα είναι (εδώ 3).', 15, 400, MUTED))
+    return svg(340, 'Επέκταση μιας κατάστασης', b)
+
+
+# ---- Σχήμα: the tree grows exponentially (b = 2), as on slide 3 ---------
 def growth():
-    b, levels = [], 4                                # depths 0..3
-    xs = lambda d: [W / 2] if d == 0 else [40 + (i + 0.5) * (420 / 2 ** d) for i in range(2 ** d)]
-    ys = [40, 105, 170, 235]
+    b, levels = [], 5                                # depths 0..4
+    x0, x1 = 196, 490
+    xs = lambda d: [x0 + (i + 0.5) * ((x1 - x0) / 2 ** d) for i in range(2 ** d)]
+    ys = [48, 104, 160, 216, 272]
+    b.append(text(22, 22, 'd', 14, 800, MUTED, 'start'))
+    b.append(text(72, 22, 'κόμβοι', 14, 800, MUTED, 'middle'))
+    b.append(text(146, 22, 'σύνολο', 14, 800, MUTED, 'middle'))
     for d in range(1, levels):
         for i, x in enumerate(xs(d)):
-            b.append(line(xs(d - 1)[i // 2], ys[d - 1] + 12, x, ys[d] - 12))
+            b.append(line(xs(d - 1)[i // 2], ys[d - 1] + 10, x, ys[d] - 9))
     for d in range(levels):
-        r = 12 if d < 3 else 9
+        r = [13, 12, 11, 10, 8][d]
         for x in xs(d):
-            b.append(circle(x, ys[d], r, ACC_BG if d == 3 else BOX, ACC if d == 3 else EDGE))
-        b.append(text(486, ys[d] + 6, f'{2 ** d}', 18, 800, ACC if d == 3 else INK, 'end'))
-        b.append(text(14, ys[d] + 6, f'd = {d}', 15, 700, MUTED, 'start'))
-    b.append(text(486, 16, 'κόμβοι', 13, 700, MUTED, 'end'))
-    b.append(line(20, 262, 480, 262, LINE, 1.5))
-    b.append(text(W / 2, 290, 'Με b = 2: 1 + 2 + 4 + 8 = 15 κόμβοι μέχρι το βάθος 3.', 16, 400, MUTED))
-    b.append(text(W / 2, 314, 'Στο βάθος d υπάρχουν bᵈ κόμβοι· στο d = 10 ήδη 1.024.', 16, 400, MUTED))
+            b.append(circle(x, ys[d], r, ACC_BG if d == 4 else BOX, ACC if d == 4 else EDGE, 1.8))
+        b.append(text(22, ys[d] + 6, str(d), 17, 800, INK, 'start'))
+        b.append(text(72, ys[d] + 6, str(2 ** d), 17, 800, ACC if d == 4 else INK))
+        b.append(text(146, ys[d] + 6, str(2 ** (d + 1) - 1), 17, 700, MUTED))
+    b.append(line(14, 296, 486, 296, LINE, 1.5))
+    b.append(text(W / 2, 322, 'Με b = 2: στο βάθος d υπάρχουν 2ᵈ κόμβοι', 16, 400, MUTED))
+    b.append(text(W / 2, 346, 'και συνολικά 2ᵈ⁺¹ − 1 μέχρι εκεί (31 στο d = 4).', 16, 400, MUTED))
+    assert [2 ** (d + 1) - 1 for d in range(5)] == [1, 3, 7, 15, 31]
     assert sum(2 ** d for d in range(11)) == 2047 and 2 ** 10 == 1024
     assert sum(3 ** d for d in range(11)) == 88573 and sum(10 ** d for d in range(6)) == 111111
-    return svg(330, 'Ο αριθμός των κόμβων διπλασιάζεται σε κάθε επίπεδο', b)
+    return svg(362, 'Ο αριθμός των κόμβων διπλασιάζεται σε κάθε επίπεδο', b)
+
+
+# ---- Σχήμα: the chessboard and the grains of rice (slide 5) --------------
+def chessboard():
+    b = []
+    cs, x0, y0 = 56, 26, 20
+    for k in range(64):
+        r, c = divmod(k, 8)
+        dark = (r + c) % 2 == 1
+        hl = k in (39, 63)
+        fill = ACC if hl else ('#2b3a44' if dark else '#eef3f6')
+        b.append(f'<rect x="{x0 + c * cs}" y="{y0 + r * cs}" width="{cs}" height="{cs}" fill="{fill}"/>')
+        col = '#ffffff' if dark or hl else INK
+        b.append(text(x0 + c * cs + cs / 2, y0 + r * cs + cs / 2 + 7,
+                      f'2<tspan dy="-8" font-size="12">{k}</tspan>', 18, 800, col))
+    b.append(f'<rect x="{x0}" y="{y0}" width="{8 * cs}" height="{8 * cs}" fill="none" stroke="{INK}" stroke-width="2"/>')
+    y = y0 + 8 * cs + 30
+    assert 2 ** 39 == 549_755_813_888 and 2 ** 63 == 9_223_372_036_854_775_808 and 2 ** 64 - 1 == 18_446_744_073_709_551_615
+    b.append(text(W / 2, y, 'Τετράγωνο k: 2ᵏ⁻¹ κόκκοι. Τονισμένα το 40ό και το 64ο.', 15, 400, MUTED))
+    b.append(text(W / 2, y + 24, '40ό: 2³⁹ ≈ 5,5 · 10¹¹ · 64ο: 2⁶³ ≈ 9,2 · 10¹⁸', 15, 700, INK))
+    b.append(text(W / 2, y + 48, 'Σύνολο και στα 64: 2⁶⁴ − 1 ≈ 1,8 · 10¹⁹ κόκκοι.', 15, 400, MUTED))
+    return svg(y + 64, 'Η σκακιέρα με τους κόκκους ρυζιού', b)
+
+
+# ---- Σχήμα: the two glasses — start and goal states (slide 10) ----------
+def jug_states():
+    b = []
+    def glasses(x, y, big, small, qbig=False, qsmall=False):
+        b.append(rect(x, y, 140, 120, '#ffffff', LINE, 1.5, 10))
+        for gx, gy, gw, gh, v, cap, q, lab in ((x + 18, y + 18, 54, 70, big, 70, qbig, '70 ml'), (x + 86, y + 40, 38, 48, small, 50, qsmall, '50 ml')):
+            b.append(f'<rect x="{gx}" y="{gy}" width="{gw}" height="{gh}" fill="#ffffff" stroke="{INK}" stroke-width="2"/>')
+            if v:
+                lv = (gh - 2) * v / cap
+                b.append(f'<rect x="{gx + 1}" y="{gy + gh - lv - 1:g}" width="{gw - 2}" height="{lv:g}" fill="#2f8fdc"/>')
+                b.append(text(gx + gw / 2, gy + gh - 6, f'{v}', 13, 800, '#ffffff'))
+            if q:
+                b.append(text(gx + gw / 2, gy + gh / 2 + 6, '?', 18, 800, MUTED))
+            b.append(text(gx + gw / 2, y + 108, lab, 12, 700, MUTED))
+    glasses(20, 40, 0, 0)
+    b.append(text(90, 26, 'Αρχική κατάσταση', 15, 800))
+    glasses(196, 40, 40, 0, qsmall=True)
+    b.append(text(350, 108, 'ή', 18, 700, MUTED))
+    glasses(340 + 0, 40, 0, 40, qbig=True)
+    # move the second goal to the right edge
+    b[-1:] = b[-1:]
+    b.append(text(343, 26, 'Τελικές καταστάσεις', 15, 800))
+    b.append(text(W / 2, 196, 'Γεμίζεις ένα ποτήρι μέχρι το χείλος (μόνο όταν είναι άδειο),', 14, 400, MUTED))
+    b.append(text(W / 2, 218, 'το αδειάζεις στο άλλο ή στον νεροχύτη. Στόχος: ακριβώς', 14, 400, MUTED))
+    b.append(text(W / 2, 240, '40 ml σε οποιοδήποτε από τα δύο. «?» = οτιδήποτε.', 14, 400, MUTED))
+    return svg(256, 'Το πρόβλημα των ποτηριών: αρχική και τελικές καταστάσεις', b)
 
 
 # ---- Σχήμα: where the children go — stack (DFS) vs queue (BFS) -----------
@@ -337,7 +413,7 @@ def practice():
     return svg(374, 'Δένδρο εξάσκησης', b)
 
 
-for name, fn in (('search-growth', growth), ('frontier-stack-queue', frontier), ('iterative-deepening', deepening),
+for name, fn in (('search-expansion', expansion), ('search-growth', growth), ('chessboard-rice', chessboard), ('jug-states', jug_states), ('frontier-stack-queue', frontier), ('iterative-deepening', deepening),
                  ('maze-dfs-bfs', maze), ('bidirectional-search', bidirectional), ('tsp-graph', tsp_graph),
                  ('tsp-branch-and-bound', bnb_tree), ('practice-tree', practice)):
     out = fn()
