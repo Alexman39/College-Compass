@@ -50,7 +50,7 @@ const anchor = `task-${assignment.id.replaceAll('/', '-')}${idSuffix ? `-${idSuf
 ---
 
 <article
-  class="assignment"
+  class:list={['assignment', { 'is-full': full }]}
   id={anchor}
   data-assignment={assignment.id}
   data-due={due?.toISOString()}
@@ -168,6 +168,14 @@ const anchor = `task-${assignment.id.replaceAll('/', '-')}${idSuffix ? `-${idSuf
   .assignment,
   .assignment > * {
     min-width: 0;
+  }
+
+  /* On its own page the card sits inside the lesson-style panel, so it
+   * drops its own frame. */
+  .assignment.is-full {
+    padding: 0;
+    border: 0;
+    background: none;
   }
 
   .assignment:target {
