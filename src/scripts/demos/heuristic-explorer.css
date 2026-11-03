@@ -1,0 +1,58 @@
+/* Heuristic explorer: what it adds to the search explorer's look. */
+
+.hx .jug-toolbar {
+  gap: var(--s-2) var(--s-3);
+}
+
+/* Closed states: visited and done, between plain and current. */
+.jug-node.closed .box {
+  fill: color-mix(in oklab, var(--st-soon) 10%, var(--panel-sunken));
+  stroke: var(--text-muted);
+}
+
+.jug-swatch.closed {
+  border-color: var(--text-muted);
+  background: color-mix(in oklab, var(--st-soon) 10%, var(--panel-sunken));
+}
+
+/* States with h = 0 keep a green outline, so the target is always visible. */
+.jug-node.hx-target:not(.goal) .box {
+  stroke: var(--st-done);
+  stroke-width: 2.5;
+}
+
+/* Hill Climbing has nowhere to go. */
+.jug-node.hx-stuck .box {
+  fill: color-mix(in oklab, var(--st-overdue) 18%, var(--panel-solid));
+  stroke: var(--st-overdue);
+  stroke-width: 3;
+}
+
+.hx-cell .box {
+  rx: 0;
+}
+
+.hx-wall {
+  fill: var(--text);
+  opacity: 0.85;
+}
+
+.hx-axis {
+  fill: var(--text-muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.hx-path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.hx .sx-node .ml {
+  font-size: 13px;
+}

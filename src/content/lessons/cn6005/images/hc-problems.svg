@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 510" width="500" height="510" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Τα τρία προβλήματα του Hill Climbing</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="510" fill="#ffffff"/>
+  <text x="130" y="28" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">Πρόποδες (foothill)</text>
+  <g transform="translate(10,40)"><path d="M10 150 C40 150 50 70 80 70 C105 70 110 130 125 130 C140 130 150 20 175 20 C195 20 205 150 230 150 L230 160 L10 160 Z" fill="#eef3f6" stroke="#7b8a94" stroke-width="2"/><circle cx="80" cy="61" r="8" fill="#c62828" stroke="#c62828" stroke-width="2"/></g>
+  <text x="130" y="224" text-anchor="middle" font-size="13" font-weight="400" fill="#4a5a65">μια χαμηλή κορυφή «ξεγελά»</text>
+  <text x="375" y="28" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">Οροπέδιο (plateau)</text>
+  <g transform="translate(255,40)"><path d="M10 150 C30 150 40 90 70 90 L170 90 C195 90 200 40 210 40 C220 40 225 150 230 150 L230 160 L10 160 Z" fill="#eef3f6" stroke="#7b8a94" stroke-width="2"/><circle cx="110" cy="81" r="8" fill="#c62828" stroke="#c62828" stroke-width="2"/></g>
+  <text x="375" y="224" text-anchor="middle" font-size="13" font-weight="400" fill="#4a5a65">όλα γύρω έχουν το ίδιο ύψος</text>
+  <text x="252" y="268" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">Κορυφογραμμή (ridge)</text>
+  <g transform="translate(132,280)"><path d="M10 150 L40 100 L55 120 L75 80 L90 100 L110 60 L125 80 L145 40 L160 60 L180 22 L230 150 L230 160 L10 160 Z" fill="#eef3f6" stroke="#7b8a94" stroke-width="2"/><circle cx="75" cy="71" r="8" fill="#c62828" stroke="#c62828" stroke-width="2"/></g>
+  <text x="252" y="464" text-anchor="middle" font-size="13" font-weight="400" fill="#4a5a65">κάθε βήμα ανεβαίνει λίγο, μετά κατεβαίνει</text>
+  <circle cx="140" cy="485" r="7" fill="#c62828" stroke="#c62828" stroke-width="2"/>
+  <text x="154" y="490" text-anchor="start" font-size="14" font-weight="400" fill="#4a5a65">εδώ σταματά ο Hill Climbing</text>
+</svg>

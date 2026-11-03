@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 410" width="500" height="410" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Η ιδέα του A*</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="410" fill="#ffffff"/>
+  <path d="M250 30 L40 330 L460 330 Z" fill="#eef3f6" stroke="#7b8a94" stroke-width="2"/>
+  <polyline points="250,30 236,80 258,120 230,160 246,200" fill="none" stroke="#841387" stroke-width="4" stroke-linejoin="round"/>
+  <line x1="246" y1="200" x2="312" y2="318" stroke="#2e7d32" stroke-width="4" stroke-dasharray="9 6"/>
+  <circle cx="250" cy="30" r="17" fill="#0c2636" stroke="#0c2636" stroke-width="2"/>
+  <text x="250" y="35" text-anchor="middle" font-size="13" font-weight="800" fill="#ffffff">IS</text>
+  <circle cx="246" cy="200" r="17" fill="#841387" stroke="#841387" stroke-width="2"/>
+  <text x="246" y="205" text-anchor="middle" font-size="13" font-weight="800" fill="#ffffff">S</text>
+  <circle cx="312" cy="322" r="17" fill="#2e7d32" stroke="#2e7d32" stroke-width="2"/>
+  <text x="312" y="327" text-anchor="middle" font-size="13" font-weight="800" fill="#ffffff">FS</text>
+  <text x="222" y="124" text-anchor="end" font-size="18" font-weight="800" fill="#841387">g(S)</text>
+  <text x="222" y="146" text-anchor="end" font-size="13" font-weight="700" fill="#4a5a65">πραγματικό κόστος</text>
+  <text x="292" y="254" text-anchor="start" font-size="18" font-weight="800" fill="#2e7d32">h(S)</text>
+  <text x="292" y="276" text-anchor="start" font-size="13" font-weight="700" fill="#4a5a65">εκτίμηση</text>
+  <text x="250" y="366" text-anchor="middle" font-size="19" font-weight="800" fill="#0c2636">f(S) = g(S) + h(S)</text>
+  <text x="250" y="392" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">εκτίμηση του κόστους της καλύτερης λύσης που περνά από την S</text>
+</svg>
