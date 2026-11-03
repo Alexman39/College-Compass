@@ -13,14 +13,14 @@ import Breadcrumbs from '~/components/Breadcrumbs.astro';
 import AssignmentItem from '~/components/AssignmentItem.astro';
 import Lightbox from '~/components/Lightbox.astro';
 import WidthToggle from '~/components/WidthToggle.astro';
-import { getAssignments, getCourses, getLessons, type Assignment, type Course, type Lesson } from '~/lib/content';
+import { getAssignments, getCourses, getLessons, hasOwnPage, type Assignment, type Course, type Lesson } from '~/lib/content';
 import { courseUrl, lessonUrl, url } from '~/lib/url';
 
 export async function getStaticPaths() {
   const courses = await getCourses();
   const [assignments, lessons] = await Promise.all([getAssignments(), getLessons()]);
   return assignments
-    .filter((a) => a.body?.trim() && !a.data.answers)
+    .filter(hasOwnPage)
     .map((assignment) => {
       const course = courses.find((c) => c.id === assignment.data.course.id)!;
       const lesson = lessons.find((l) => l.data.course.id === course.id && l.data.week === assignment.data.week);
