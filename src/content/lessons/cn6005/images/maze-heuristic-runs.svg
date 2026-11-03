@@ -125,7 +125,7 @@
   <circle cx="390" cy="206" r="13.600000000000001" fill="#841387" stroke="#841387" stroke-width="2"/>
   <text x="390" y="211" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">F</text>
   <text x="20" y="360" text-anchor="start" font-size="19" font-weight="800" fill="#c62828">Hill Climbing</text>
-  <text x="20" y="382" text-anchor="start" font-size="13" font-weight="700" fill="#4a5a65">από το 6-3 ξαναγυρνά στο 7-3 (h = 2): πηγαινοέρχεται, δεν φτάνει ποτέ</text>
+  <text x="20" y="382" text-anchor="start" font-size="13" font-weight="700" fill="#4a5a65">από το &lt;6,3&gt; ξαναγυρνά στο &lt;7,3&gt; (h = 2): πηγαινοέρχεται, δεν φτάνει ποτέ</text>
   <rect x="50" y="596" width="40" height="40" fill="#ffffff" stroke="#c9d3d9" stroke-width="1"/>
   <text x="70" y="621" text-anchor="middle" font-size="14" font-weight="700" fill="#4a5a65">10</text>
   <rect x="90" y="596" width="40" height="40" fill="#2b3a44" stroke="#c9d3d9" stroke-width="1"/>
@@ -249,7 +249,7 @@
   <circle cx="270" cy="536" r="16.0" fill="none" stroke="#c62828" stroke-width="3"/>
   <circle cx="310" cy="536" r="16.0" fill="none" stroke="#c62828" stroke-width="3"/>
   <text x="20" y="690" text-anchor="start" font-size="19" font-weight="800" fill="#a15c00">Beam Search, N = 2</text>
-  <text x="20" y="712" text-anchor="start" font-size="13" font-weight="700" fill="#4a5a65">πετάει το 7-5 · χάνεται αριστερά · επέκτεινε 18, δεν βρίσκει το F</text>
+  <text x="20" y="712" text-anchor="start" font-size="13" font-weight="700" fill="#4a5a65">πετάει το &lt;7,5&gt; · χάνεται αριστερά · επέκτεινε 18, δεν βρίσκει το F</text>
   <rect x="50" y="926" width="40" height="40" fill="#fff1d6" stroke="#c9d3d9" stroke-width="1"/>
   <text x="70" y="951" text-anchor="middle" font-size="14" font-weight="700" fill="#4a5a65">10</text>
   <rect x="90" y="926" width="40" height="40" fill="#2b3a44" stroke="#c9d3d9" stroke-width="1"/>

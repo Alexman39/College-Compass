@@ -32,9 +32,15 @@
   rx: 0;
 }
 
-.hx-wall {
-  fill: var(--text);
-  opacity: 0.85;
+/* Walls: hatched, so they read as walls in both light and dark mode
+ * (a solid var(--text) turned light in dark mode and looked like free space). */
+.hx-wall-bg {
+  fill: color-mix(in oklab, var(--text) 24%, var(--panel-solid));
+}
+
+.hx-wall-line {
+  stroke: color-mix(in oklab, var(--text) 45%, var(--panel-solid));
+  stroke-width: 3;
 }
 
 .hx-axis {
@@ -126,4 +132,10 @@
 
 .jug.is-full .hx-memory {
   display: none;
+}
+
+/* «Ανά κελί»: a cell of the row not revealed yet. */
+.hx-chip.pending {
+  color: var(--text-muted);
+  border-style: dashed;
 }
