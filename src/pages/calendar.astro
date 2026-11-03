@@ -1,23 +1,27 @@
 ---
 /**
- * /calendar/ — this week day by day (classes + deadlines), the next weeks'
- * deadlines and holidays, and how to subscribe to /calendar.ics.
+ * /calendar/ — the academic year week by week (classes, deadlines, events,
+ * holidays), opening on this week with ← / → to browse; then the next
+ * weeks' deadlines and holidays, and how to subscribe to /calendar.ics.
  * Built daily, so "this week" moves on by itself.
+ *
+ * Every week is in the page. Without JavaScript they are all listed; with
+ * it (src/scripts/calendar-weeks.ts) one is shown at a time.
  */
 import Base from '~/layouts/Base.astro';
 import Breadcrumbs from '~/components/Breadcrumbs.astro';
 import DeadlineRow from '~/components/DeadlineRow.astro';
 import JellyButton from '~/components/JellyButton.astro';
-import { getClassSlots, getCourses, getDeadlineItems, getEvents, getSettings } from '~/lib/content';
-import { weekTimetable, workloadForecast } from '~/lib/derive';
+import { getClassSeries, getCourses, getDeadlineItems, getEvents, getSettings } from '~/lib/content';
+import { calendarWeeks, workloadForecast } from '~/lib/derive';
 import { DAY_NAMES, formatLocalDate } from '~/lib/labels';
-import { addDays, athensDateKey, formatAthens, weekdayOf } from '~/lib/time';
+import { addDays, athensDateKey, formatAthens, mondayOf, weekdayOf } from '~/lib/time';
 import { courseUrl, url } from '~/lib/url';
 
 const now = new Date();
 const today = athensDateKey(now);
-const [slots, deadlines, settings, courses, events] = await Promise.all([
-  getClassSlots(),
+const [series, deadlines, settings, courses, events] = await Promise.all([
+  getClassSeries(),
   getDeadlineItems(),
   getSettings(),
   getCourses(),
@@ -25,15 +29,14 @@ const [slots, deadlines, settings, courses, events] = await Promise.all([
 ]);
 const currentCourses = courses.filter((c) => c.data.status === 'current').length;
 
-const week = weekTimetable(slots, now).map((d) => ({
-  ...d,
-  deadlines: deadlines.filter((x) => athensDateKey(x.due) === d.date).sort((a, b) => a.due.getTime() - b.due.getTime()),
-  events: events.filter((e) => athensDateKey(e.start) === d.date),
-}));
+const weeks = calendarWeeks({ now, series, deadlines, events, holidays: settings.holidays, semesters: settings.semesters });
+// Open on this week; outside the academic year, on the nearest week.
+const thisMonday = mondayOf(today);
+const shown = (weeks.find((w) => w.isCurrent) ?? (thisMonday < weeks[0]!.start ? weeks[0] : weeks.at(-1)))!.start;
 const later = workloadForecast(deadlines, now, 6).slice(1); // the five weeks after this one
-const horizon = addDays(week[0]!.date, 42);
+const horizon = addDays(thisMonday, 42);
 const holidays = settings.holidays.filter((h) => (h.end ?? h.start) >= today && h.start < horizon);
-const nextWeek = addDays(week[0]!.date, 7);
+const nextWeek = addDays(thisMonday, 7);
 const laterEvents = events.filter((e) => athensDateKey(e.start) >= nextWeek && athensDateKey(e.start) < horizon);
 
 const feedPath = url('calendar.ics');
@@ -43,6 +46,8 @@ const short = (key: string) => formatLocalDate(key).replace(/\s\d{4}$/, '');
 const feedContents =
   settings.semesters.length > 0 ? 'οι προθεσμίες, τα μαθήματα, οι εκδηλώσεις και οι αργίες' : 'οι προθεσμίες, οι εκδηλώσεις και οι αργίες';
 const timeOf = (d: Date) => formatAthens(d, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+const range = (monday: string) => `${short(monday)} – ${formatLocalDate(addDays(monday, 6))}`;
+const anchor = (id: string) => `task-${id.replaceAll('/', '-')}`;
 ---
 
 <Base title="Ημερολόγιο" description="Μαθήματα, προθεσμίες και αργίες, και συνδρομή στο ημερολόγιό σου.">
@@ -52,59 +57,99 @@ const timeOf = (d: Date) => formatAthens(d, { hour: '2-digit', minute: '2-digit'
     <header class="panel intro">
       <h1>Ημερολόγιο</h1>
       <p>
-        Εβδομάδα {short(week[0]!.date)} – {short(week[6]!.date)}. Όλες οι ώρες είναι ώρες Ελλάδας.
+        Μαθήματα, προθεσμίες, εκδηλώσεις και αργίες για όλη την ακαδημαϊκή χρονιά, εβδομάδα προς εβδομάδα. Όλες οι
+        ώρες είναι ώρες Ελλάδας.
       </p>
     </header>
 
-    <section class="panel block" aria-labelledby="week-title">
-      <h2 id="week-title">Αυτή την εβδομάδα</h2>
-      <ol class="week" role="list">
-        {
-          week.map((d) => (
-            <li class:list={['day', { today: d.isToday }]} aria-current={d.isToday ? 'date' : undefined}>
-              <p class="day-name">
-                {DAY_NAMES[d.day]} <span class="date">{short(d.date)}</span>
-                {d.isToday && <span class="today-chip">Σήμερα</span>}
-              </p>
-              {d.slots.length === 0 && d.deadlines.length === 0 && d.events.length === 0 ? (
-                <p class="nothing">—</p>
-              ) : (
-                <ul class="events" role="list">
-                  {d.slots.map((s) => (
-                    <li class="class" style={`--accent:${s.course.accent}`}>
-                      <span class="time">
-                        {s.start}–{s.end}
-                      </span>
-                      <a href={courseUrl(s.course.slug)} lang="en">
-                        {s.course.title}
-                      </a>
-                      {s.course.optional && <span class="optional">Προαιρετικό</span>}
-                      {s.room && <span class="muted">{s.room}</span>}
-                    </li>
-                  ))}
-                  {d.deadlines.map((x) => (
-                    <li class="deadline" style={`--accent:${x.course.accent}`}>
-                      <span class="time">Προθεσμία {timeOf(x.due)}</span>
-                      <a href={courseUrl(x.course.slug)}>{x.title}</a>
-                    </li>
-                  ))}
-                  {d.events.map((e) => (
-                    <li class="event">
-                      <span class="time">
-                        {timeOf(e.start)}–{timeOf(e.end)}
-                      </span>
-                      <span>{e.title}</span>
-                      {e.location && <span class="muted">{e.location}</span>}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))
-        }
-      </ol>
+    <section class="panel block" aria-labelledby="week-title" data-weeks>
+      <div class="week-head">
+        <h2 id="week-title">Ανά εβδομάδα</h2>
+        <nav class="week-nav" aria-label="Εβδομάδες" data-week-nav hidden>
+          <button type="button" data-step="-1" aria-label="Προηγούμενη εβδομάδα">
+            ←<span class="long"> Προηγούμενη</span>
+          </button>
+          <button type="button" data-today>Σήμερα</button>
+          <button type="button" data-step="1" aria-label="Επόμενη εβδομάδα">
+            <span class="long">Επόμενη </span>→
+          </button>
+        </nav>
+      </div>
+      <p class="visually-hidden" aria-live="polite" data-week-announce></p>
       {
-        slots.length === 0 && (
+        weeks.map((w) => (
+          <section
+            class="cal-week"
+            id={`week-${w.start}`}
+            data-week={w.start}
+            data-shown={w.start === shown ? '' : undefined}
+            aria-labelledby={`wl-${w.start}`}
+          >
+            <h3 class="week-label" id={`wl-${w.start}`}>
+              {range(w.start)}
+              {w.semester && (
+                <span class="sem">
+                  Εξάμηνο {w.semester.semester} · εβδομάδα {w.semester.week}
+                </span>
+              )}
+              {w.isCurrent && <span class="today-chip">Αυτή η εβδομάδα</span>}
+            </h3>
+            <ol class="days" role="list">
+              {w.days.map((d) => {
+                const empty = d.classes.length === 0 && d.deadlines.length === 0 && d.events.length === 0;
+                return (
+                  <li
+                    class:list={['day', { today: d.isToday, past: d.isPast, empty: empty && !d.holiday }]}
+                    aria-current={d.isToday ? 'date' : undefined}
+                  >
+                    <p class="day-name">
+                      {DAY_NAMES[d.day]} <span class="date">{short(d.date)}</span>
+                      {d.isToday && <span class="today-chip">Σήμερα</span>}
+                    </p>
+                    {d.holiday && <p class="holiday">Αργία: {d.holiday}</p>}
+                    {empty ? (
+                      !d.holiday && <p class="nothing">—</p>
+                    ) : (
+                      <ul class="items" role="list">
+                        {d.classes.map((c) => (
+                          <li class="item class" style={`--accent:${c.course.accent}`}>
+                            <span class="time">
+                              {c.start}–{c.end}
+                            </span>
+                            <a href={courseUrl(c.course.slug)} lang="en">
+                              {c.course.title}
+                            </a>
+                            {c.course.optional && <span class="optional">Προαιρετικό</span>}
+                            {c.room && <span class="muted">{c.room}</span>}
+                          </li>
+                        ))}
+                        {d.deadlines.map((x) => (
+                          <li class="item deadline" style={`--accent:${x.course.accent}`}>
+                            <span class="time">Προθεσμία {timeOf(x.due)}</span>
+                            <a href={`${courseUrl(x.course.slug)}#${anchor(x.id)}`}>{x.title}</a>
+                            <span class="muted">{x.course.code}</span>
+                          </li>
+                        ))}
+                        {d.events.map((e) => (
+                          <li class="item event">
+                            <span class="time">
+                              {timeOf(e.start)}–{timeOf(e.end)}
+                            </span>
+                            <span class="strong">{e.title}</span>
+                            {e.location && <span class="muted">{e.location}</span>}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
+            </ol>
+          </section>
+        ))
+      }
+      {
+        series.length === 0 && (
           <p class="muted note">
             {currentCourses > 0
               ? 'Το ωρολόγιο πρόγραμμα του εξαμήνου δεν έχει προστεθεί ακόμη.'
@@ -199,6 +244,10 @@ const timeOf = (d: Date) => formatAthens(d, { hour: '2-digit', minute: '2-digit'
   </div>
 </Base>
 
+<script>
+  import '~/scripts/calendar-weeks';
+</script>
+
 <style>
   .page {
     display: grid;
@@ -225,33 +274,124 @@ const timeOf = (d: Date) => formatAthens(d, { hour: '2-digit', minute: '2-digit'
     font-weight: 700;
   }
 
-  .week {
-    display: grid;
-    gap: var(--s-2);
-    padding: 0;
-    list-style: none;
+  .week-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-2) var(--s-4);
   }
 
-  /* Seven columns once there's room; a list on phones. */
-  @media (min-width: 64rem) {
-    .week {
-      grid-template-columns: repeat(7, minmax(0, 1fr));
+  .week-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+  }
+
+  .week-nav[hidden] {
+    display: none;
+  }
+
+  .week-nav button {
+    min-height: 44px;
+    padding: 0 var(--s-4);
+    border: 1px solid var(--divider);
+    border-radius: var(--r-pill);
+    background: var(--panel-solid);
+    font-weight: 700;
+  }
+
+  /* On a phone the arrows alone keep the three buttons on one line; the
+   * full words stay in aria-label. */
+  @media (max-width: 30rem) {
+    .week-nav .long {
+      display: none;
     }
+  }
+
+  .week-nav button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  /* With JavaScript (the inline theme script always sets data-theme), only
+   * the chosen week shows; without it, every week is listed. */
+  :global(:root[data-theme]) .cal-week:not([data-shown]) {
+    display: none;
+  }
+
+  .cal-week {
+    display: grid;
+    gap: var(--s-3);
+    scroll-margin-top: 5rem;
+  }
+
+  .week-label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--s-1) var(--s-3);
+    font-size: var(--fs-lg);
+  }
+
+  .sem {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+  }
+
+  /* One row per day: the day on the left, its items side by side on the
+   * right, each with the full width to itself. Empty days are a thin line. */
+  .days {
+    display: grid;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--divider);
   }
 
   .day {
     display: grid;
-    align-content: start;
-    gap: var(--s-2);
-    padding: var(--s-3);
-    border: 1px solid var(--divider);
-    border-radius: var(--r-md);
+    gap: var(--s-2) var(--s-4);
+    padding: var(--s-3) var(--s-2);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  @media (min-width: 40rem) {
+    .day {
+      grid-template-columns: 11rem minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .day > :not(.day-name) {
+      grid-column: 2;
+    }
+
+    .day-name {
+      grid-row: 1 / span 2;
+    }
+  }
+
+  .day.empty {
+    padding-block: var(--s-2);
+  }
+
+  /* An empty day stays on one line on a phone too: «Δευτέρα 2 Νοε —». */
+  @media (max-width: 40rem) {
+    .day.empty {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s-3);
+    }
+  }
+
+  .day.past {
+    opacity: 0.7;
   }
 
   .today {
-    border-color: var(--link);
-    box-shadow: inset 0 0 0 1px var(--link);
+    border-radius: var(--r-md);
     background: var(--panel-sunken);
+    box-shadow: inset 3px 0 0 var(--link);
   }
 
   .day-name {
@@ -281,27 +421,38 @@ const timeOf = (d: Date) => formatAthens(d, { hour: '2-digit', minute: '2-digit'
     color: var(--text-muted);
   }
 
-  .events {
+  .holiday {
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+
+  .items {
     display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
     gap: var(--s-2);
     padding: 0;
     list-style: none;
     font-size: var(--fs-sm);
   }
 
-  .events li {
+  .item {
     display: grid;
-    padding-left: var(--s-2);
+    align-content: start;
+    gap: 2px;
+    padding: var(--s-2) var(--s-3);
+    border: 1px solid var(--divider);
     border-left: 4px solid var(--accent);
+    border-radius: var(--r-sm, 6px);
+    background: var(--panel-solid);
   }
 
   .deadline {
-    border-left-style: dashed !important;
+    border-left-style: dashed;
   }
 
   .event {
-    border-left-color: var(--link) !important;
-    border-left-style: dotted !important;
+    border-left-color: var(--link);
+    border-left-style: dotted;
   }
 
   /* Optional class (e.g. a free seminar): a quiet pill next to the title. */
