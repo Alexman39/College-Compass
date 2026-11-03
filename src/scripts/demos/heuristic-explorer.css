@@ -56,3 +56,74 @@
 .hx .sx-node .ml {
   font-size: 13px;
 }
+
+/* Jump to any step (from the Άσκηση 2 visualizer). */
+.hx-scrub {
+  flex: 1 1 8rem;
+  min-width: 6rem;
+  accent-color: var(--accent);
+}
+
+.hx-hint {
+  margin: 0;
+}
+
+/* Memory: the frontier, closed set and children as chips. */
+.hx-memory {
+  display: grid;
+  gap: var(--s-2);
+}
+
+.hx-chips-box {
+  display: grid;
+  gap: 4px;
+}
+
+.hx-chips-title {
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+}
+
+.hx-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.hx-chip {
+  padding: 2px 8px;
+  border: 1px solid var(--divider);
+  border-radius: var(--r-md);
+  background: var(--panel-solid);
+  font-size: var(--fs-xs);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.hx-chip.first {
+  border-color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 14%, var(--panel-solid));
+  font-weight: 700;
+}
+
+.hx-chip.closed {
+  background: color-mix(in oklab, var(--st-soon) 10%, var(--panel-sunken));
+}
+
+.hx-chip.kids {
+  border-color: var(--st-soon);
+}
+
+.hx-chip.empty {
+  color: var(--text-muted);
+}
+
+/* States the search has not met yet. */
+.jug-node.hx-unseen {
+  opacity: 0.35;
+}
+
+.jug.is-full .hx-memory {
+  display: none;
+}

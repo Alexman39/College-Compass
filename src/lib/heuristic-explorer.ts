@@ -7,6 +7,9 @@
  *  - maze: the lecture's maze (slide 14), S = 5-5, F = 9-3, h = Manhattan
  *    distance to F, every move costs 1. Moves in the order αριστερά, πάνω,
  *    δεξιά, κάτω, as in Week 2.
+ *  - book: the grid of the book's Σχήμα 4.5, S = 3-4, G = 7-8. The figure
+ *    writes the Manhattan distance in every free cell, so unnumbered cells
+ *    are obstacles. Its Table 4.1 is the BestFS run reproduced here.
  *  - roads: the small road network of the lesson (ours, not the lecture's).
  *  - ex1, ex2: the exercise trees of slides 24 and 25. Slide 25 names two
  *    nodes «i»; here they are i1 (h 3) and i2 (h 9), both shown as «i».
@@ -26,7 +29,7 @@
  *    frontier is kept only if its new path is cheaper (the old one is removed).
  */
 
-export type ProblemId = 'maze' | 'roads' | 'ex1' | 'ex2';
+export type ProblemId = 'maze' | 'book' | 'roads' | 'ex1' | 'ex2';
 export type AlgorithmId = 'GREEDY' | 'HC' | 'BEAM' | 'ASTAR';
 export type RowKind = 'expand' | 'loop' | 'goal' | 'stuck' | 'cycle';
 
@@ -49,8 +52,8 @@ export interface Problem {
   /** Drawn edges [from, to, cost]; trees are directed. */
   edges: [string, string, number][];
   directed: boolean;
-  /** Maze only: grid size and walls. */
-  grid?: { w: number; h: number; walls: string[] };
+  /** Mazes only: grid size, walls and the name of the exit (F or G). */
+  grid?: { w: number; h: number; walls: string[]; goal: string };
 }
 
 export interface FrontierItem {
@@ -75,30 +78,65 @@ export interface Row {
 
 // ---- Problems ---------------------------------------------------------------
 
-const MAZE_W = 10;
-const MAZE_H = 6;
-const WALLS: Record<number, number[]> = { 6: [4, 9, 10], 5: [2, 6], 4: [1, 2, 3, 4, 8], 3: [4, 5, 8], 2: [2, 7, 8, 10], 1: [2, 6] };
-const wall = (x: number, y: number) => WALLS[y]?.includes(x) ?? false;
 const MOVES: [number, number][] = [[-1, 0], [0, 1], [1, 0], [0, -1]]; // αριστερά, πάνω, δεξιά, κάτω
 
-function maze(): Problem {
-  const F = [9, 3] as const;
+/**
+ * A grid maze from rows of text, top row first: '#' wall, '.' free, 'S' start,
+ * and the goal letter. h is the Manhattan distance to the goal.
+ */
+function grid(id: ProblemId, label: string, rows: string[], goalName: string): Problem {
+  const H = rows.length;
+  const W = rows[0]!.length;
+  const at = (x: number, y: number) => rows[H - y]![x - 1]!;
+  const wall = (x: number, y: number) => at(x, y) === '#';
+  const find = (c: string) => {
+    for (let y = 1; y <= H; y++) for (let x = 1; x <= W; x++) if (at(x, y) === c) return [x, y] as const;
+    throw new Error(`no ${c} in ${id}`);
+  };
+  const [sx, sy] = find('S');
+  const [gx, gy] = find(goalName);
   const nodes: Node[] = [];
   const next: Problem['next'] = {};
-  const edges: Problem['edges'] = [];
-  for (let y = 1; y <= MAZE_H; y++) {
-    for (let x = 1; x <= MAZE_W; x++) {
-      if (wall(x, y)) continue;
-      const id = `${x}-${y}`;
-      nodes.push({ id, label: id, h: Math.abs(x - F[0]) + Math.abs(y - F[1]), x, y });
-      next[id] = MOVES.map(([dx, dy]) => [x + dx, y + dy] as const)
-        .filter(([a, b]) => a >= 1 && a <= MAZE_W && b >= 1 && b <= MAZE_H && !wall(a, b))
+  const walls: string[] = [];
+  for (let y = 1; y <= H; y++) {
+    for (let x = 1; x <= W; x++) {
+      const cell = `${x}-${y}`;
+      if (wall(x, y)) {
+        walls.push(cell);
+        continue;
+      }
+      nodes.push({ id: cell, label: cell, h: Math.abs(x - gx) + Math.abs(y - gy), x, y });
+      next[cell] = MOVES.map(([dx, dy]) => [x + dx, y + dy] as const)
+        .filter(([a, b]) => a >= 1 && a <= W && b >= 1 && b <= H && !wall(a, b))
         .map(([a, b]) => [`${a}-${b}`, 1]);
     }
   }
-  const walls = Object.entries(WALLS).flatMap(([y, xs]) => xs.map((x) => `${x}-${y}`));
-  return { id: 'maze', label: 'Λαβύρινθος', start: '5-5', nodes, next, edges, directed: false, grid: { w: MAZE_W, h: MAZE_H, walls } };
+  return { id, label, start: `${sx}-${sy}`, nodes, next, edges: [], directed: false, grid: { w: W, h: H, walls, goal: goalName } };
 }
+
+// Lecture 3, slide 14 (10 × 6).
+const MAZE = grid('maze', 'Λαβύρινθος', [
+  '...#....##',
+  '.#..S#....',
+  '####...#..',
+  '...##..#F.',
+  '.#....##.#',
+  '.#...#....',
+], 'F');
+
+// The book, Σχήμα 4.5 (10 × 10).
+const BOOK = grid('book', 'Λαβύρινθος βιβλίου', [
+  '##.....###',
+  '##.....###',
+  '......G...',
+  '...##.....',
+  '...####...',
+  '...#####..',
+  '..S###....',
+  '..#####...',
+  '..#####.##',
+  '........##',
+], 'G');
 
 function graph(id: ProblemId, label: string, start: string, nodes: [string, number, number, number][], edges: [string, string, number][], directed: boolean, display: (id: string) => string = (x) => x): Problem {
   const next: Problem['next'] = Object.fromEntries(nodes.map(([n]) => [n, []]));
@@ -127,15 +165,15 @@ const EX2 = graph('ex2', 'Άσκηση 2', 'c',
    ['d', 'a', 1], ['a', 'l', 1], ['i1', 'g', 1], ['i1', 'h', 1], ['g', 'm', 1], ['g', 'f', 1], ['m', 'q', 1], ['m', 'r', 1], ['f', 'n', 1]],
   true, (id) => id.replace(/\d$/, ''));
 
-export const PROBLEMS: Problem[] = [maze(), ROADS, EX1, EX2];
+export const PROBLEMS: Problem[] = [MAZE, BOOK, ROADS, EX1, EX2];
 export const problem = (id: ProblemId): Problem => PROBLEMS.find((p) => p.id === id)!;
 
 export const ALGORITHMS: { id: AlgorithmId; label: string; problems: ProblemId[] }[] = [
-  { id: 'GREEDY', label: 'Greedy BestFS', problems: ['maze', 'roads', 'ex1', 'ex2'] },
-  { id: 'HC', label: 'Hill Climbing', problems: ['maze', 'roads', 'ex1', 'ex2'] },
-  { id: 'BEAM', label: 'Beam (N = 2)', problems: ['maze', 'roads', 'ex1', 'ex2'] },
-  // The exercise trees have no step costs, so A* runs on the maze and the roads.
-  { id: 'ASTAR', label: 'A*', problems: ['maze', 'roads'] },
+  { id: 'GREEDY', label: 'Greedy BestFS', problems: ['maze', 'book', 'roads', 'ex1', 'ex2'] },
+  { id: 'HC', label: 'Hill Climbing', problems: ['maze', 'book', 'roads', 'ex1', 'ex2'] },
+  { id: 'BEAM', label: 'Beam (N = 2)', problems: ['maze', 'book', 'roads', 'ex1', 'ex2'] },
+  // The exercise trees have no step costs, so A* runs on the mazes and the roads.
+  { id: 'ASTAR', label: 'A*', problems: ['maze', 'book', 'roads'] },
 ];
 
 export const BEAM_WIDTH = 2;

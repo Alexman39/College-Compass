@@ -20,6 +20,25 @@ describe('heuristic explorer traces', () => {
     expect(rows.at(-1)!.path.join(' ')).toBe('5-5 5-4 6-4 7-4 7-5 8-5 9-5 9-4 9-3');
   });
 
+  it("the book's maze (Σχήμα 4.5): Greedy BestFS reproduces Table 4.1", () => {
+    const b = problem('book');
+    expect(b.start).toBe('3-4');
+    expect(b.grid!.goal).toBe('G');
+    // every h of Table 4.1, written there as e.g. 35⁷ for (3, 5) with h = 7
+    const table: Record<string, number> = {
+      '3-4': 8, '3-5': 7, '2-4': 9, '3-6': 6, '2-5': 8, '3-7': 5, '2-6': 7, '3-8': 4, '2-7': 6, '4-8': 3, '3-9': 5,
+      '2-8': 5, '5-8': 2, '4-9': 4, '6-8': 1, '5-9': 3, '7-8': 0, '6-7': 2, '6-9': 2,
+    };
+    for (const [id, h] of Object.entries(table)) expect(hOf(b, id), id).toBe(h);
+    const rows = run('book', 'GREEDY');
+    expect(rows.map((r) => r.id)).toEqual(['3-4', '3-5', '3-6', '3-7', '3-8', '4-8', '5-8', '6-8', '7-8']);
+    // the children of each row are those of the table (the table leaves out some closed parents)
+    expect(rows[0]!.children.map((c) => c.id).sort()).toEqual(['2-4', '3-5']);
+    expect(rows[7]!.children.map((c) => c.id).sort()).toEqual(['5-8', '6-7', '6-9', '7-8']);
+    expect(rows.at(-1)).toMatchObject({ kind: 'goal', g: 8 });
+    expect(run('book', 'ASTAR').at(-1)).toMatchObject({ id: '7-8', kind: 'goal', g: 8 });
+  });
+
   it('Hill Climbing on the maze gets caught between 7-3 and 6-3', () => {
     expect(taken('maze', 'HC')).toEqual(['5-5', '5-4', '6-4', '7-4', '7-3', '6-3']);
     expect(run('maze', 'HC').at(-1)).toMatchObject({ kind: 'cycle' });
