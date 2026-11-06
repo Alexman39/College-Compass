@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 587" width="500" height="587" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Το δέντρο επιθέσεων του χρηματοκιβωτίου</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c62828"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="587" fill="#ffffff"/>
+  <rect x="14" y="16" width="472" height="30" rx="6" fill="#eef3f6" stroke="#7b8a94" stroke-width="1.5"/>
+  <rect x="24" y="22" width="42" height="18" rx="9" fill="#ffffff" stroke="#0c2636" stroke-width="1.5"/>
+  <text x="45" y="36" text-anchor="middle" font-size="12" font-weight="800" fill="#0c2636">OR</text>
+  <text x="74" y="37" text-anchor="start" font-size="15" font-weight="700" fill="#0c2636">Άνοιξε το χρηματοκιβώτιο</text>
+  <text x="476" y="37" text-anchor="end" font-size="15" font-weight="800" fill="#0c2636">10.000 $</text>
+  <path d="M24 46 V69 H40" fill="none" stroke="#7b8a94" stroke-width="1.8"/>
+  <rect x="40" y="54" width="446" height="30" rx="6" fill="#ffffff" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="50" y="75" text-anchor="start" font-size="15" font-weight="400" fill="#0c2636">Παραβίασε την κλειδαριά</text>
+  <text x="476" y="75" text-anchor="end" font-size="15" font-weight="800" fill="#0c2636">30.000 $ · ΕΕ</text>
+  <path d="M24 46 V107 H40" fill="none" stroke="#7b8a94" stroke-width="1.8"/>
+  <rect x="40" y="92" width="446" height="30" rx="6" fill="#eef3f6" stroke="#7b8a94" stroke-width="1.5"/>
+  <rect x="50" y="98" width="42" height="18" rx="9" fill="#ffffff" stroke="#0c2636" stroke-width="1.5"/>
+  <text x="71" y="112" text-anchor="middle" font-size="12" font-weight="800" fill="#0c2636">OR</text>
+  <text x="100" y="113" text-anchor="start" font-size="15" font-weight="700" fill="#0c2636">Μάθε τον συνδυασμό</text>
+  <text x="476" y="113" text-anchor="end" font-size="15" font-weight="800" fill="#0c2636">20.000 $</text>
+  <path d="M50 122 V145 H66" fill="none" stroke="#7b8a94" stroke-width="1.8"/>
+  <rect x="66" y="130" width="420" height="30" rx="6" fill="#ffffff" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="76" y="151" text-anchor="start" font-size="15" font-weight="400" fill="#0c2636">Βρες τον συνδυασμό γραμμένο κάπου</text>
+  <text x="476" y="151" text-anchor="end" font-size="15" font-weight="800" fill="#0c2636">75.000 $</text>
+  <path d="M50 122 V183 H66" fill="none" stroke="#7b8a94" stroke-width="1.8"/>
+  <rect x="66" y="168" width="420" height="30" rx="6" fill="#eef3f6" stroke="#7b8a94" stroke-width="1.5"/>
+  <rect x="76" y="174" width="42" height="18" rx="9" fill="#ffffff" stroke="#0c2636" stroke-width="1.5"/>
+  <text x="97" y="188" text-anchor="middle" font-size="12" font-weight="800" fill="#0c2636">OR</text>
+  <text x="126" y="189" text-anchor="start" font-size="15" font-weight="700" fill="#0c2636">Πάρε τον από τον κάτοχο</text>
+  <text x="476" y="189" text-anchor="end" font-size="15" font-weight="800" fill="#0c2636">20.000 $</text>
+  <path d="M76 198 V221 H92" fill="none" stroke="#7b8a94" stroke-width="1.8"/>
+  <rect x="92" y="206" width="394" height="30" rx="6" fill="#ffffff" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="102" y="227" text-anchor="start" font-size="15" font-weight="400" fill="#0c2636">Απείλησε</text>
+  <text x="476" y="227" text-anchor="end" font-size="15" font-weight="800" fill="#0c2636">60.000 $</text>
+  <path d="M76 198 V259 H92" fill="none" stroke="#7b8a94" stroke-width="1.8"/>
+  <rect x="92" y="244" width="394" height="30" rx="6" fill="#ffffff" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="102" y="265" text-anchor="start" font-size="15" font-weight="400" fill="#0c2636">Εκβίασε</text>
+  <text x="476" y="265" text-anchor="end" font-size="15" font-weight="800" fill="#0c2636">100.000 $</text>
+  <path d="M76 198 V297 H92" fill="none" stroke="#7b8a94" stroke-width="1.8"/>
+  <rect x="92" y="282" width="394" height="30" rx="6" fill="#eef3f6" stroke="#7b8a94" stroke-width="1.5"/>
+  <rect x="102" y="288" width="42" height="18" rx="9" fill="#0c2636" stroke="#0c2636" stroke-width="1.5"/>
+  <text x="123" y="302" text-anchor="middle" font-size="12" font-weight="800" fill="#ffffff">AND</text>
+  <text x="152" y="303" text-anchor="start" font-size="15" font-weight="700" fill="#0c2636">Κρυφάκουσε</text>
+  <text x="476" y="303" text-anchor="end" font-size="15" font-weight="800" fill="#0c2636">60.000 $</text>
+  <path d="M102 312 V335 H118" fill="none" stroke="#7b8a94" stroke-width="1.8"/>
+  <rect x="118" y="320" width="368" height="30" rx="6" fill="#ffffff" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="128" y="341" text-anchor="start" font-size="15" font-weight="400" fill="#0c2636">Άκου τη συνομιλία</text>
+  <text x="476" y="341" text-anchor="end" font-size="15" font-weight="800" fill="#0c2636">20.000 $ · ΕΕ</text>
+  <path d="M102 312 V373 H118" fill="none" stroke="#7b8a94" stroke-width="1.8"/>
+  <rect x="118" y="358" width="368" height="30" rx="6" fill="#ffffff" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="128" y="379" text-anchor="start" font-size="15" font-weight="400" fill="#0c2636">Κάνε τον να πει τον συνδυασμό</text>
+  <text x="476" y="379" text-anchor="end" font-size="15" font-weight="800" fill="#0c2636">40.000 $</text>
+  <path d="M76 198 V411 H92" fill="none" stroke="#7b8a94" stroke-width="1.8"/>
+  <rect x="92" y="396" width="394" height="30" rx="6" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="102" y="417" text-anchor="start" font-size="15" font-weight="700" fill="#0c2636">Δωροδόκησε</text>
+  <text x="476" y="417" text-anchor="end" font-size="15" font-weight="800" fill="#841387">20.000 $</text>
+  <path d="M24 46 V449 H40" fill="none" stroke="#7b8a94" stroke-width="1.8"/>
+  <rect x="40" y="434" width="446" height="30" rx="6" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="50" y="455" text-anchor="start" font-size="15" font-weight="700" fill="#0c2636">Κόψε το χρηματοκιβώτιο</text>
+  <text x="476" y="455" text-anchor="end" font-size="15" font-weight="800" fill="#841387">10.000 $ · ΕΕ</text>
+  <path d="M24 46 V487 H40" fill="none" stroke="#7b8a94" stroke-width="1.8"/>
+  <rect x="40" y="472" width="446" height="30" rx="6" fill="#ffffff" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="50" y="493" text-anchor="start" font-size="15" font-weight="400" fill="#0c2636">Εκμεταλλεύσου κακή εγκατάσταση</text>
+  <text x="476" y="493" text-anchor="end" font-size="15" font-weight="800" fill="#0c2636">100.000 $</text>
+  <text x="250" y="524" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">OR: το φθηνότερο παιδί · AND: το άθροισμα (20.000 + 40.000)</text>
+  <text x="250" y="545" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">ΕΕ = χρειάζεται ειδικό εξοπλισμό</text>
+  <text x="250" y="566" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">Τονισμένα: φθηνότερο με ΕΕ (Κόψε) και χωρίς (Δωροδόκησε)</text>
+</svg>

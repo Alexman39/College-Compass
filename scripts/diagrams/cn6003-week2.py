@@ -201,8 +201,72 @@ def dmz():
     return svg(408, 'DMZ σε πανεπιστήμιο', b)
 
 
-# Σχήματα 7 and 8 (the two attack trees) are ```attack-tree blocks in the
-# lesson, drawn at build time by src/lib/attack-tree.ts.
+# Indented tree used by Σχήματα 7 and 8: one row per node, elbow connectors.
+def tree(rows, title, legend, height_extra=0):
+    b = []
+    row_h, top, indent = 38, 16, 26
+    for i, r in enumerate(rows):
+        depth, label, value, gate, mark = r['d'], r['label'], r.get('value', ''), r.get('gate'), r.get('mark')
+        y = top + i * row_h
+        x = 14 + depth * indent
+        if depth:
+            parent = max(j for j in range(i) if rows[j]['d'] == depth - 1)
+            px = 14 + (depth - 1) * indent + 10
+            py = top + parent * row_h + 30
+            b.append(f'<path d="M{px} {py} V{y + 15} H{x}" fill="none" stroke="{EDGE}" stroke-width="1.8"/>')
+        hl = mark == 'best'
+        w = W - 14 - x
+        b.append(box(x, y, w, 30, ACC_BG if hl else ('#ffffff' if not gate else BOX_BG), ACC if hl else EDGE, 2.5 if hl else 1.5, 6))
+        tx = x + 10
+        if gate:
+            b.append(box(tx, y + 6, 42, 18, INK if gate == 'AND' else '#ffffff', INK, 1.5, 9))
+            b.append(text(tx + 21, y + 20, gate, 12, 800, '#ffffff' if gate == 'AND' else INK))
+            tx += 50
+        b.append(text(tx, y + 21, label, 15, 700 if gate or hl else 400, INK, 'start'))
+        if value:
+            b.append(text(W - 24, y + 21, value, 15, 800, ACC if hl else INK, 'end'))
+    y = top + len(rows) * row_h + 14
+    for k, item in enumerate(legend):
+        b.append(text(W / 2, y + k * 21, item, 14, 400, MUTED))
+    return svg(y + len(legend) * 21 + height_extra, title, b)
+
+
+def safe():
+    R = [dict(d=0, label='Άνοιξε το χρηματοκιβώτιο', gate='OR', value='10.000 $'),
+         dict(d=1, label='Παραβίασε την κλειδαριά', value='30.000 $ · ΕΕ'),
+         dict(d=1, label='Μάθε τον συνδυασμό', gate='OR', value='20.000 $'),
+         dict(d=2, label='Βρες τον συνδυασμό γραμμένο κάπου', value='75.000 $'),
+         dict(d=2, label='Πάρε τον από τον κάτοχο', gate='OR', value='20.000 $'),
+         dict(d=3, label='Απείλησε', value='60.000 $'),
+         dict(d=3, label='Εκβίασε', value='100.000 $'),
+         dict(d=3, label='Κρυφάκουσε', gate='AND', value='60.000 $'),
+         dict(d=4, label='Άκου τη συνομιλία', value='20.000 $ · ΕΕ'),
+         dict(d=4, label='Κάνε τον να πει τον συνδυασμό', value='40.000 $'),
+         dict(d=3, label='Δωροδόκησε', value='20.000 $', mark='best'),
+         dict(d=1, label='Κόψε το χρηματοκιβώτιο', value='10.000 $ · ΕΕ', mark='best'),
+         dict(d=1, label='Εκμεταλλεύσου κακή εγκατάσταση', value='100.000 $')]
+    return tree(R, 'Το δέντρο επιθέσεων του χρηματοκιβωτίου',
+                ['OR: το φθηνότερο παιδί · AND: το άθροισμα (20.000 + 40.000)',
+                 'ΕΕ = χρειάζεται ειδικό εξοπλισμό',
+                 'Τονισμένα: φθηνότερο με ΕΕ (Κόψε) και χωρίς (Δωροδόκησε)'])
+
+
+def company():
+    R = [dict(d=0, label='Πρόσβαση στα ευαίσθητα δεδομένα της Χ', gate='OR'),
+         dict(d=1, label='Κλοπή credentials', gate='OR'),
+         dict(d=2, label='spear phishing', value='0,30'),
+         dict(d=2, label='keylogger / malware στο laptop', value='0,20'),
+         dict(d=2, label='κοινωνική μηχανική για τον κωδικό', value='0,10'),
+         dict(d=1, label='Εκμετάλλευση ευπάθειας', gate='OR'),
+         dict(d=2, label='unpatched υπηρεσία SMB', value='0,25'),
+         dict(d=2, label='zero-day στον web server', value='0,15'),
+         dict(d=2, label='custom malware σε συνημμένο', value='0,20'),
+         dict(d=1, label='Φυσική πρόσβαση', gate='OR'),
+         dict(d=2, label='μη εξουσιοδοτημένη είσοδος στο κτίριο', value='0,05'),
+         dict(d=2, label='κλοπή κάρτας (badge)', value='0,10'),
+         dict(d=2, label='tailgating', value='0,10')]
+    return tree(R, 'Δέντρο επιθέσεων για τα δεδομένα της εταιρείας Χ',
+                ['Οι αριθμοί είναι εκτιμώμενες πιθανότητες επιτυχίας κάθε φύλλου.'])
 
 
 # Σχήμα 9 — root probability under the three gate choices; bar lengths computed.
@@ -230,6 +294,6 @@ def bars():
 
 for name, fn in (('attack-chain', chain), ('dns-cache-poisoning', dns), ('arp-spoofing', arp),
                  ('syn-flood', synflood), ('firewall-rule-order', firewall), ('dmz-university', dmz),
-                 ('attack-tree-gates', bars)):
+                 ('attack-tree-safe', safe), ('attack-tree-company-x', company), ('attack-tree-gates', bars)):
     open(f'{OUT}/{name}.svg', 'w').write(fn())
 print('ok')
