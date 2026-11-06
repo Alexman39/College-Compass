@@ -119,6 +119,32 @@ Diagrams go next to the lesson in an `images/` folder (e.g.
 `![description](./images/name.svg)`. The description is what screen readers
 read, so it should say what the diagram shows.
 
+**Attack trees** are written as text in a fenced block with the language
+`attack-tree` and drawn when the site is built (`src/lib/attack-tree.ts`):
+
+````md
+```attack-tree
+mode: cost            # cost | probability | none
+unit: $
+values: all           # leaves: hide computed values (e.g. an exercise)
+highlight: Κόψε       # optional; cost mode defaults to the cheapest attack
+layout: list          # list (phone-friendly) | tree (top-down, small trees)
+note: ΕΕ = ειδικός εξοπλισμός
+
+Άνοιξε το χρηματοκιβώτιο | OR = 10.000
+  Παραβίασε την κλειδαριά | 30.000 | ΕΕ
+  Κόψε | 10.000 | ΕΕ
+```
+````
+
+One node per line, indented two spaces per level: `label | value or OR/AND |
+tags`. Leaves carry values; OR/AND nodes are computed (cost: OR = cheapest,
+AND = sum; probability: OR = 1 − Π(1 − p), AND = Π p). `OR = 10.000` also
+checks the computed value, so a wrong number fails the build. Numbers are
+written the Greek way (10.000, 0,30). The same code powers the interactive
+attack-tree explorer: `<div data-demo="attack-tree"></div>` (optionally
+`data-tree="mission"`).
+
 ### Adding course material
 
 Raw course files (slides, PDFs, handouts) go in `materials/<course>/`, e.g.
