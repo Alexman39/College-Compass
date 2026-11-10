@@ -413,7 +413,69 @@ def practice():
     return svg(374, 'Δένδρο εξάσκησης', b)
 
 
-for name, fn in (('search-expansion', expansion), ('search-growth', growth), ('chessboard-rice', chessboard), ('jug-states', jug_states), ('frontier-stack-queue', frontier), ('iterative-deepening', deepening),
+# ---- Σχήμα: the small A–G tree of the rewrite, with DFS and BFS orders -------
+SMALL = {'A': ['B', 'C'], 'B': ['D', 'E'], 'C': ['F', 'G'], 'D': [], 'E': [], 'F': [], 'G': []}
+
+
+def small_order(bfs):
+    """Children left to right; stop when the goal G is taken from the frontier."""
+    frontier, out = ['A'], []
+    while frontier:
+        n = frontier.pop(0)
+        out.append(n)
+        if n == 'G':
+            return out
+        frontier = frontier + SMALL[n] if bfs else SMALL[n] + frontier
+
+
+def small_tree():
+    b = []
+    dfs, bfs = small_order(False), small_order(True)
+    assert dfs == list('ABDECFG') and bfs == list('ABCDEFG')
+    P = {'A': (250, 40), 'B': (140, 120), 'C': (360, 120), 'D': (85, 200), 'E': (195, 200), 'F': (305, 200), 'G': (415, 200)}
+    for p, kids in SMALL.items():
+        for c in kids:
+            b.append(line(*P[p], *P[c], EDGE, 2))
+    for n, (x, y) in P.items():
+        goal = n == 'G'
+        b.append(circle(x, y, 22, OK_BG if goal else BOX, OK if goal else EDGE, 3 if goal else 2))
+        if goal:
+            b.append(circle(x, y, 16, 'none', OK, 1.5))
+        b.append(text(x, y + 7, n, 19, 800))
+    b.append(text(W / 2, 262, 'DFS: ' + ' → '.join(dfs), 16, 800, ACC))
+    b.append(text(W / 2, 288, 'BFS: ' + ' → '.join(bfs), 16, 800, OK))
+    b.append(text(W / 2, 316, 'Στόχος το G (διπλός κύκλος). Παιδιά από αριστερά προς τα δεξιά.', 14, 400, MUTED))
+    return svg(334, 'Μικρό δέντρο A έως G', b)
+
+
+# ---- Σχήμα: b = 3, the levels grow 1, 3, 9, 27 ------------------------------
+def branching3():
+    b = []
+    B, D = 3, 4
+    total = sum(B ** k for k in range(D + 1))
+    assert total == (B ** (D + 1) - 1) // (B - 1) == 121
+    ys = [40, 110, 180, 250]
+    x0, x1 = 150, 480
+    pos = []
+    for k, y in enumerate(ys):
+        n = B ** k
+        step = (x1 - x0) / n
+        pos.append([x0 + step * (i + 0.5) for i in range(n)])
+    for k in range(1, len(ys)):
+        for i, x in enumerate(pos[k]):
+            b.append(line(pos[k - 1][i // B], ys[k - 1], x, ys[k], LINE, 1.2))
+    for k, y in enumerate(ys):
+        r = [14, 11, 8, 5][k]
+        for x in pos[k]:
+            b.append(circle(x, y, r, ACC_BG, ACC, 1.5))
+        b.append(text(20, y + 5, f'βάθος {k}: {B ** k}', 14, 700, INK, 'start'))
+    b.append(text(20, 318, 'βάθος 4: 81 (δεν σχεδιάζεται)', 14, 700, MUTED, 'start'))
+    b.append(text(W / 2, 356, f'Μέχρι βάθος 4: 1 + 3 + 9 + 27 + 81 = {total} κόμβοι', 16, 800, INK))
+    b.append(text(W / 2, 380, 'Κάθε επίπεδο έχει τρεις φορές περισσότερους κόμβους.', 14, 400, MUTED))
+    return svg(398, 'Εκθετική αύξηση με παράγοντα διακλάδωσης 3', b)
+
+
+for name, fn in (('blind-small-tree', small_tree), ('branching-3', branching3), ('search-expansion', expansion), ('search-growth', growth), ('chessboard-rice', chessboard), ('jug-states', jug_states), ('frontier-stack-queue', frontier), ('iterative-deepening', deepening),
                  ('maze-dfs-bfs', maze), ('bidirectional-search', bidirectional), ('tsp-graph', tsp_graph),
                  ('tsp-branch-and-bound', bnb_tree), ('practice-tree', practice)):
     out = fn()
