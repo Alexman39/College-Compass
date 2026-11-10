@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 336" width="500" height="336" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Ενθυλάκωση: HTTP μέσα σε TCP μέσα σε IPv4 μέσα σε Ethernet</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker></defs>
+  <rect width="500" height="336" fill="#ffffff"/>
+  <text x="20" y="26" text-anchor="start" font-size="14" font-weight="800" fill="#4a5a65">HTTP</text>
+  <rect x="20" y="32" width="460" height="40" rx="6" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="250" y="57" text-anchor="middle" font-size="14" font-weight="600" fill="#0c2636">δεδομένα εφαρμογής</text>
+  <text x="20" y="96" text-anchor="start" font-size="14" font-weight="800" fill="#4a5a65">TCP segment</text>
+  <rect x="20" y="102" width="112" height="40" rx="6" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="76" y="127" text-anchor="middle" font-size="14" font-weight="700" fill="#0c2636">TCP</text>
+  <rect x="132" y="102" width="348" height="40" rx="6" fill="#eef3f6" stroke="#7b8a94" stroke-width="2"/>
+  <text x="306" y="127" text-anchor="middle" font-size="14" font-weight="600" fill="#0c2636">δεδομένα HTTP</text>
+  <text x="20" y="166" text-anchor="start" font-size="14" font-weight="800" fill="#4a5a65">IPv4 packet</text>
+  <rect x="20" y="172" width="112" height="40" rx="6" fill="#e3eefb" stroke="#2a62a8" stroke-width="2"/>
+  <text x="76" y="197" text-anchor="middle" font-size="14" font-weight="700" fill="#0c2636">IPv4 20 B</text>
+  <rect x="132" y="172" width="348" height="40" rx="6" fill="#eef3f6" stroke="#7b8a94" stroke-width="2"/>
+  <text x="306" y="197" text-anchor="middle" font-size="14" font-weight="600" fill="#0c2636">TCP segment</text>
+  <text x="20" y="236" text-anchor="start" font-size="14" font-weight="800" fill="#4a5a65">Ethernet frame</text>
+  <rect x="20" y="242" width="112" height="40" rx="6" fill="#fdeee2" stroke="#b5541c" stroke-width="2"/>
+  <text x="76" y="267" text-anchor="middle" font-size="14" font-weight="700" fill="#0c2636">Ethernet 14 B</text>
+  <rect x="132" y="242" width="292" height="40" rx="6" fill="#eef3f6" stroke="#7b8a94" stroke-width="2"/>
+  <text x="278" y="267" text-anchor="middle" font-size="14" font-weight="600" fill="#0c2636">IPv4 packet</text>
+  <rect x="424" y="242" width="56" height="40" rx="6" fill="#fdeee2" stroke="#b5541c" stroke-width="2"/>
+  <text x="452" y="267" text-anchor="middle" font-size="12" font-weight="700" fill="#0c2636">FCS 4 B</text>
+  <text x="250" y="308" text-anchor="middle" font-size="13" font-weight="400" fill="#4a5a65">Κάθε επίπεδο προσθέτει τη δική του επικεφαλίδα·</text>
+  <text x="250" y="326" text-anchor="middle" font-size="13" font-weight="400" fill="#4a5a65">στη λήψη αφαιρούνται με την αντίστροφη σειρά.</text>
+</svg>

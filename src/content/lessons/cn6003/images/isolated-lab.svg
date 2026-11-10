@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 348" width="500" height="348" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Το εργαστήριο: δύο VMs σε απομονωμένο εικονικό δίκτυο</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c62828"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="348" fill="#ffffff"/>
+  <rect x="14" y="14" width="472" height="180" rx="14" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="250" y="40" text-anchor="middle" font-size="17" font-weight="800" fill="#841387">Απομονωμένο εικονικό δίκτυο</text>
+  <rect x="34" y="70" width="150" height="64" rx="10" fill="#eef3f6" stroke="#7b8a94" stroke-width="2.5"/>
+  <text x="109" y="98" text-anchor="middle" font-size="17" font-weight="800" fill="#0c2636">Kali Linux</text>
+  <text x="109" y="120" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">εργαλεία</text>
+  <rect x="316" y="70" width="150" height="64" rx="10" fill="#eef3f6" stroke="#7b8a94" stroke-width="2.5"/>
+  <text x="391" y="98" text-anchor="middle" font-size="17" font-weight="800" fill="#0c2636">OWASP BWA</text>
+  <text x="391" y="120" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">ευάλωτος στόχος</text>
+  <rect x="206" y="86" width="88" height="32" rx="8" fill="#ffffff" stroke="#7b8a94" stroke-width="2"/>
+  <text x="250" y="107" text-anchor="middle" font-size="14" font-weight="700" fill="#0c2636">v-switch</text>
+  <line x1="184" y1="102" x2="206.0" y2="102" stroke="#0c2636" stroke-width="2.5"/>
+  <line x1="294.0" y1="102" x2="316" y2="102" stroke="#0c2636" stroke-width="2.5"/>
+  <text x="250" y="170" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">Οι δύο VMs βλέπουν μόνο η μία την άλλη</text>
+  <rect x="60" y="262" width="160" height="48" rx="10" fill="#eef3f6" stroke="#7b8a94" stroke-width="2"/>
+  <text x="140" y="292" text-anchor="middle" font-size="15" font-weight="700" fill="#0c2636">Κάρτα δικτύου</text>
+  <rect x="280" y="262" width="160" height="48" rx="10" fill="#eef3f6" stroke="#7b8a94" stroke-width="2"/>
+  <text x="360" y="292" text-anchor="middle" font-size="15" font-weight="700" fill="#0c2636">Internet</text>
+  <line x1="140" y1="196" x2="140" y2="258" stroke="#7b8a94" stroke-width="2.5" stroke-dasharray="6 5"/>
+  <path d="M129 216L151 238M151 216L129 238" stroke="#c62828" stroke-width="4"/>
+  <line x1="360" y1="196" x2="360" y2="258" stroke="#7b8a94" stroke-width="2.5" stroke-dasharray="6 5"/>
+  <path d="M349 216L371 238M371 216L349 238" stroke="#c62828" stroke-width="4"/>
+  <text x="140" y="334" text-anchor="middle" font-size="15" font-weight="800" fill="#c62828">χωρίς bridging</text>
+  <text x="360" y="334" text-anchor="middle" font-size="15" font-weight="800" fill="#c62828">χωρίς Internet</text>
+</svg>

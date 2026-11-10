@@ -16,6 +16,24 @@ const demos: Record<string, () => Promise<{ mount: (root: HTMLElement) => void }
   'ml-kmeans': () => import('./demos/ml-kmeans'),
   'ml-assoc': () => import('./demos/ml-assoc'),
   'ml-dtree': () => import('./demos/ml-dtree'),
+  // CN6003 labs
+  'sec-cia': () => import('./demos/sec-classify'),
+  'sec-attacks': () => import('./demos/sec-classify'),
+  'sec-risk': () => import('./demos/sec-risk'),
+  'sec-mccumber': () => import('./demos/sec-mccumber'),
+  'sec-attack-tree': () => import('./demos/sec-attack-tree'),
+  'sec-firewall': () => import('./demos/sec-firewall'),
+  'sec-netattack': () => import('./demos/sec-netattack'),
+  'sec-caesar': () => import('./demos/sec-cipher'),
+  'sec-vigenere': () => import('./demos/sec-cipher'),
+  'sec-euclid': () => import('./demos/sec-euclid'),
+  'sec-rsa': () => import('./demos/sec-rsa'),
+  'sec-lsb': () => import('./demos/sec-lsb'),
+  'sec-tls': () => import('./demos/sec-tls'),
+  'sec-packet': () => import('./demos/sec-packet'),
+  'sec-frag': () => import('./demos/sec-frag'),
+  'sec-tcp': () => import('./demos/sec-tcp'),
+  'sec-traffic': () => import('./demos/sec-traffic'),
 };
 
 for (const root of document.querySelectorAll<HTMLElement>('[data-demo]')) {

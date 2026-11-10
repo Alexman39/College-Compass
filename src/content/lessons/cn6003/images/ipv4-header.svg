@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 328" width="500" height="328" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Η επικεφαλίδα IPv4 σε γραμμές των 32 bit</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker></defs>
+  <rect width="500" height="328" fill="#ffffff"/>
+  <text x="52.875" y="20" text-anchor="middle" font-size="12" font-weight="600" fill="#4a5a65">0</text>
+  <text x="162.875" y="20" text-anchor="middle" font-size="12" font-weight="600" fill="#4a5a65">8</text>
+  <text x="272.875" y="20" text-anchor="middle" font-size="12" font-weight="600" fill="#4a5a65">16</text>
+  <text x="382.875" y="20" text-anchor="middle" font-size="12" font-weight="600" fill="#4a5a65">24</text>
+  <text x="479.125" y="20" text-anchor="middle" font-size="12" font-weight="600" fill="#4a5a65">31</text>
+  <text x="38" y="57" text-anchor="end" font-size="12" font-weight="600" fill="#4a5a65">0</text>
+  <rect x="46" y="30" width="55" height="44" fill="#e3eefb" stroke="#2a62a8" stroke-width="1.5"/>
+  <text x="73.5" y="51" text-anchor="middle" font-size="11" font-weight="700" fill="#0c2636">Version</text>
+  <text x="73.5" y="66" text-anchor="middle" font-size="11" font-weight="400" fill="#4a5a65">4 bit</text>
+  <rect x="101" y="30" width="55" height="44" fill="#e3eefb" stroke="#2a62a8" stroke-width="1.5"/>
+  <text x="128.5" y="51" text-anchor="middle" font-size="11" font-weight="700" fill="#0c2636">IHL</text>
+  <text x="128.5" y="66" text-anchor="middle" font-size="11" font-weight="400" fill="#4a5a65">4 bit</text>
+  <rect x="156" y="30" width="110" height="44" fill="#e3eefb" stroke="#2a62a8" stroke-width="1.5"/>
+  <text x="211" y="51" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636">DSCP / ECN</text>
+  <text x="211" y="66" text-anchor="middle" font-size="11" font-weight="400" fill="#4a5a65">8 bit</text>
+  <rect x="266" y="30" width="220" height="44" fill="#e3eefb" stroke="#2a62a8" stroke-width="1.5"/>
+  <text x="376" y="51" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636">Total Length</text>
+  <text x="376" y="66" text-anchor="middle" font-size="11" font-weight="400" fill="#4a5a65">16 bit</text>
+  <text x="38" y="101" text-anchor="end" font-size="12" font-weight="600" fill="#4a5a65">4</text>
+  <rect x="46" y="74" width="220" height="44" fill="#e3eefb" stroke="#2a62a8" stroke-width="1.5"/>
+  <text x="156" y="95" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636">Identification</text>
+  <text x="156" y="110" text-anchor="middle" font-size="11" font-weight="400" fill="#4a5a65">16 bit</text>
+  <rect x="266" y="74" width="41.25" height="44" fill="#e3eefb" stroke="#2a62a8" stroke-width="1.5"/>
+  <text x="286.625" y="95" text-anchor="middle" font-size="11" font-weight="700" fill="#0c2636">Flags</text>
+  <text x="286.625" y="110" text-anchor="middle" font-size="11" font-weight="400" fill="#4a5a65">3 bit</text>
+  <rect x="307.25" y="74" width="178.75" height="44" fill="#e3eefb" stroke="#2a62a8" stroke-width="1.5"/>
+  <text x="396.625" y="95" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636">Fragment Offset</text>
+  <text x="396.625" y="110" text-anchor="middle" font-size="11" font-weight="400" fill="#4a5a65">13 bit</text>
+  <text x="38" y="145" text-anchor="end" font-size="12" font-weight="600" fill="#4a5a65">8</text>
+  <rect x="46" y="118" width="110" height="44" fill="#e3eefb" stroke="#2a62a8" stroke-width="1.5"/>
+  <text x="101" y="139" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636">TTL</text>
+  <text x="101" y="154" text-anchor="middle" font-size="11" font-weight="400" fill="#4a5a65">8 bit</text>
+  <rect x="156" y="118" width="110" height="44" fill="#e3eefb" stroke="#2a62a8" stroke-width="1.5"/>
+  <text x="211" y="139" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636">Protocol</text>
+  <text x="211" y="154" text-anchor="middle" font-size="11" font-weight="400" fill="#4a5a65">8 bit</text>
+  <rect x="266" y="118" width="220" height="44" fill="#e3eefb" stroke="#2a62a8" stroke-width="1.5"/>
+  <text x="376" y="139" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636">Header Checksum</text>
+  <text x="376" y="154" text-anchor="middle" font-size="11" font-weight="400" fill="#4a5a65">16 bit</text>
+  <text x="38" y="189" text-anchor="end" font-size="12" font-weight="600" fill="#4a5a65">12</text>
+  <rect x="46" y="162" width="440" height="44" fill="#f3e6f4" stroke="#841387" stroke-width="1.5"/>
+  <text x="266" y="183" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636">Source Address</text>
+  <text x="266" y="198" text-anchor="middle" font-size="11" font-weight="400" fill="#4a5a65">32 bit</text>
+  <text x="38" y="233" text-anchor="end" font-size="12" font-weight="600" fill="#4a5a65">16</text>
+  <rect x="46" y="206" width="440" height="44" fill="#f3e6f4" stroke="#841387" stroke-width="1.5"/>
+  <text x="266" y="227" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636">Destination Address</text>
+  <text x="266" y="242" text-anchor="middle" font-size="11" font-weight="400" fill="#4a5a65">32 bit</text>
+  <text x="38" y="277" text-anchor="end" font-size="12" font-weight="600" fill="#4a5a65">20</text>
+  <rect x="46" y="250" width="440" height="44" fill="#ffffff" stroke="#7b8a94" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="266" y="271" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636">Options / Padding (προαιρετικά)</text>
+  <text x="266" y="286" text-anchor="middle" font-size="11" font-weight="400" fill="#4a5a65">32 bit</text>
+  <text x="250" y="316" text-anchor="middle" font-size="13" font-weight="400" fill="#4a5a65">Συνήθως 5 γραμμές × 4 bytes = 20 bytes (IHL = 5)· έως 60 με options.</text>
+</svg>
