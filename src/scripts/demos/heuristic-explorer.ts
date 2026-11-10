@@ -287,7 +287,7 @@ export function mount(root: HTMLElement): void {
     const kids = r.children.map(value).join(', ');
     switch (r.kind) {
       case 'loop':
-        return `Η ${L} είναι ήδη στο κλειστό σύνολο: βρόχος, δεν επεκτείνεται ξανά.`;
+        return `Η ${L} είναι ήδη στο κλειστό σύνολο: Deadlock, δεν επεκτείνεται ξανά.`;
       case 'goal':
         return `Η ${L} είναι τελική κατάσταση (h = 0). Διαδρομή ${r.path.map(label).join(' → ')}${P().grid || prob === 'roads' ? `, κόστος ${r.g}` : ''}.`;
       case 'stuck':
@@ -315,9 +315,9 @@ export function mount(root: HTMLElement): void {
 
   function lastCell(r: Row): string {
     if (r.kind === 'goal') return 'ΤΕΛΙΚΗ';
-    if (r.kind === 'loop') return 'Βρόχος';
+    if (r.kind === 'loop') return 'Deadlock';
     if (r.kind === 'stuck') return alg === 'HC' ? '— (αδιέξοδο)' : '—';
-    if (r.kind === 'cycle') return `${list(r.children)} · βρόχος`;
+    if (r.kind === 'cycle') return `${list(r.children)} · Deadlock`;
     return list(r.children);
   }
 
@@ -386,7 +386,7 @@ export function mount(root: HTMLElement): void {
     fill.style.width = `${max ? (step / max) * 100 : 0}%`;
     bar.setAttribute('aria-valuemax', String(max));
     bar.setAttribute('aria-valuenow', String(step));
-    status.textContent = !shownRow ? 'Αρχική κατάσταση' : shownRow.kind === 'goal' && reached ? 'Βρέθηκε λύση' : shownRow.kind === 'stuck' && alg === 'HC' ? 'Αδιέξοδο' : shownRow.kind === 'cycle' ? 'Βρόχος' : `Κατάσταση ${label(shownRow.id)}`;
+    status.textContent = !shownRow ? 'Αρχική κατάσταση' : shownRow.kind === 'goal' && reached ? 'Βρέθηκε λύση' : shownRow.kind === 'stuck' && alg === 'HC' ? 'Αδιέξοδο' : shownRow.kind === 'cycle' ? 'Deadlock' : `Κατάσταση ${label(shownRow.id)}`;
     resetBtn.disabled = prevBtn.disabled = step === 0;
     nextBtn.disabled = endBtn.disabled = step === max;
 
@@ -443,7 +443,7 @@ export function mount(root: HTMLElement): void {
     const tie = r.frontier.slice(1).some((f) => f.id !== first.id && sortKey(f) === sortKey(first));
     let t = `Η ${L} είναι πρώτη στο μέτωπο: έχει τη μικρότερη ${alg === 'ASTAR' ? 'f = g + h' : 'h'}${tie ? ' (σε ισοβαθμία προηγείται όποια μπήκε τελευταία στο μέτωπο)' : ''}.`;
     if (alg === 'BEAM') t += ` Το μέτωπο κρατά μόνο τις ${BEAM_WIDTH} καλύτερες.`;
-    if (r.kind === 'loop') t += ' Είναι όμως ήδη στο κλειστό σύνολο: βρόχος, δεν επεκτείνεται.';
+    if (r.kind === 'loop') t += ' Είναι όμως ήδη στο κλειστό σύνολο: Deadlock, δεν επεκτείνεται.';
     return t;
   }
 
