@@ -286,6 +286,24 @@ pre {
   color: var(--text-muted);
 }
 
+/* Expandable sections in lessons («Αναλυτικά», «Λύση», self-check
+ * questions): a quiet card, so the main reading path stays short. */
+.prose details {
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--divider);
+  border-radius: var(--r-sm);
+  background: var(--panel-sunken);
+}
+
+.prose details > summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.prose details[open] > summary {
+  margin-bottom: var(--s-2);
+}
+
 /* A caption written as a lone italic line right under an image
  * («*Σχήμα 1. …*») is centred with it. */
 .prose p:has(> img, > .zoom) + p:has(> em:only-child) {

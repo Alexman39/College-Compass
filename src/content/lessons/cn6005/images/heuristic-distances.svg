@@ -248,11 +248,11 @@
   <circle cx="169" cy="323" r="12" fill="#0c2636" stroke="#0c2636" stroke-width="2"/>
   <text x="169" y="328" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">S</text>
   <circle cx="429" cy="167" r="12" fill="#0c2636" stroke="#0c2636" stroke-width="2"/>
-  <text x="429" y="172" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">F</text>
+  <text x="429" y="172" text-anchor="middle" font-size="14" font-weight="800" fill="#ffffff">G</text>
   <text x="291" y="229.4" text-anchor="end" font-size="15" font-weight="800" fill="#841387">d ≈ 11,66</text>
   <text x="299" y="349" text-anchor="middle" font-size="14" font-weight="700" fill="#2e7d32">10</text>
   <text x="441" y="250" text-anchor="start" font-size="14" font-weight="700" fill="#2e7d32">6</text>
-  <text x="250" y="462" text-anchor="middle" font-size="15" font-weight="700" fill="#0c2636">S = (5, 4), F = (15, 10)</text>
+  <text x="250" y="462" text-anchor="middle" font-size="15" font-weight="700" fill="#0c2636">S = (5, 4), G = (15, 10)</text>
   <line x1="70" y1="484" x2="104" y2="484" stroke="#841387" stroke-width="4"/>
   <text x="112" y="489" text-anchor="start" font-size="14" font-weight="400" fill="#4a5a65">Ευκλείδεια: √(10² + 6²) = √136 ≈ 11,66</text>
   <line x1="70" y1="508" x2="104" y2="508" stroke="#2e7d32" stroke-width="4" stroke-dasharray="9 6"/>

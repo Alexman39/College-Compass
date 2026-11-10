@@ -139,3 +139,40 @@
   color: var(--text-muted);
   border-style: dashed;
 }
+
+/* «Πρόβλεψη»: the question before each row, and the answer's reason. */
+.hx-quiz:empty {
+  display: none;
+}
+
+.hx-quiz {
+  display: grid;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+}
+
+.hx-quiz p {
+  margin: 0;
+}
+
+.hx-quiz-q {
+  font-weight: 700;
+}
+
+.hx-quiz-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.hx-feedback {
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-sm);
+  border-left: 4px solid var(--st-done);
+  background: color-mix(in oklab, var(--st-done) 12%, var(--panel-solid));
+}
+
+.hx-feedback.bad {
+  border-left-color: var(--st-overdue);
+  background: color-mix(in oklab, var(--st-overdue) 12%, var(--panel-solid));
+}
