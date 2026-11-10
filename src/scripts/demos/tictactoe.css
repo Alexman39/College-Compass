@@ -1,0 +1,120 @@
+/* Tic-tac-toe practice (Week 4). */
+.ttt {
+  display: grid;
+  gap: var(--s-3);
+  margin-block: var(--s-4);
+  padding: var(--s-4);
+  border: 1px solid var(--divider);
+  border-radius: var(--r-md);
+  background: var(--panel-solid);
+}
+
+.ttt p {
+  margin: 0;
+}
+
+.ttt-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+}
+
+.ttt-col {
+  display: grid;
+  gap: var(--s-2);
+  align-content: start;
+}
+
+.ttt-h {
+  font-weight: 700;
+}
+
+.ttt-board {
+  display: grid;
+  grid-template-columns: repeat(3, 3rem);
+  grid-template-rows: repeat(3, 3rem);
+  gap: 3px;
+  width: max-content;
+  padding: 3px;
+  border-radius: var(--r-sm);
+  background: var(--text-muted);
+}
+
+.ttt-steps .ttt-board {
+  grid-template-columns: repeat(3, 2rem);
+  grid-template-rows: repeat(3, 2rem);
+}
+
+.ttt-cell {
+  display: grid;
+  place-items: center;
+  background: var(--panel-solid);
+  color: var(--text);
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.ttt-steps .ttt-cell {
+  font-size: 1rem;
+}
+
+.ttt-cell.new {
+  background: color-mix(in oklab, var(--accent) 18%, var(--panel-solid));
+  color: var(--accent);
+}
+
+.ttt button.ttt-cell.pick {
+  min-height: 0;
+  padding: 0;
+  border: 2px dashed var(--accent);
+  border-radius: 0;
+  background: color-mix(in oklab, var(--accent) 6%, var(--panel-solid));
+  cursor: pointer;
+}
+
+.ttt button.ttt-cell.pick:hover,
+.ttt button.ttt-cell.pick:focus-visible {
+  background: color-mix(in oklab, var(--accent) 22%, var(--panel-solid));
+}
+
+.ttt-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+.ttt-step {
+  display: grid;
+  gap: var(--s-1);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.ttt-value {
+  padding: var(--s-2) var(--s-3);
+  border-left: 4px solid var(--text-muted);
+  border-radius: var(--r-sm);
+  background: var(--panel-sunken);
+}
+
+.ttt-value.v2 {
+  border-left-color: var(--st-done);
+}
+
+.ttt-value.v0 {
+  border-left-color: var(--st-overdue);
+}
+
+.ttt-summary ul {
+  margin: var(--s-1) 0;
+  padding-left: var(--s-5);
+}
+
+.ttt-decision {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.ttt-hint {
+  color: var(--text-muted);
+}

@@ -9,6 +9,8 @@
 const demos: Record<string, () => Promise<{ mount: (root: HTMLElement) => void }>> = {
   'search-explorer': () => import('./demos/search-explorer'),
   'heuristic-explorer': () => import('./demos/heuristic-explorer'),
+  'game-tree': () => import('./demos/game-tree'),
+  tictactoe: () => import('./demos/tictactoe'),
 };
 
 for (const root of document.querySelectorAll<HTMLElement>('[data-demo]')) {

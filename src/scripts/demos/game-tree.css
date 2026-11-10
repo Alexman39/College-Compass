@@ -1,0 +1,170 @@
+/* Game-tree explorer (Week 4): what it adds to the shared explorer look. */
+
+.gt .jug-toolbar {
+  gap: var(--s-2) var(--s-3);
+}
+
+.gt-ply {
+  fill: var(--text-muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.gt-edge {
+  stroke: var(--text-muted);
+  stroke-width: 1.5;
+  opacity: 0.55;
+}
+
+.gt-edge.active {
+  stroke: var(--st-soon);
+  stroke-width: 3;
+  opacity: 1;
+}
+
+.gt-edge.best {
+  stroke: var(--accent);
+  stroke-width: 4;
+  opacity: 1;
+}
+
+.gt-edge.pruned {
+  stroke-dasharray: 6 5;
+  opacity: 0.35;
+}
+
+.gt-node .box,
+.gt-leaf .box {
+  fill: var(--panel-sunken);
+  stroke: var(--text-muted);
+  stroke-width: 1.5;
+}
+
+.gt-node.active .box,
+.gt-leaf.active .box {
+  fill: color-mix(in oklab, var(--st-soon) 28%, var(--panel-solid));
+  stroke: var(--st-soon);
+  stroke-width: 3;
+}
+
+.gt-node.best .box {
+  fill: color-mix(in oklab, var(--accent) 18%, var(--panel-solid));
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.gt-leaf.leaf-done .box {
+  fill: color-mix(in oklab, var(--st-done) 22%, var(--panel-solid));
+  stroke: var(--st-done);
+  stroke-width: 2;
+}
+
+.gt-leaf.pruned .box {
+  fill: var(--panel-solid);
+  stroke-dasharray: 5 4;
+  opacity: 0.6;
+}
+
+.gt-leaf.pruned .val {
+  fill: var(--text-muted);
+  text-decoration: line-through;
+}
+
+.gt-node .val,
+.gt-leaf .val {
+  fill: var(--text);
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.gt-node .name {
+  fill: var(--text);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.gt-node .iv {
+  fill: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.gt-node .name,
+.gt-node .iv {
+  paint-order: stroke;
+  stroke: var(--panel-solid);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+.jug-swatch.gt-sw-active {
+  border-color: var(--st-soon);
+  background: color-mix(in oklab, var(--st-soon) 28%, var(--panel-solid));
+}
+
+.jug-swatch.gt-sw-leaf {
+  border-color: var(--st-done);
+  background: color-mix(in oklab, var(--st-done) 22%, var(--panel-solid));
+}
+
+.jug-swatch.gt-sw-pruned {
+  border-style: dashed;
+  border-color: var(--text-muted);
+}
+
+.jug-swatch.gt-sw-best {
+  height: 4px;
+  border: 0;
+  background: var(--accent);
+}
+
+.jug-table tr.gt-pruned-row td {
+  background: color-mix(in oklab, var(--st-overdue) 10%, transparent);
+}
+
+/* «Πρόβλεψη»: the question before a step and the reason after it. */
+.gt-quiz:empty {
+  display: none;
+}
+
+.gt-quiz {
+  display: grid;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+}
+
+.gt-quiz p {
+  margin: 0;
+}
+
+.gt-quiz-q {
+  font-weight: 700;
+}
+
+.gt-quiz-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.gt-feedback {
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-sm);
+  border-left: 4px solid var(--st-done);
+  background: color-mix(in oklab, var(--st-done) 12%, var(--panel-solid));
+}
+
+.gt-feedback.bad {
+  border-left-color: var(--st-overdue);
+  background: color-mix(in oklab, var(--st-overdue) 12%, var(--panel-solid));
+}
+
+/* Phones: the tree keeps a readable size and scrolls sideways in its box,
+ * like the tables, instead of shrinking until the numbers can't be read. */
+.gt .jug-tree {
+  overflow-x: auto;
+}
+
+.gt .jug-tree svg {
+  min-width: 34rem;
+}
