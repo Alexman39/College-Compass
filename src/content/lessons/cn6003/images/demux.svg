@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 240" width="500" height="240" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Demultiplexing: EtherType, IP Protocol, θύρα, εφαρμογή</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker></defs>
+  <rect width="500" height="240" fill="#ffffff"/>
+  <text x="66" y="30" text-anchor="middle" font-size="15" font-weight="800" fill="#0c2636">Ethernet</text>
+  <text x="66" y="48" text-anchor="middle" font-size="12" font-weight="400" fill="#4a5a65">πεδίο: EtherType</text>
+  <rect x="14" y="62" width="104" height="36" rx="6" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="66" y="85" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636">0x0800 IPv4</text>
+  <rect x="14" y="112" width="104" height="36" rx="6" fill="#eef3f6" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="66" y="135" text-anchor="middle" font-size="13" font-weight="400" fill="#0c2636">0x0806 ARP</text>
+  <rect x="14" y="162" width="104" height="36" rx="6" fill="#eef3f6" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="66" y="185" text-anchor="middle" font-size="13" font-weight="400" fill="#0c2636">0x86DD IPv6</text>
+  <line x1="120" y1="80" x2="136" y2="130" stroke="#0c2636" stroke-width="2.5" marker-end="url(#a-ink)"/>
+  <text x="190" y="30" text-anchor="middle" font-size="15" font-weight="800" fill="#0c2636">IPv4</text>
+  <text x="190" y="48" text-anchor="middle" font-size="12" font-weight="400" fill="#4a5a65">πεδίο: Protocol</text>
+  <rect x="138" y="62" width="104" height="36" rx="6" fill="#eef3f6" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="190" y="85" text-anchor="middle" font-size="13" font-weight="400" fill="#0c2636">1 ICMP</text>
+  <rect x="138" y="112" width="104" height="36" rx="6" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="190" y="135" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636">6 TCP</text>
+  <rect x="138" y="162" width="104" height="36" rx="6" fill="#eef3f6" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="190" y="185" text-anchor="middle" font-size="13" font-weight="400" fill="#0c2636">17 UDP</text>
+  <line x1="244" y1="130" x2="260" y2="130" stroke="#0c2636" stroke-width="2.5" marker-end="url(#a-ink)"/>
+  <text x="314" y="30" text-anchor="middle" font-size="15" font-weight="800" fill="#0c2636">TCP / UDP</text>
+  <text x="314" y="48" text-anchor="middle" font-size="12" font-weight="400" fill="#4a5a65">πεδίο: Θύρα</text>
+  <rect x="262" y="62" width="104" height="36" rx="6" fill="#eef3f6" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="314" y="85" text-anchor="middle" font-size="13" font-weight="400" fill="#0c2636">53 DNS</text>
+  <rect x="262" y="112" width="104" height="36" rx="6" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="314" y="135" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636">80 HTTP</text>
+  <rect x="262" y="162" width="104" height="36" rx="6" fill="#eef3f6" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="314" y="185" text-anchor="middle" font-size="13" font-weight="400" fill="#0c2636">443 HTTPS</text>
+  <line x1="368" y1="130" x2="384" y2="130" stroke="#0c2636" stroke-width="2.5" marker-end="url(#a-ink)"/>
+  <text x="438" y="30" text-anchor="middle" font-size="15" font-weight="800" fill="#0c2636">Εφαρμογή</text>
+  <rect x="386" y="62" width="104" height="36" rx="6" fill="#eef3f6" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="438" y="85" text-anchor="middle" font-size="13" font-weight="400" fill="#0c2636">DNS resolver</text>
+  <rect x="386" y="112" width="104" height="36" rx="6" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="438" y="135" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636">web server</text>
+  <rect x="386" y="162" width="104" height="36" rx="6" fill="#eef3f6" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="438" y="185" text-anchor="middle" font-size="13" font-weight="400" fill="#0c2636">web server (TLS)</text>
+  <text x="250" y="228" text-anchor="middle" font-size="13" font-weight="400" fill="#4a5a65">Παράδειγμα: 0x0800 → 6 → 80 · το πλαίσιο φτάνει στον web server.</text>
+</svg>

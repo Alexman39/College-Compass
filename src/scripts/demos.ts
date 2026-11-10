@@ -30,6 +30,10 @@ const demos: Record<string, () => Promise<{ mount: (root: HTMLElement) => void }
   'sec-rsa': () => import('./demos/sec-rsa'),
   'sec-lsb': () => import('./demos/sec-lsb'),
   'sec-tls': () => import('./demos/sec-tls'),
+  'sec-packet': () => import('./demos/sec-packet'),
+  'sec-frag': () => import('./demos/sec-frag'),
+  'sec-tcp': () => import('./demos/sec-tcp'),
+  'sec-traffic': () => import('./demos/sec-traffic'),
 };
 
 for (const root of document.querySelectorAll<HTMLElement>('[data-demo]')) {

@@ -74,7 +74,7 @@ export function mount(root: HTMLElement): void {
       const coefM = b.big === a ? b.y : b.x;
       const inv = mod(coefA, m);
       result.hidden = false; result.className = 'ml-fb ok';
-      result.textContent = `Bézout: ${coefA}×${a} + (${coefM})×${m} = 1, άρα ${a}×${coefA} ≡ 1 (mod ${m}). Αντίστροφος: ${coefA}${coefA < 0 ? ` + ${m} = ${inv}` : ''} → d = ${inv}. Έλεγχος: ${a}×${inv} = ${a * inv} = ${Math.floor((a * inv) / m)}×${m} + ${(a * inv) % m}.`;
+      result.textContent = `Bézout: ${String(coefA).replace("-", "−")}×${a} + (${String(coefM).replace("-", "−")})×${m} = 1, άρα ${a}×${coefA} ≡ 1 (mod ${m}). Αντίστροφος: ${coefA}${coefA < 0 ? ` + ${m} = ${inv}` : ''} → d = ${inv}. Έλεγχος: ${a}×${inv} = ${a * inv} = ${Math.floor((a * inv) / m)}×${m} + ${(a * inv) % m}.`;
     }
   }
 
