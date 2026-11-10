@@ -19,7 +19,8 @@ def svg(h, title, body):
 def text(x, y, s, size, weight=400, fill=INK, anchor='middle'):
     return f'<text x="{x:g}" y="{y:g}" text-anchor="{anchor}" font-size="{size}" font-weight="{weight}" fill="{fill}">{s}</text>'
 
-def tree(alpha_beta):
+def tree(alpha_beta, blank=False):
+    """blank: the unsolved tree of the lesson's first exercise (values '?', nothing chosen)."""
     body = []
     leaf_x = [40 + i * 52.5 for i in range(9)]           # 40 … 460
     min_x = [leaf_x[3 * k + 1] for k in range(3)]         # middle leaf of each group
@@ -28,6 +29,9 @@ def tree(alpha_beta):
     pruned = {(1, 1), (1, 2)} if alpha_beta else set()
     values = [min(g) for g in LEAVES]
     best = values.index(max(values))                      # C
+    assert (values, best) == ([4, 3, 5], 2)
+    if blank:
+        best = -1
     # legend
     body.append(text(16, 26, '▲ MAX', 15, 700, MUTED, 'start'))
     body.append(text(16, 46, '▼ MIN', 15, 700, MUTED, 'start'))
@@ -42,7 +46,7 @@ def tree(alpha_beta):
             lx = leaf_x[3 * k + j]
             if (k, j) in pruned:
                 body.append(f'<line x1="{x:g}" y1="{min_y + 22}" x2="{lx:g}" y2="{leaf_y}" stroke="{PRUNE}" stroke-width="2" stroke-dasharray="6 5"/>')
-            elif not alpha_beta and j == chosen:
+            elif not alpha_beta and not blank and j == chosen:
                 body.append(f'<line x1="{x:g}" y1="{min_y + 22}" x2="{lx:g}" y2="{leaf_y}" stroke="{ACC}" stroke-width="4"/>')
             else:
                 body.append(f'<line x1="{x:g}" y1="{min_y + 22}" x2="{lx:g}" y2="{leaf_y}" stroke="{EDGE}" stroke-width="2"/>')
@@ -52,12 +56,12 @@ def tree(alpha_beta):
     # root (MAX, triangle up)
     rx, ry = root
     body.append(f'<polygon points="{rx},{ry - 26} {rx - 32},{ry + 20} {rx + 32},{ry + 20}" fill="{ACC_BG}" stroke="{ACC}" stroke-width="3"/>')
-    body.append(text(rx, ry + 14, str(max(values)), 22, 800))
+    body.append(text(rx, ry + 14, '?' if blank else str(max(values)), 22, 800))
     # MIN nodes (triangle down)
     for k, x in enumerate(min_x):
         on = k == best
         body.append(f'<polygon points="{x - 32:g},{min_y - 22} {x + 32:g},{min_y - 22} {x:g},{min_y + 24}" fill="{ACC_BG if on else MIN_BG}" stroke="{ACC if on else MUTED}" stroke-width="2.5"/>')
-        label = ('≤3' if alpha_beta and k == 1 else str(values[k]))
+        label = '?' if blank else ('≤3' if alpha_beta and k == 1 else str(values[k]))
         body.append(text(x, min_y + 1, label, 22, 800))
         body.append(text(x + 44, min_y + 2, MOVES[k], 19, 700, ACC if on else MUTED))
     # leaves
@@ -68,7 +72,7 @@ def tree(alpha_beta):
                 body.append(f'<rect x="{lx - 22:g}" y="{leaf_y}" width="44" height="38" rx="6" fill="#f4f6f7" stroke="{PRUNE}" stroke-width="2" stroke-dasharray="5 4"/>')
                 body.append(text(lx, leaf_y + 26, v, 20, 700, '#5b6a73'))
             else:
-                hi = (not alpha_beta) and v == values[k]
+                hi = (not alpha_beta) and not blank and v == values[k]
                 body.append(f'<rect x="{lx - 22:g}" y="{leaf_y}" width="44" height="38" rx="6" fill="{ACC_BG if hi else "#ffffff"}" stroke="{ACC if hi else EDGE}" stroke-width="{3 if hi else 2}"/>')
                 body.append(text(lx, leaf_y + 26, v, 20, 700))
     if alpha_beta:
@@ -79,6 +83,10 @@ def tree(alpha_beta):
         body.append(text(W / 2, 376, 'C = 5 > 4 → α = 5. Παίζει C, τιμή 5.', 17, 400, MUTED))
         body.append(text(W / 2, 400, '7 φύλλα αντί για 9: τα 11 και 7 δεν αξιολογούνται.', 17, 400, MUTED))
         return svg(416, 'Το ίδιο δένδρο με Alpha-Beta', body)
+    if blank:
+        body.append(text(W / 2, 332, 'Ποια τιμή παίρνει κάθε κόμβος MIN;', 17, 400, MUTED))
+        body.append(text(W / 2, 356, 'Και ποια κίνηση διαλέγει ο MAX στη ρίζα;', 17, 400, MUTED))
+        return svg(372, 'Δένδρο Minimax: άσκηση', body)
     body.append(text(W / 2, 332, 'Κάθε MIN κρατά το μικρότερο φύλλο του.', 17, 400, MUTED))
     body.append(text(W / 2, 356, 'Ο MAX παίρνει το μεγαλύτερο: max(4, 3, 5) = 5 → C.', 17, 400, MUTED))
     return svg(372, 'Δένδρο Minimax', body)
@@ -117,6 +125,7 @@ def tictactoe():
     body.append(text(W / 2, 434, 'Ο X διαλέγει τη μέγιστη, +1: τρίλιζα στη μεσαία στήλη.', 17, 400, MUTED))
     return svg(450, 'Minimax στην τρίλιζα', body)
 
+open(f'{OUT}/minimax-question.svg', 'w').write(tree(False, blank=True))
 open(f'{OUT}/minimax-tree.svg', 'w').write(tree(False))
 open(f'{OUT}/alpha-beta-tree.svg', 'w').write(tree(True))
 open(f'{OUT}/tic-tac-toe-minimax.svg', 'w').write(tictactoe())
