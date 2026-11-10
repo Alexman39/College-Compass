@@ -51,7 +51,7 @@ def circle(x, y, r, fill='#ffffff', stroke=EDGE, sw=2):
     return f'<circle cx="{x:g}" cy="{y:g}" r="{r}" fill="{fill}" stroke="{stroke}" stroke-width="{sw}"/>'
 
 
-# ---- Σχήμα: Euclidean and Manhattan distance (slide 6) --------------------
+# ---- Σχήμα: Euclidean and Manhattan distance (slide 6; the goal written G, as in the rewrite) --
 def distances():
     b = []
     S, F = (5, 4), (15, 10)
@@ -70,14 +70,14 @@ def distances():
     # Manhattan: right along y = 4, then up along x = 15
     b.append(f'<polyline points="{X(S[0]):g},{Y(S[1]):g} {X(F[0]):g},{Y(S[1]):g} {X(F[0]):g},{Y(F[1]):g}" fill="none" stroke="{OK}" stroke-width="4" stroke-dasharray="9 6"/>')
     b.append(line(X(S[0]), Y(S[1]), X(F[0]), Y(F[1]), ACC, 4))
-    for (x, y), lab in ((S, 'S'), (F, 'F')):
+    for (x, y), lab in ((S, 'S'), (F, 'G')):
         b.append(circle(X(x), Y(y), 12, INK, INK))
         b.append(text(X(x), Y(y) + 5, lab, 14, 800, '#ffffff'))
     b.append(text(X(10) - 8, Y(7.6), 'd ≈ 11,66', 15, 800, ACC, 'end'))
     b.append(text(X(10), Y(4) + 26, '10', 14, 700, OK))
     b.append(text(X(15) + 12, Y(7) + 5, '6', 14, 700, OK, 'start'))
     y = y0 + 15 * cs + 48
-    b.append(text(W / 2, y, 'S = (5, 4), F = (15, 10)', 15, 700, INK))
+    b.append(text(W / 2, y, 'S = (5, 4), G = (15, 10)', 15, 700, INK))
     b.append(line(70, y + 22, 104, y + 22, ACC, 4))
     b.append(text(112, y + 27, 'Ευκλείδεια: √(10² + 6²) = √136 ≈ 11,66', 14, 400, MUTED, 'start'))
     b.append(line(70, y + 46, 104, y + 46, OK, 4, '9 6'))
@@ -468,7 +468,91 @@ def roads():
     return svg(392, 'Ένα μικρό οδικό δίκτυο από το S στο G', b)
 
 
-for name, fn in (('heuristic-distances', distances), ('puzzle15-heuristics', puzzle15), ('maze-heuristic', maze_heuristic),
+# ---- Σχήμα: the estimate h against the real path, on the lecture maze -------
+def shortest_maze():
+    """BFS: the shortest real path from S to F in the lecture's maze."""
+    parent, queue = {MS: None}, [MS]
+    while queue:
+        c = queue.pop(0)
+        if c == MF:
+            path = [c]
+            while parent[path[-1]]:
+                path.append(parent[path[-1]])
+            return path[::-1]
+        for q in neighbours(c):
+            if q not in parent:
+                parent[q] = c
+                queue.append(q)
+
+
+def estimate_vs_path():
+    b = []
+    cs, x0, y0 = 44, 30, 20
+    path = shortest_maze()
+    euclid = sqrt((MS[0] - MF[0]) ** 2 + (MS[1] - MF[1]) ** 2)
+    assert len(path) - 1 == 8 and mh(MS) == 6 and round(euclid, 2) == 4.47
+    maze_grid(b, x0, y0, cs, lambda p: '#ffffff', labels=False)
+    poly(b, x0, y0, cs, path, OK)
+    cx = lambda p: x0 + (p[0] - 0.5) * cs
+    cy = lambda p: y0 + (MH - p[1] + 0.5) * cs
+    b.append(line(cx(MS), cy(MS), cx(MF), cy(MF), ACC, 4, '9 6'))
+    mark(b, x0, y0, cs, MS, 'S')
+    mark(b, x0, y0, cs, MF, 'F')
+    y = y0 + MH * cs + 46
+    b.append(line(60, y - 5, 100, y - 5, ACC, 4, '9 6'))
+    b.append(text(108, y, 'ευθεία: Ευκλείδεια √20 ≈ 4,47 · Manhattan h(S) = 6', 14, 400, MUTED, 'start'))
+    b.append(line(60, y + 19, 100, y + 19, OK, 5))
+    b.append(text(108, y + 24, 'εφικτή διαδρομή γύρω από τους τοίχους: 8 βήματα', 14, 400, MUTED, 'start'))
+    return svg(y + 42, 'Εκτίμηση και πραγματική διαδρομή στον λαβύρινθο', b)
+
+
+# ---- Σχήμα: local against global maximum ------------------------------------
+def local_global():
+    b = []
+    d = 'M20 250 C70 250 90 130 140 130 C185 130 195 200 235 200 C285 200 310 50 360 50 C410 50 430 250 480 250'
+    b.append(f'<path d="{d} L480 262 L20 262 Z" fill="{BOX}" stroke="{EDGE}" stroke-width="2"/>')
+    # Hill Climbing climbs from the left and stops on the lower peak
+    for x, y in ((60, 226), (90, 170), (115, 140)):
+        b.append(circle(x, y - 6, 5, ACC, ACC))
+    b.append(circle(140, 121, 8, BAD, BAD))
+    b.append(circle(360, 41, 8, OK, OK))
+    b.append(text(140, 100, 'τοπικό μέγιστο', 15, 800, BAD))
+    b.append(text(140, 80, 'εδώ σταματά', 13, 700, MUTED))
+    b.append(text(360, 22, 'καθολικό μέγιστο', 15, 800, OK))
+    b.append(text(W / 2, 292, 'Το ύψος είναι η αξία της κατάστασης.', 14, 400, MUTED))
+    b.append(text(W / 2, 314, 'Ο Hill Climbing ανεβαίνει από αριστερά και σταματά', 14, 400, MUTED))
+    b.append(text(W / 2, 336, 'στην πρώτη κορυφή, όπου κάθε γείτονας είναι πιο χαμηλά.', 14, 400, MUTED))
+    return svg(354, 'Τοπικό μέγιστο έναντι καθολικού μέγιστου', b)
+
+
+# ---- Σχήμα: the two heuristics on an 8-puzzle state (root of slide 18) ------
+def puzzle8_heuristics():
+    b = []
+    st = [0, 1, 3, 4, 2, 5, 7, 8, 6]
+    n, cs = 3, 56
+    dist = lambda i, t: (lambda g: abs(i // n - g // n) + abs(i % n - g % n))((t - 1) if t else n * n - 1)
+    tiles = [(i, t) for i, t in enumerate(st) if t]
+    out, man = sum(1 for i, t in tiles if dist(i, t)), sum(dist(i, t) for i, t in tiles)
+    assert (out, man) == (4, 4) and puzzle_h(st, 3) == (5, 8)
+    x0, y0 = 50, 56
+    b.append(text(x0 + 1.5 * cs, 30, 'Κατάσταση', 16, 800))
+    board(b, x0, y0, st, n, cs, hl=lambda i, t: WARN_BG if dist(i, t) else '#ffffff', blank=WALL)
+    for i, t in tiles:
+        b.append(text(x0 + (i % n) * cs + cs - 6, y0 + (i // n) * cs + 15, str(dist(i, t)), 12, 800, ACC if dist(i, t) else MUTED, 'end'))
+    gx = 300
+    b.append(text(gx + 1.5 * cs, 30, 'Τελική', 16, 800))
+    board(b, gx, y0, [1, 2, 3, 4, 5, 6, 7, 8, 0], n, cs)
+    y = y0 + n * cs + 36
+    b.append(rect(50, y - 14, 18, 18, WARN_BG, LINE, 1, 3))
+    b.append(text(76, y, 'εκτός θέσης · μωβ αριθμός: απόσταση Manhattan', 14, 400, MUTED, 'start'))
+    b.append(text(W / 2, y + 32, 'Misplaced Tiles = 4 · Manhattan Distance = 4', 17, 800, INK))
+    b.append(text(W / 2, y + 56, 'Χωρίς το κενό (σκούρο τετράγωνο).', 14, 400, MUTED))
+    b.append(text(W / 2, y + 78, 'Μετρώντας και το κενό, όπως η διάλεξη: 5 και 8.', 14, 400, MUTED))
+    return svg(y + 96, 'Οι δύο ευριστικές στο 8-puzzle', b)
+
+
+for name, fn in (('heuristic-estimate-path', estimate_vs_path), ('local-global-max', local_global),
+                 ('puzzle8-heuristics', puzzle8_heuristics), ('heuristic-distances', distances),('puzzle15-heuristics', puzzle15), ('maze-heuristic', maze_heuristic),
                  ('maze-heuristic-runs', maze_runs), ('puzzle8-greedy', puzzle8), ('hc-problems', hc_problems),
                  ('heuristic-exercise-1', exercise1), ('heuristic-exercise-2', exercise2),
                  ('astar-idea', astar_idea), ('astar-roads', roads)):
