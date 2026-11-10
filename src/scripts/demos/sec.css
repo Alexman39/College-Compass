@@ -99,10 +99,21 @@ button.sec-cell {
 }
 
 .sec-steps {
+  display: grid;
+  gap: var(--s-2);
   margin: 0;
   padding-left: 1.4rem;
-  font-family: var(--font-mono, ui-monospace, monospace);
   font-variant-numeric: tabular-nums;
+}
+
+.sec-steps.sec-mono {
+  gap: 2px;
+}
+
+.sec-steps li button {
+  min-height: 36px;
+  margin-left: var(--s-2);
+  padding: 0 var(--s-3);
 }
 
 .sec-steps li.on {

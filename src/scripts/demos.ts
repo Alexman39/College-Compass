@@ -21,6 +21,9 @@ const demos: Record<string, () => Promise<{ mount: (root: HTMLElement) => void }
   'sec-attacks': () => import('./demos/sec-classify'),
   'sec-risk': () => import('./demos/sec-risk'),
   'sec-mccumber': () => import('./demos/sec-mccumber'),
+  'sec-attack-tree': () => import('./demos/sec-attack-tree'),
+  'sec-firewall': () => import('./demos/sec-firewall'),
+  'sec-netattack': () => import('./demos/sec-netattack'),
 };
 
 for (const root of document.querySelectorAll<HTMLElement>('[data-demo]')) {
