@@ -267,3 +267,23 @@ export function run(problemId: ProblemId, alg: AlgorithmId): Row[] {
 export function hcChoice(p: Problem, r: Row): string | undefined {
   return r.children.length ? stableBy(r.children, (k) => hOf(p, k.id))[0]!.id : undefined;
 }
+
+/**
+ * «Πρόβλεψη» mode: before row `i` is shown, the explorer asks which state the
+ * algorithm takes next. The answer is that row's state; the options are the
+ * children of the previous row plus the front of row i's frontier (best-first)
+ * or just the previous row's children (HC), one per state, in label order so
+ * the order gives nothing away. No question for the first row (always S).
+ */
+export function predictOptions(p: Problem, rows: Row[], i: number, alg: AlgorithmId): { answer: string; options: FrontierItem[] } | undefined {
+  const row = rows[i];
+  const prev = rows[i - 1];
+  if (!row || !prev) return undefined;
+  const pool = alg === 'HC' ? prev.children : [...row.frontier.slice(0, 4), ...prev.children];
+  const byId = new Map<string, FrontierItem>();
+  for (const it of pool) if (!byId.has(it.id)) byId.set(it.id, it);
+  if (!byId.has(row.id)) return undefined;
+  const label = (id: string) => p.nodes.find((n) => n.id === id)!.label;
+  const options = [...byId.values()].sort((a, b) => label(a.id).localeCompare(label(b.id), 'el', { numeric: true }));
+  return options.length > 1 ? { answer: row.id, options } : undefined;
+}

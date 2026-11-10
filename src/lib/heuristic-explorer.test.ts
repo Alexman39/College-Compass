@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { hOf, problem, run, type AlgorithmId, type ProblemId } from './heuristic-explorer';
+import { hOf, predictOptions, problem, run, type AlgorithmId, type ProblemId } from './heuristic-explorer';
 
 const taken = (p: ProblemId, a: AlgorithmId) => run(p, a).map((r) => r.id);
 const expanded = (p: ProblemId, a: AlgorithmId) => run(p, a).filter((r) => r.kind === 'expand').map((r) => r.id);
@@ -80,5 +80,38 @@ describe('heuristic explorer traces', () => {
     expect(astar.at(-1)).toMatchObject({ g: 8, path: ['S', 'B', 'C', 'G'] });
     // step 4: C reached more cheaply through B (5 instead of 7) replaces the old entry
     expect(astar[3]!.frontier).toEqual([{ id: 'C', g: 5 }, { id: 'D', g: 9 }]);
+  });
+});
+
+describe('predictOptions («Πρόβλεψη»)', () => {
+  it('asks nothing for the first row and always offers the right answer', () => {
+    for (const p of ['maze', 'book', 'roads', 'ex1', 'ex2'] as ProblemId[]) {
+      for (const a of ['GREEDY', 'HC', 'BEAM', 'ASTAR'] as AlgorithmId[]) {
+        if ((p === 'ex1' || p === 'ex2') && a === 'ASTAR') continue;
+        const rows = run(p, a);
+        expect(predictOptions(problem(p), rows, 0, a)).toBeUndefined();
+        rows.forEach((r, i) => {
+          const q = predictOptions(problem(p), rows, i, a);
+          if (!q) return;
+          expect(q.answer).toBe(r.id);
+          expect(q.options.map((o) => o.id)).toContain(r.id);
+          expect(new Set(q.options.map((o) => o.id)).size).toBe(q.options.length);
+        });
+      }
+    }
+  });
+
+  it('on the road network, A* is asked to choose between A and B first', () => {
+    const rows = run('roads', 'ASTAR');
+    const q = predictOptions(problem('roads'), rows, 1, 'ASTAR')!;
+    expect(q.answer).toBe('A');
+    expect(q.options.map((o) => o.id)).toEqual(['A', 'B']);
+  });
+
+  it('Hill Climbing is asked only among the children of its current state', () => {
+    const rows = run('ex1', 'HC');
+    const q = predictOptions(problem('ex1'), rows, 1, 'HC')!;
+    expect(q.answer).toBe('c');
+    expect(q.options.map((o) => o.id)).toEqual(['b', 'c', 'd']);
   });
 });

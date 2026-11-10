@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 354" width="500" height="354" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Τοπικό μέγιστο έναντι καθολικού μέγιστου</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="354" fill="#ffffff"/>
+  <path d="M20 250 C70 250 90 130 140 130 C185 130 195 200 235 200 C285 200 310 50 360 50 C410 50 430 250 480 250 L480 262 L20 262 Z" fill="#eef3f6" stroke="#7b8a94" stroke-width="2"/>
+  <circle cx="60" cy="220" r="5" fill="#841387" stroke="#841387" stroke-width="2"/>
+  <circle cx="90" cy="164" r="5" fill="#841387" stroke="#841387" stroke-width="2"/>
+  <circle cx="115" cy="134" r="5" fill="#841387" stroke="#841387" stroke-width="2"/>
+  <circle cx="140" cy="121" r="8" fill="#c62828" stroke="#c62828" stroke-width="2"/>
+  <circle cx="360" cy="41" r="8" fill="#2e7d32" stroke="#2e7d32" stroke-width="2"/>
+  <text x="140" y="100" text-anchor="middle" font-size="15" font-weight="800" fill="#c62828">τοπικό μέγιστο</text>
+  <text x="140" y="80" text-anchor="middle" font-size="13" font-weight="700" fill="#4a5a65">εδώ σταματά</text>
+  <text x="360" y="22" text-anchor="middle" font-size="15" font-weight="800" fill="#2e7d32">καθολικό μέγιστο</text>
+  <text x="250" y="292" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">Το ύψος είναι η αξία της κατάστασης.</text>
+  <text x="250" y="314" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">Ο Hill Climbing ανεβαίνει από αριστερά και σταματά</text>
+  <text x="250" y="336" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">στην πρώτη κορυφή, όπου κάθε γείτονας είναι πιο χαμηλά.</text>
+</svg>

@@ -10,7 +10,10 @@
  * Optional presets: data-problem="ex2" data-algorithm="GREEDY" open the
  * explorer on that problem and algorithm. The «Ανά κελί» mode, the slider,
  * the frontier/closed/children chips and the faded unseen states come from
- * the user's greedy-best-first-visualizer.html (Άσκηση 2).
+ * the user's greedy-best-first-visualizer.html (Άσκηση 2). In «Πρόβλεψη»
+ * the table fills row by row, but before each row the student picks which
+ * state the algorithm takes next (options from predictOptions), and gets
+ * the reason right after.
  */
 import './water-jug.css';
 import './search-explorer.css';
@@ -21,6 +24,7 @@ import {
   PROBLEMS,
   hOf,
   hcChoice,
+  predictOptions,
   problem,
   run,
   type AlgorithmId,
@@ -73,7 +77,8 @@ export function mount(root: HTMLElement): void {
   const isAlg = (x: string | undefined): x is AlgorithmId => ALGORITHMS.some((a) => a.id === x);
   let prob: ProblemId = isProblem(root.dataset.problem) ? root.dataset.problem : 'maze';
   let alg: AlgorithmId = isAlg(root.dataset.algorithm) && ALGORITHMS.find((a) => a.id === root.dataset.algorithm)!.problems.includes(prob) ? root.dataset.algorithm : 'GREEDY';
-  let mode: 'row' | 'cell' = 'row';
+  let mode: 'row' | 'cell' | 'predict' = 'row';
+  let feedback: { ok: boolean; text: string } | undefined;
   let step = 0;
   const uid = Math.random().toString(36).slice(2, 8);
   let rows: Row[] = run(prob, alg);
@@ -109,10 +114,11 @@ export function mount(root: HTMLElement): void {
     return b;
   });
   const modeLabel = h('span', { class: 'jug-mode-label', id: `hx-mode-${Math.random().toString(36).slice(2, 8)}` }, 'Εκτέλεση:');
-  const modeGroup = h('div', { class: 'jug-seg', role: 'group', 'aria-labelledby': modeLabel.id });
+  const modeGroup = h('div', { class: 'jug-seg sx-algs', role: 'group', 'aria-labelledby': modeLabel.id });
   const rowBtn = h('button', { type: 'button', 'aria-pressed': 'true' }, 'Ανά γραμμή');
   const cellBtn = h('button', { type: 'button', 'aria-pressed': 'false' }, 'Ανά κελί');
-  modeGroup.append(rowBtn, cellBtn);
+  const predictBtn = h('button', { type: 'button', 'aria-pressed': 'false' }, 'Πρόβλεψη');
+  modeGroup.append(rowBtn, cellBtn, predictBtn);
   const modeWrap = h('div', { class: 'jug-mode' });
   modeWrap.append(modeLabel, modeGroup);
   const fsBtn = h('button', { type: 'button', class: 'jug-fs', 'aria-pressed': 'false' }, '⛶ Πλήρης οθόνη');
@@ -136,7 +142,8 @@ export function mount(root: HTMLElement): void {
   const scrub = h('input', { type: 'range', min: '0', value: '0', class: 'hx-scrub', 'aria-label': 'Μετάβαση σε βήμα' });
   controls.append(resetBtn, prevBtn, nextBtn, endBtn, scrub);
   const hint = h('p', { class: 'jug-sub hx-hint' });
-  panel.append(head, bar, controls, hint);
+  const quiz = h('div', { class: 'hx-quiz', 'aria-live': 'polite' });
+  panel.append(head, bar, controls, hint, quiz);
 
   const treeTitle = h('h3', { class: 'jug-h' });
   const treeWrap = h('div', { class: 'jug-scroll jug-tree' });
@@ -373,6 +380,7 @@ export function mount(root: HTMLElement): void {
     scrub.value = String(step);
     hint.textContent =
       step === max ? (last?.kind === 'goal' ? 'Τέλος: βρέθηκε τελική κατάσταση.' : 'Τέλος.')
+        : mode === 'predict' && step ? 'Διάλεξε την επόμενη κατάσταση, ή πάτα «Επόμενο» για να τη δεις.'
         : mode === 'cell' ? `Επόμενο κελί: ${CELL_NAMES[step % CELLS]}, γραμμή ${Math.floor(step / CELLS) + 1}.`
           : `Επόμενη γραμμή: ${step + 1}.`;
     fill.style.width = `${max ? (step / max) * 100 : 0}%`;
@@ -397,6 +405,7 @@ export function mount(root: HTMLElement): void {
     let text = current && cells < 4 ? explainCell(current, cells) : explain(current);
     if (step === max && last && last.kind !== 'goal' && alg !== 'HC') text += ' Το μέτωπο άδειασε χωρίς να βρεθεί τελική κατάσταση: αποτυχία.';
     explanation.textContent = text;
+    renderQuiz();
 
     thead.replaceChildren();
     const trh = h('tr');
@@ -409,7 +418,7 @@ export function mount(root: HTMLElement): void {
       if (r.kind === 'goal' && i <= active) tr.classList.add('goal');
       tr.append(h('td', {}, String(i + 1)));
       [list(r.frontier), set(r.closed), state(r.id, r.g), lastCell(r)].forEach((v, j) => {
-        const shown = mode === 'row' ? i < step : i * CELLS + REVEAL.indexOf(j) < step;
+        const shown = mode !== 'cell' ? i < step : i * CELLS + REVEAL.indexOf(j) < step;
         tr.append(h('td', shown ? {} : { class: 'hidden-cell' }, shown ? v : '—'));
       });
       tbody.append(tr);
@@ -420,6 +429,44 @@ export function mount(root: HTMLElement): void {
     foot.textContent = P().grid
       ? `${NOTE[prob]} Κάθε θέση γράφεται <x,y> (στήλη, γραμμή), όπως στο βιβλίο, με εκθέτη ${alg === 'ASTAR' ? 'g + h' : 'την h της: <5,4>⁵ σημαίνει h = 5'}.`
       : `${NOTE[prob]} Στο μέτωπο, δίπλα σε κάθε κατάσταση η τιμή με την οποία ταξινομείται: ${alg === 'ASTAR' ? 'g + h' : 'h'}.`;
+  }
+
+  // «Πρόβλεψη»: which state comes next, and why.
+  const sortKey = (it: FrontierItem) => (alg === 'ASTAR' ? it.g + hOf(P(), it.id) : hOf(P(), it.id));
+
+  function reason(i: number): string {
+    const r = rows[i]!;
+    const prev = rows[i - 1]!;
+    const L = state(r.id, r.g);
+    if (alg === 'HC') return `Από τα παιδιά της ${label(prev.id)}, η ${L} έχει τη μικρότερη h. Ο Hill Climbing δεν κοιτάζει τίποτε άλλο.`;
+    const first = r.frontier[0]!;
+    const tie = r.frontier.slice(1).some((f) => f.id !== first.id && sortKey(f) === sortKey(first));
+    let t = `Η ${L} είναι πρώτη στο μέτωπο: έχει τη μικρότερη ${alg === 'ASTAR' ? 'f = g + h' : 'h'}${tie ? ' (σε ισοβαθμία προηγείται όποια μπήκε τελευταία στο μέτωπο)' : ''}.`;
+    if (alg === 'BEAM') t += ` Το μέτωπο κρατά μόνο τις ${BEAM_WIDTH} καλύτερες.`;
+    if (r.kind === 'loop') t += ' Είναι όμως ήδη στο κλειστό σύνολο: βρόχος, δεν επεκτείνεται.';
+    return t;
+  }
+
+  function renderQuiz() {
+    quiz.replaceChildren();
+    if (mode !== 'predict') return;
+    if (feedback) quiz.append(h('p', { class: `hx-feedback ${feedback.ok ? 'ok' : 'bad'}` }, feedback.text));
+    const q = step < rows.length ? predictOptions(P(), rows, step, alg) : undefined;
+    if (!q) return;
+    quiz.append(h('p', { class: 'hx-quiz-q' }, alg === 'HC' ? 'Σε ποιο παιδί θα πάει τώρα ο Hill Climbing;' : 'Ποια κατάσταση θα βγει τώρα από το μέτωπο;'));
+    const opts = h('div', { class: 'hx-quiz-opts' });
+    for (const o of q.options) {
+      const b = h('button', { type: 'button' }, value(o));
+      b.addEventListener('click', () => {
+        const ok = o.id === q.answer;
+        const answer = state(q.answer, rows[step]!.g);
+        feedback = { ok, text: `${ok ? 'Σωστά.' : `Όχι: επιλέγεται η ${answer}, όχι η ${value(o)}.`} ${reason(step)}` };
+        step += 1;
+        render();
+      });
+      opts.append(b);
+    }
+    quiz.append(opts);
   }
 
   function setProblem(next: ProblemId) {
@@ -435,6 +482,7 @@ export function mount(root: HTMLElement): void {
 
   function reset() {
     step = 0;
+    feedback = undefined;
     rows = run(prob, alg);
     PROBLEMS.forEach((p, i) => probBtns[i]!.setAttribute('aria-pressed', String(p.id === prob)));
     ALGORITHMS.forEach((a, i) => {
@@ -446,20 +494,24 @@ export function mount(root: HTMLElement): void {
     render();
   }
 
-  const setMode = (next: 'row' | 'cell') => {
+  const setMode = (next: 'row' | 'cell' | 'predict') => {
     mode = next;
     step = 0;
+    feedback = undefined;
     rowBtn.setAttribute('aria-pressed', String(mode === 'row'));
     cellBtn.setAttribute('aria-pressed', String(mode === 'cell'));
+    predictBtn.setAttribute('aria-pressed', String(mode === 'predict'));
     render();
   };
   rowBtn.addEventListener('click', () => setMode('row'));
   cellBtn.addEventListener('click', () => setMode('cell'));
-  scrub.addEventListener('input', () => { step = Number(scrub.value); render(); });
-  nextBtn.addEventListener('click', () => { step = Math.min(maxStep(), step + 1); render(); });
-  prevBtn.addEventListener('click', () => { step = Math.max(0, step - 1); render(); });
-  resetBtn.addEventListener('click', () => { step = 0; render(); });
-  endBtn.addEventListener('click', () => { step = maxStep(); render(); });
+  predictBtn.addEventListener('click', () => setMode('predict'));
+  const go = (to: number) => { step = Math.max(0, Math.min(maxStep(), to)); feedback = undefined; render(); };
+  scrub.addEventListener('input', () => go(Number(scrub.value)));
+  nextBtn.addEventListener('click', () => go(step + 1));
+  prevBtn.addEventListener('click', () => go(step - 1));
+  resetBtn.addEventListener('click', () => go(0));
+  endBtn.addEventListener('click', () => go(maxStep()));
 
   reset();
 }
