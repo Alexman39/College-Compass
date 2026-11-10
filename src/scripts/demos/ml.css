@@ -1,0 +1,315 @@
+/* CN6005 Week 5 ML widgets: one card look for all five. */
+.ml {
+  display: grid;
+  gap: var(--s-3);
+  margin-block: var(--s-4);
+  padding: var(--s-4);
+  border: 1px solid var(--divider);
+  border-radius: var(--r-md);
+  background: var(--panel-solid);
+  color: var(--text);
+  /* chart colours (dataviz reference palette, validated on this site's panels) */
+  --ml-c1: #2a78d6;
+  --ml-c2: #eb6834;
+  --ml-c3: #1baf7a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .ml {
+    --ml-c1: #3987e5;
+    --ml-c2: #d95926;
+    --ml-c3: #199e70;
+  }
+}
+
+[data-theme='dark'] .ml {
+  --ml-c1: #3987e5;
+  --ml-c2: #d95926;
+  --ml-c3: #199e70;
+}
+
+/* Grid items default to min-width: auto, so a wide table would stretch the
+ * card past the screen; with 0 the table scrolls inside its own box. */
+.ml {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.ml > *,
+.ml-predict > * {
+  min-width: 0;
+}
+
+.ml p {
+  margin: 0;
+}
+
+.ml-title {
+  font-weight: 800;
+  font-size: var(--fs-md);
+}
+
+.ml-lead {
+  color: var(--text-muted);
+}
+
+.ml-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-3);
+}
+
+.ml button {
+  min-height: 44px;
+  padding: 0 var(--s-4);
+  border: 1px solid var(--divider);
+  border-radius: var(--r-pill);
+  background: var(--panel-solid);
+  color: var(--text);
+  font-weight: 700;
+}
+
+.ml button[aria-pressed='true'],
+.ml button.primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--text-on-accent);
+}
+
+.ml button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ml button.ml-quiet {
+  border-style: dashed;
+  color: var(--text-muted);
+}
+
+.ml label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-weight: 700;
+}
+
+.ml input[type='range'] {
+  accent-color: var(--accent);
+  width: min(16rem, 60vw);
+}
+
+.ml-chart {
+  border: 1px solid var(--divider);
+  border-radius: var(--r-md);
+  background: var(--panel-solid);
+  overflow-x: auto;
+}
+
+.ml-chart svg {
+  display: block;
+  width: 100%;
+  /* phones: keep labels readable and scroll sideways inside the box */
+  min-width: 30rem;
+  height: auto;
+}
+
+.ml-axis,
+.ml-tick {
+  fill: var(--text-muted);
+  font-size: 13px;
+}
+
+.ml-axis {
+  font-weight: 700;
+}
+
+.ml-grid {
+  stroke: var(--divider);
+  stroke-width: 1;
+}
+
+.ml-baseline {
+  stroke: var(--text-muted);
+  stroke-width: 1;
+}
+
+.ml-point {
+  fill: var(--ml-c1);
+  stroke: var(--panel-solid);
+  stroke-width: 2;
+}
+
+.ml-line {
+  stroke: var(--accent);
+  stroke-width: 2.5;
+}
+
+.ml-best {
+  stroke: var(--text-muted);
+  stroke-width: 2;
+  stroke-dasharray: 6 5;
+}
+
+.ml-resid {
+  stroke: var(--st-overdue);
+  stroke-width: 2;
+  stroke-dasharray: 3 3;
+}
+
+.ml-label {
+  fill: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+  paint-order: stroke;
+  stroke: var(--panel-solid);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+.ml-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--s-2);
+}
+
+.ml-stat {
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-sm);
+  background: var(--panel-sunken);
+}
+
+.ml-stat span {
+  display: block;
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+}
+
+.ml-stat strong {
+  font-size: var(--fs-md);
+}
+
+.ml-predict {
+  display: grid;
+  gap: var(--s-2);
+  padding: var(--s-3);
+  border-radius: var(--r-sm);
+  background: var(--panel-sunken);
+}
+
+.ml-q {
+  font-weight: 700;
+}
+
+.ml-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.ml-fb {
+  padding: var(--s-2) var(--s-3);
+  border-left: 4px solid var(--text-muted);
+  border-radius: var(--r-sm);
+  background: var(--panel-solid);
+}
+
+.ml-fb.ok {
+  border-left-color: var(--st-done);
+}
+
+.ml-fb.bad {
+  border-left-color: var(--st-overdue);
+}
+
+.ml-note {
+  padding: var(--s-2) var(--s-3);
+  border-left: 3px solid var(--accent);
+  color: var(--text-muted);
+}
+
+.ml-warn {
+  padding: var(--s-2) var(--s-3);
+  border-left: 4px solid var(--st-overdue);
+  border-radius: var(--r-sm);
+  background: color-mix(in oklab, var(--st-overdue) 10%, var(--panel-solid));
+}
+
+.ml-table {
+  overflow-x: auto;
+  border: 1px solid var(--divider);
+  border-radius: var(--r-sm);
+}
+
+.ml-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+}
+
+.ml-table caption {
+  padding: var(--s-2);
+  text-align: left;
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+}
+
+.ml-table th,
+.ml-table td {
+  padding: var(--s-2);
+  border-bottom: 1px solid var(--divider);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.ml-table th {
+  background: var(--panel-sunken);
+}
+
+.ml-table tr.hit td {
+  background: color-mix(in oklab, var(--accent) 14%, transparent);
+}
+
+.ml-table tr.hit-x td {
+  background: color-mix(in oklab, var(--st-soon) 18%, transparent);
+}
+
+.ml-table tr.test td {
+  font-style: italic;
+}
+
+.ml-table td.changed {
+  background: color-mix(in oklab, var(--st-done) 22%, transparent);
+  font-weight: 700;
+}
+
+.ml-history {
+  margin: 0;
+  padding-left: var(--s-5);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.ml-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.ml-tree {
+  display: grid;
+  gap: var(--s-1);
+  padding: 0;
+  list-style: none;
+}
+
+.ml-tree li {
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--divider);
+  border-radius: var(--r-sm);
+}
+
+.ml-tree li.on {
+  border-color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 12%, var(--panel-solid));
+  font-weight: 700;
+}

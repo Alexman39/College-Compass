@@ -11,6 +11,11 @@ const demos: Record<string, () => Promise<{ mount: (root: HTMLElement) => void }
   'heuristic-explorer': () => import('./demos/heuristic-explorer'),
   'game-tree': () => import('./demos/game-tree'),
   tictactoe: () => import('./demos/tictactoe'),
+  'ml-regression': () => import('./demos/ml-regression'),
+  'ml-preprocess': () => import('./demos/ml-preprocess'),
+  'ml-kmeans': () => import('./demos/ml-kmeans'),
+  'ml-assoc': () => import('./demos/ml-assoc'),
+  'ml-dtree': () => import('./demos/ml-dtree'),
 };
 
 for (const root of document.querySelectorAll<HTMLElement>('[data-demo]')) {
