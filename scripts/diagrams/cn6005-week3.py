@@ -551,7 +551,48 @@ def puzzle8_heuristics():
     return svg(y + 96, 'Οι δύο ευριστικές στο 8-puzzle', b)
 
 
-for name, fn in (('heuristic-estimate-path', estimate_vs_path), ('local-global-max', local_global),
+# ---- Σχήμα: the same frontier, Greedy picks B and A* picks C (section 5) ----
+CHOICE = {'A': (20, 40), 'B': (35, 10), 'C': (10, 20)}      # g, h
+
+
+def greedy_vs_astar():
+    b = []
+    greedy = min(CHOICE, key=lambda n: CHOICE[n][1])
+    astar = min(CHOICE, key=lambda n: sum(CHOICE[n]))
+    assert (greedy, astar) == ('B', 'C') and [sum(CHOICE[n]) for n in 'ABC'] == [60, 45, 30]
+    S, G = (60, 190), (440, 190)
+    P = {'A': (250, 70), 'B': (250, 190), 'C': (250, 310)}
+    for n, (x, y) in P.items():
+        g, h = CHOICE[n]
+        b.append(line(*S, x, y, INK, 3))
+        b.append(line(x, y, *G, EDGE, 2.5, '8 6'))
+        for (x1, y1), val, col in ((S, g, INK), (G, h, MUTED)):
+            mx, my = (x1 + x) / 2, (y1 + y) / 2 - (14 if n != 'B' else 14)
+            b.append(rect(mx - 22, my - 13, 44, 24, '#ffffff', LINE, 1, 12))
+            b.append(text(mx, my + 5, str(val), 15, 800, col))
+    for (x, y), lab in ((S, 'S'), (G, 'G')):
+        goal = lab == 'G'
+        b.append(circle(x, y, 26, OK_BG if goal else BOX, OK if goal else INK, 3))
+        b.append(text(x, y + 7, lab, 20, 800))
+    for n, (x, y) in P.items():
+        g, h = CHOICE[n]
+        ring = WARN if n == greedy else ACC if n == astar else EDGE
+        b.append(circle(x, y, 26, '#ffffff', ring, 5 if ring != EDGE else 2))
+        b.append(text(x, y + 7, n, 20, 800))
+        b.append(text(x, y + 46, f'f = {g} + {h} = {g + h}', 14, 700, MUTED))
+        if n == greedy:
+            b.append(text(x, y - 36, 'Greedy: μικρότερη h', 14, 800, WARN))
+        if n == astar:
+            b.append(text(x, y - 36, 'A*: μικρότερο f', 14, 800, ACC))
+    y = 392
+    b.append(line(70, y - 5, 110, y - 5, INK, 3))
+    b.append(text(118, y, 'g: πραγματικό κόστος από το S', 14, 400, MUTED, 'start'))
+    b.append(line(70, y + 19, 110, y + 19, EDGE, 2.5, '8 6'))
+    b.append(text(118, y + 24, 'h: εκτίμηση ως τον στόχο G', 14, 400, MUTED, 'start'))
+    return svg(y + 42, 'Greedy και A* επιλέγουν διαφορετικό κόμβο', b)
+
+
+for name, fn in (('greedy-vs-astar-choice', greedy_vs_astar), ('heuristic-estimate-path', estimate_vs_path), ('local-global-max', local_global),
                  ('puzzle8-heuristics', puzzle8_heuristics), ('heuristic-distances', distances),('puzzle15-heuristics', puzzle15), ('maze-heuristic', maze_heuristic),
                  ('maze-heuristic-runs', maze_runs), ('puzzle8-greedy', puzzle8), ('hc-problems', hc_problems),
                  ('heuristic-exercise-1', exercise1), ('heuristic-exercise-2', exercise2),

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 434" width="500" height="434" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Greedy και A* επιλέγουν διαφορετικό κόμβο</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="434" fill="#ffffff"/>
+  <line x1="60" y1="190" x2="250" y2="70" stroke="#0c2636" stroke-width="3"/>
+  <line x1="250" y1="70" x2="440" y2="190" stroke="#7b8a94" stroke-width="2.5" stroke-dasharray="8 6"/>
+  <rect x="133" y="103" width="44" height="24" rx="12" fill="#ffffff" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="155" y="121" text-anchor="middle" font-size="15" font-weight="800" fill="#0c2636">20</text>
+  <rect x="323" y="103" width="44" height="24" rx="12" fill="#ffffff" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="345" y="121" text-anchor="middle" font-size="15" font-weight="800" fill="#4a5a65">40</text>
+  <line x1="60" y1="190" x2="250" y2="190" stroke="#0c2636" stroke-width="3"/>
+  <line x1="250" y1="190" x2="440" y2="190" stroke="#7b8a94" stroke-width="2.5" stroke-dasharray="8 6"/>
+  <rect x="133" y="163" width="44" height="24" rx="12" fill="#ffffff" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="155" y="181" text-anchor="middle" font-size="15" font-weight="800" fill="#0c2636">35</text>
+  <rect x="323" y="163" width="44" height="24" rx="12" fill="#ffffff" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="345" y="181" text-anchor="middle" font-size="15" font-weight="800" fill="#4a5a65">10</text>
+  <line x1="60" y1="190" x2="250" y2="310" stroke="#0c2636" stroke-width="3"/>
+  <line x1="250" y1="310" x2="440" y2="190" stroke="#7b8a94" stroke-width="2.5" stroke-dasharray="8 6"/>
+  <rect x="133" y="223" width="44" height="24" rx="12" fill="#ffffff" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="155" y="241" text-anchor="middle" font-size="15" font-weight="800" fill="#0c2636">10</text>
+  <rect x="323" y="223" width="44" height="24" rx="12" fill="#ffffff" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="345" y="241" text-anchor="middle" font-size="15" font-weight="800" fill="#4a5a65">20</text>
+  <circle cx="60" cy="190" r="26" fill="#eef3f6" stroke="#0c2636" stroke-width="3"/>
+  <text x="60" y="197" text-anchor="middle" font-size="20" font-weight="800" fill="#0c2636">S</text>
+  <circle cx="440" cy="190" r="26" fill="#e8f5e9" stroke="#2e7d32" stroke-width="3"/>
+  <text x="440" y="197" text-anchor="middle" font-size="20" font-weight="800" fill="#0c2636">G</text>
+  <circle cx="250" cy="70" r="26" fill="#ffffff" stroke="#7b8a94" stroke-width="2"/>
+  <text x="250" y="77" text-anchor="middle" font-size="20" font-weight="800" fill="#0c2636">A</text>
+  <text x="250" y="116" text-anchor="middle" font-size="14" font-weight="700" fill="#4a5a65">f = 20 + 40 = 60</text>
+  <circle cx="250" cy="190" r="26" fill="#ffffff" stroke="#a15c00" stroke-width="5"/>
+  <text x="250" y="197" text-anchor="middle" font-size="20" font-weight="800" fill="#0c2636">B</text>
+  <text x="250" y="236" text-anchor="middle" font-size="14" font-weight="700" fill="#4a5a65">f = 35 + 10 = 45</text>
+  <text x="250" y="154" text-anchor="middle" font-size="14" font-weight="800" fill="#a15c00">Greedy: μικρότερη h</text>
+  <circle cx="250" cy="310" r="26" fill="#ffffff" stroke="#841387" stroke-width="5"/>
+  <text x="250" y="317" text-anchor="middle" font-size="20" font-weight="800" fill="#0c2636">C</text>
+  <text x="250" y="356" text-anchor="middle" font-size="14" font-weight="700" fill="#4a5a65">f = 10 + 20 = 30</text>
+  <text x="250" y="274" text-anchor="middle" font-size="14" font-weight="800" fill="#841387">A*: μικρότερο f</text>
+  <line x1="70" y1="387" x2="110" y2="387" stroke="#0c2636" stroke-width="3"/>
+  <text x="118" y="392" text-anchor="start" font-size="14" font-weight="400" fill="#4a5a65">g: πραγματικό κόστος από το S</text>
+  <line x1="70" y1="411" x2="110" y2="411" stroke="#7b8a94" stroke-width="2.5" stroke-dasharray="8 6"/>
+  <text x="118" y="416" text-anchor="start" font-size="14" font-weight="400" fill="#4a5a65">h: εκτίμηση ως τον στόχο G</text>
+</svg>
