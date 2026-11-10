@@ -16,6 +16,11 @@ const demos: Record<string, () => Promise<{ mount: (root: HTMLElement) => void }
   'ml-kmeans': () => import('./demos/ml-kmeans'),
   'ml-assoc': () => import('./demos/ml-assoc'),
   'ml-dtree': () => import('./demos/ml-dtree'),
+  // CN6003 labs
+  'sec-cia': () => import('./demos/sec-classify'),
+  'sec-attacks': () => import('./demos/sec-classify'),
+  'sec-risk': () => import('./demos/sec-risk'),
+  'sec-mccumber': () => import('./demos/sec-mccumber'),
 };
 
 for (const root of document.querySelectorAll<HTMLElement>('[data-demo]')) {

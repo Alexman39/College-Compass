@@ -1,0 +1,116 @@
+/* CN6003 labs: additions to the shared widget card (ml.css). */
+.ml input[type='text'],
+.ml input[type='number'],
+.ml select {
+  min-height: 44px;
+  padding: 0 var(--s-3);
+  border: 1px solid var(--divider);
+  border-radius: var(--r-sm, 8px);
+  background: var(--panel-solid);
+  color: var(--text);
+  font: inherit;
+}
+
+.ml input[type='number'] {
+  width: 7rem;
+}
+
+.ml input[type='text'] {
+  width: min(22rem, 100%);
+}
+
+.ml input:focus-visible,
+.ml select:focus-visible,
+.ml button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.sec-case {
+  padding: var(--s-3);
+  border-left: 4px solid var(--accent);
+  background: var(--panel);
+  font-weight: 600;
+}
+
+.sec-mono {
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+
+/* 5 × 5 risk matrix */
+.sec-matrix {
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.sec-matrix th,
+.sec-matrix td {
+  width: 2.6rem;
+  height: 2.4rem;
+  border: 1px solid var(--divider);
+  text-align: center;
+}
+
+.sec-matrix td.on {
+  outline: 3px solid var(--text);
+  outline-offset: -3px;
+  font-weight: 800;
+}
+
+.sec-b1 { background: color-mix(in srgb, #1baf7a 22%, transparent); }
+.sec-b2 { background: color-mix(in srgb, #e3b341 28%, transparent); }
+.sec-b3 { background: color-mix(in srgb, #eb6834 30%, transparent); }
+.sec-b4 { background: color-mix(in srgb, #d03b3b 34%, transparent); }
+
+/* character / step grids (Caesar, Vigenère, LSB, hex) */
+.sec-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.sec-cell {
+  display: grid;
+  min-width: 2.4rem;
+  padding: 4px 6px;
+  border: 1px solid var(--divider);
+  border-radius: 6px;
+  background: var(--panel-solid);
+  text-align: center;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-variant-numeric: tabular-nums;
+}
+
+.sec-cell small {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.sec-cell.on,
+button.sec-cell[aria-pressed='true'] {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+button.sec-cell {
+  min-height: 0;
+  border-radius: 6px;
+  font-weight: 400;
+}
+
+.sec-steps {
+  margin: 0;
+  padding-left: 1.4rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-variant-numeric: tabular-nums;
+}
+
+.sec-steps li.on {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.sec-bits b {
+  color: var(--accent);
+  text-decoration: underline;
+}
