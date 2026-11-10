@@ -28,7 +28,7 @@ export interface TraceRow {
   /** Frontier and closed set as they were before taking it. */
   frontier: string[];
   closed: string[];
-  /** Already examined: a loop (βρόχος), not expanded. */
+  /** Already examined: a loop (shown as «Deadlock»), not expanded. */
   loop: boolean;
   goal: boolean;
   /** Children added to the frontier (empty for a loop or the goal). */
