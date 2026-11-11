@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 392" width="500" height="392" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Τα επίπεδα του Web</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c62828"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="392" fill="#ffffff"/>
+  <text x="250" y="30" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">Τα επίπεδα του Web (παγόβουνο)</text>
+  <line x1="30" y1="118" x2="470" y2="118" stroke="#7b8a94" stroke-width="2" stroke-dasharray="6 5"/>
+  <path d="M100 60 L400 60 L430.16 118 L69.84 118 Z" fill="#dcefff" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="250" y="87" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">Surface Web</text>
+  <text x="250" y="105" text-anchor="middle" font-size="12" font-weight="400" fill="#4a5a65">≈ 4%: ό,τι ευρετηριάζει η Google</text>
+  <path d="M78 118 L422 118 L481.28 232 L18.72 232 Z" fill="#aacde3" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="250" y="151" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">Deep Web</text>
+  <text x="250" y="169" text-anchor="middle" font-size="12" font-weight="400" fill="#4a5a65">ό,τι ΔΕΝ ευρετηριάζεται:</text>
+  <text x="250" y="184" text-anchor="middle" font-size="12" font-weight="400" fill="#4a5a65">email, e-banking, βάσεις,</text>
+  <text x="250" y="199" text-anchor="middle" font-size="12" font-weight="400" fill="#4a5a65">συνδρομές — νόμιμο</text>
+  <path d="M45 232 L455 232 L508.04 334 L-8.04 334 Z" fill="#5f8097" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="250" y="259" text-anchor="middle" font-size="16" font-weight="800" fill="#ffffff">Dark Web</text>
+  <text x="250" y="277" text-anchor="middle" font-size="12" font-weight="400" fill="#ffffff">σκόπιμα κρυμμένο·</text>
+  <text x="250" y="292" text-anchor="middle" font-size="12" font-weight="400" fill="#ffffff">πρόσβαση με ειδικό</text>
+  <text x="250" y="307" text-anchor="middle" font-size="12" font-weight="400" fill="#ffffff">λογισμικό (Tor)</text>
+  <text x="250" y="356" text-anchor="middle" font-size="13" font-weight="400" fill="#4a5a65">Προσοχή: Deep Web ≠ Dark Web. Το Deep Web είναι κυρίως νόμιμο</text>
+  <text x="250" y="374" text-anchor="middle" font-size="13" font-weight="400" fill="#4a5a65">(οι δικοί σου λογαριασμοί)· το Dark Web είναι μικρό κομμάτι του.</text>
+</svg>

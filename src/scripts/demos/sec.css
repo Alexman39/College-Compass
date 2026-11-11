@@ -240,3 +240,93 @@ button.sec-cell {
 .ml .sec-perm-form input[type='text'] {
   width: 12rem;
 }
+
+/* Week 6: PAT phases, password meter, hats classifier */
+.sec-phases li.on button {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--text-on-accent);
+}
+
+.sec-cols {
+  display: grid;
+  gap: var(--s-3);
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 34rem) {
+  .sec-cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sec-col {
+  padding: var(--s-3);
+  border-radius: var(--r-md);
+  border: 1px solid var(--divider);
+}
+
+.sec-col h4 {
+  margin: 0 0 var(--s-2);
+}
+
+.sec-col.sec-attack {
+  background: color-mix(in srgb, #d03b3b 10%, transparent);
+}
+
+.sec-col.sec-defend {
+  background: color-mix(in srgb, #1baf7a 12%, transparent);
+}
+
+.sec-phase-detail p {
+  margin: 0 0 var(--s-2);
+}
+
+.sec-meter {
+  height: 12px;
+  border-radius: 999px;
+  background: var(--panel-sunken);
+  overflow: hidden;
+}
+
+.sec-meter-bar {
+  height: 100%;
+  width: 0;
+  transition: width 0.2s ease;
+  border-radius: 999px;
+}
+
+.sec-meter-bar.sec-s1 { background: #d03b3b; }
+.sec-meter-bar.sec-s2 { background: #eb6834; }
+.sec-meter-bar.sec-s3 { background: #e3b341; }
+.sec-meter-bar.sec-s4 { background: #6fbf73; }
+.sec-meter-bar.sec-s5 { background: #1baf7a; }
+
+.ml input.sec-pw-input {
+  width: min(22rem, 100%);
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+
+.sec-chip {
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--divider);
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+}
+
+.sec-chip.on {
+  border-color: var(--accent);
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  font-weight: 700;
+}
+
+.sec-pw-stats p {
+  margin: 0.2em 0;
+}
+
+.sec-pw-warns {
+  margin: var(--s-2) 0 0;
+  color: #c0603a;
+}
