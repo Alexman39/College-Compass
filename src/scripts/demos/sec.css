@@ -330,3 +330,17 @@ button.sec-cell {
   margin: var(--s-2) 0 0;
   color: #c0603a;
 }
+
+/* Week 7: SQL labs — tint the shown query by how it was built. */
+.sec-term-vuln {
+  border-left: 4px solid #d03b3b;
+}
+
+.sec-term-safe {
+  border-left: 4px solid #1baf7a;
+}
+
+.ml .sec-term-vuln,
+.ml .sec-term-safe {
+  min-height: 0;
+}

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 486" width="500" height="486" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Το μοντέλο ER της εταιρείας</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c62828"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="486" fill="#ffffff"/>
+  <text x="250" y="30" text-anchor="middle" font-size="15" font-weight="800" fill="#0c2636">Μοντέλο Οντοτήτων–Συσχετίσεων (ER): η βάση της εταιρείας</text>
+  <rect x="175" y="50" width="150" height="44" rx="6" fill="#e6eef4" stroke="#0c2636" stroke-width="2.5"/>
+  <text x="250" y="77" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">DEPARTMENT</text>
+  <rect x="175" y="214" width="150" height="44" rx="6" fill="#e6eef4" stroke="#0c2636" stroke-width="2.5"/>
+  <text x="250" y="241" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">EMPLOYEE</text>
+  <rect x="175" y="378" width="150" height="44" rx="6" fill="#e6eef4" stroke="#0c2636" stroke-width="2.5"/>
+  <text x="250" y="405" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">PROJECT</text>
+  <line x1="210" y1="94" x2="140" y2="132" stroke="#7b8a94" stroke-width="2"/>
+  <line x1="140" y1="176" x2="210" y2="214" stroke="#7b8a94" stroke-width="2"/>
+  <line x1="290" y1="94" x2="360" y2="132" stroke="#7b8a94" stroke-width="2"/>
+  <line x1="360" y1="176" x2="290" y2="214" stroke="#7b8a94" stroke-width="2"/>
+  <line x1="250" y1="258" x2="250" y2="293" stroke="#7b8a94" stroke-width="2"/>
+  <line x1="250" y1="343" x2="250" y2="378" stroke="#7b8a94" stroke-width="2"/>
+  <polygon points="140 129.0 188.0 154 140 179.0 92.0 154" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="140" y="158" text-anchor="middle" font-size="11" font-weight="800" fill="#841387">MANAGES</text>
+  <polygon points="360 129.0 408.0 154 360 179.0 312.0 154" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="360" y="158" text-anchor="middle" font-size="11" font-weight="800" fill="#841387">WORKS_FOR</text>
+  <polygon points="250 293.0 305.0 318 250 343.0 195.0 318" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="250" y="322" text-anchor="middle" font-size="11" font-weight="800" fill="#841387">WORKS_ON</text>
+  <text x="118" y="118" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">1</text>
+  <text x="118" y="196" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">1</text>
+  <text x="382" y="118" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">1</text>
+  <text x="382" y="196" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">N</text>
+  <text x="232" y="284" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">M</text>
+  <text x="232" y="358" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636">N</text>
+  <text x="250" y="452" text-anchor="middle" font-size="11.5" font-weight="400" fill="#4a5a65">MANAGES 1:1 (μερική συμμετοχή του EMPLOYEE) · WORKS_FOR 1:N (ολική) · WORKS_ON M:N</text>
+  <text x="250" y="470" text-anchor="middle" font-size="11.5" font-weight="400" fill="#4a5a65">Ορθογώνιο = οντότητα · ρόμβος = συσχέτιση · οι αριθμοί = πολλαπλότητα</text>
+</svg>
