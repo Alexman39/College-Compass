@@ -37,6 +37,9 @@ const demos: Record<string, () => Promise<{ mount: (root: HTMLElement) => void }
   'sec-unix': () => import('./demos/sec-terminal'),
   'sec-wincmd': () => import('./demos/sec-terminal'),
   'sec-chmod': () => import('./demos/sec-chmod'),
+  'sec-pat': () => import('./demos/sec-pentest'),
+  'sec-password': () => import('./demos/sec-pentest'),
+  'sec-hats': () => import('./demos/sec-pentest'),
 };
 
 for (const root of document.querySelectorAll<HTMLElement>('[data-demo]')) {

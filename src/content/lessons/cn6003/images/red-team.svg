@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 412" width="500" height="412" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Red Teaming και Penetration Testing</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c62828"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="412" fill="#ffffff"/>
+  <text x="250" y="28" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">Red Teaming έναντι Penetration Testing</text>
+  <rect x="36" y="46" width="428" height="308" rx="14" fill="#fdecec" stroke="#c62828" stroke-width="2.5"/>
+  <text x="56" y="72" text-anchor="start" font-size="14.5" font-weight="800" fill="#c62828">Red Teaming — προσομοίωση πλήρους επίθεσης</text>
+  <rect x="56" y="86" width="388" height="79" rx="10" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="70" y="107" text-anchor="start" font-size="14" font-weight="800" fill="#841387">Penetration Testing</text>
+  <text x="86" y="126" text-anchor="start" font-size="12.5" font-weight="400" fill="#0c2636">• Infrastructure (internal/external)</text>
+  <text x="86" y="143" text-anchor="start" font-size="12.5" font-weight="400" fill="#0c2636">• Web</text>
+  <text x="86" y="160" text-anchor="start" font-size="12.5" font-weight="400" fill="#0c2636">• Mobile</text>
+  <rect x="56" y="173" width="388" height="62" rx="10" fill="#fff1d6" stroke="#a15c00" stroke-width="2"/>
+  <text x="70" y="194" text-anchor="start" font-size="14" font-weight="800" fill="#a15c00">Social Engineering</text>
+  <text x="86" y="213" text-anchor="start" font-size="12.5" font-weight="400" fill="#0c2636">• Τηλέφωνο</text>
+  <text x="86" y="230" text-anchor="start" font-size="12.5" font-weight="400" fill="#0c2636">• E-mail (phishing)</text>
+  <rect x="56" y="243" width="388" height="79" rx="10" fill="#e6eef4" stroke="#0c2636" stroke-width="2"/>
+  <text x="70" y="264" text-anchor="start" font-size="14" font-weight="800" fill="#0c2636">Physical Intrusion</text>
+  <text x="86" y="283" text-anchor="start" font-size="12.5" font-weight="400" fill="#0c2636">• Lock picking</text>
+  <text x="86" y="300" text-anchor="start" font-size="12.5" font-weight="400" fill="#0c2636">• Camera evasion</text>
+  <text x="86" y="317" text-anchor="start" font-size="12.5" font-weight="400" fill="#0c2636">• Alarm bypass</text>
+  <text x="250" y="376" text-anchor="middle" font-size="13" font-weight="400" fill="#4a5a65">Το Penetration Testing είναι ένα κομμάτι του Red Teaming,</text>
+  <text x="250" y="394" text-anchor="middle" font-size="13" font-weight="400" fill="#4a5a65">που εκτείνεται και πέρα από το δίκτυο.</text>
+</svg>

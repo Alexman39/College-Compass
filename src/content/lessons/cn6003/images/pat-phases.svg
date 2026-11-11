@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 288" width="500" height="288" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Οι φάσεις του penetration testing</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c62828"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="288" fill="#ffffff"/>
+  <rect x="18" y="62" width="84" height="72" rx="10" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="60" y="86" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0c2636">1.</text>
+  <text x="60" y="103" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0c2636">Αναγνώριση</text>
+  <line x1="102" y1="98" x2="113" y2="98" stroke="#0c2636" stroke-width="2.2" marker-end="url(#a-ink)"/>
+  <rect x="113" y="62" width="84" height="72" rx="10" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="155" y="86" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0c2636">2.</text>
+  <text x="155" y="103" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0c2636">Σάρωση</text>
+  <line x1="197" y1="98" x2="208" y2="98" stroke="#0c2636" stroke-width="2.2" marker-end="url(#a-ink)"/>
+  <rect x="208" y="62" width="84" height="72" rx="10" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="250" y="86" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0c2636">3.</text>
+  <text x="250" y="103" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0c2636">Πρόσβαση</text>
+  <line x1="292" y1="98" x2="303" y2="98" stroke="#0c2636" stroke-width="2.2" marker-end="url(#a-ink)"/>
+  <rect x="303" y="62" width="84" height="72" rx="10" fill="#f3e6f4" stroke="#841387" stroke-width="2.5"/>
+  <text x="345" y="78" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0c2636">4.</text>
+  <text x="345" y="95" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0c2636">Μόνιμη</text>
+  <text x="345" y="112" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0c2636">πρόσβαση</text>
+  <line x1="387" y1="98" x2="398" y2="98" stroke="#0c2636" stroke-width="2.2" marker-end="url(#a-ink)"/>
+  <rect x="398" y="62" width="84" height="72" rx="10" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2.5"/>
+  <text x="440" y="86" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0c2636">5.</text>
+  <text x="440" y="103" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0c2636">Αναφορά</text>
+  <text x="250" y="30" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">Οι πέντε φάσεις ενός penetration test</text>
+  <text x="250" y="162" text-anchor="middle" font-size="13" font-weight="400" fill="#4a5a65">Ακολουθεί τη μεθοδολογία ενός επιτιθέμενου (Εβδομάδα 1):</text>
+  <text x="250" y="182" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636">Recon → Scan → Access → Maintain →</text>
+  <text x="250" y="200" text-anchor="middle" font-size="13" font-weight="400" fill="#4a5a65">και αντί για Clearing Tracks, Αναφορά</text>
+  <rect x="44" y="220" width="412" height="48" rx="10" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="250" y="240" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636">Η 5η φάση είναι το προϊόν: αναφορά ευρημάτων</text>
+  <text x="250" y="258" text-anchor="middle" font-size="12.5" font-weight="400" fill="#4a5a65">με βαθμό κρισιμότητας και διορθώσεις — τίποτα δεν κρύβεται.</text>
+</svg>
