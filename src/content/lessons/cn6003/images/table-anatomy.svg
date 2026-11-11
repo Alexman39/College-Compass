@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 294" width="500" height="294" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Η ανατομία ενός πίνακα</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c62828"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="294" fill="#ffffff"/>
+  <text x="250" y="32" text-anchor="middle" font-size="16" font-weight="800" fill="#0c2636">Η ανατομία ενός πίνακα (σχέση)</text>
+  <text x="250" y="54" text-anchor="middle" font-size="13" font-weight="600" fill="#4a5a65" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">πίνακας mathites</text>
+  <rect x="63" y="92" width="50" height="32" rx="0" fill="#f3e6f4" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="88" y="113" text-anchor="middle" font-size="13" font-weight="800" fill="#841387" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">id</text>
+  <rect x="113" y="92" width="140" height="32" rx="0" fill="#e6edf2" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="183" y="113" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">eponymo</text>
+  <rect x="253" y="92" width="92" height="32" rx="0" fill="#e6edf2" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="299" y="113" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">onoma</text>
+  <rect x="345" y="92" width="92" height="32" rx="0" fill="#e6edf2" stroke="#7b8a94" stroke-width="1.5"/>
+  <text x="391" y="113" text-anchor="middle" font-size="13" font-weight="800" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">poli</text>
+  <rect x="63" y="124" width="50" height="32" rx="0" fill="#faf4fb" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="88" y="145" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">1</text>
+  <rect x="113" y="124" width="140" height="32" rx="0" fill="#ffffff" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="183" y="145" text-anchor="middle" font-size="13" font-weight="400" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">Παπαδόπουλος</text>
+  <rect x="253" y="124" width="92" height="32" rx="0" fill="#ffffff" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="299" y="145" text-anchor="middle" font-size="13" font-weight="400" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">Κώστας</text>
+  <rect x="345" y="124" width="92" height="32" rx="0" fill="#ffffff" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="391" y="145" text-anchor="middle" font-size="13" font-weight="400" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">Πειραιάς</text>
+  <rect x="63" y="156" width="50" height="32" rx="0" fill="#faf4fb" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="88" y="177" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">2</text>
+  <rect x="113" y="156" width="140" height="32" rx="0" fill="#ffffff" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="183" y="177" text-anchor="middle" font-size="13" font-weight="400" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">Οικονόμου</text>
+  <rect x="253" y="156" width="92" height="32" rx="0" fill="#ffffff" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="299" y="177" text-anchor="middle" font-size="13" font-weight="400" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">Μαρία</text>
+  <rect x="345" y="156" width="92" height="32" rx="0" fill="#ffffff" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="391" y="177" text-anchor="middle" font-size="13" font-weight="400" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">Αθήνα</text>
+  <rect x="63" y="188" width="50" height="32" rx="0" fill="#faf4fb" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="88" y="209" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">3</text>
+  <rect x="113" y="188" width="140" height="32" rx="0" fill="#ffffff" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="183" y="209" text-anchor="middle" font-size="13" font-weight="400" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">Νικολάου</text>
+  <rect x="253" y="188" width="92" height="32" rx="0" fill="#ffffff" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="299" y="209" text-anchor="middle" font-size="13" font-weight="400" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">Ελένη</text>
+  <rect x="345" y="188" width="92" height="32" rx="0" fill="#ffffff" stroke="#c9d3d9" stroke-width="1"/>
+  <text x="391" y="209" text-anchor="middle" font-size="13" font-weight="400" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">Πάτρα</text>
+  <text x="183" y="66" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0c2636">στήλη = πεδίο / γνώρισμα</text>
+  <line x1="183" y1="74" x2="183" y2="90" stroke="#0c2636" stroke-width="2" marker-end="url(#a-ink)"/>
+  <rect x="63" y="234" width="50" height="22" rx="6" fill="#f3e6f4" stroke="#841387" stroke-width="1.5"/>
+  <text x="88" y="249" text-anchor="middle" font-size="12" font-weight="800" fill="#841387" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">PK</text>
+  <text x="123" y="249" text-anchor="start" font-size="12" font-weight="400" fill="#4a5a65">πρωτεύον κλειδί: μοναδική τιμή που ξεχωρίζει κάθε εγγραφή</text>
+  <text x="63" y="274" text-anchor="start" font-size="12" font-weight="400" fill="#4a5a65">Κάθε γραμμή = μία εγγραφή (πλειάδα)· κάθε στήλη = ένα πεδίο (γνώρισμα).</text>
+</svg>

@@ -40,6 +40,10 @@ const demos: Record<string, () => Promise<{ mount: (root: HTMLElement) => void }
   'sec-pat': () => import('./demos/sec-pentest'),
   'sec-password': () => import('./demos/sec-pentest'),
   'sec-hats': () => import('./demos/sec-pentest'),
+  'sql-query': () => import('./demos/sql-lab'),
+  'sql-injection': () => import('./demos/sql-lab'),
+  'sql-union': () => import('./demos/sql-lab'),
+  'sql-keys': () => import('./demos/sql-lab'),
 };
 
 for (const root of document.querySelectorAll<HTMLElement>('[data-demo]')) {

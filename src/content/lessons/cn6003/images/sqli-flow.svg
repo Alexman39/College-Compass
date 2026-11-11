@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 352" width="500" height="352" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Ροή μιας SQL injection</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c62828"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="352" fill="#ffffff"/>
+  <text x="250" y="28" text-anchor="middle" font-size="15" font-weight="800" fill="#0c2636">Γιατί περνάει μια SQL injection — και πώς σταματά</text>
+  <rect x="20" y="46" width="224" height="290" rx="12" fill="#ffffff" stroke="#c62828" stroke-width="2.5"/>
+  <rect x="20" y="46" width="224" height="28" rx="12" fill="#c62828" stroke="#c62828" stroke-width="0"/>
+  <text x="132" y="65" text-anchor="middle" font-size="13" font-weight="800" fill="#ffffff">Ευάλωτο — ένωση κειμένου</text>
+  <text x="34" y="100" text-anchor="start" font-size="11.5" font-weight="700" fill="#4a5a65">Είσοδος χρήστη:</text>
+  <rect x="34" y="108" width="196" height="26" rx="6" fill="#f4f6f8" stroke="#7b8a94" stroke-width="1"/>
+  <text x="40" y="125" text-anchor="start" font-size="12" font-weight="700" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">κωδικός:  ' OR '1'='1</text>
+  <text x="34" y="158" text-anchor="start" font-size="11.5" font-weight="700" fill="#4a5a65">Ερώτημα στη βάση:</text>
+  <text x="38" y="176" text-anchor="start" font-size="10.5" font-weight="400" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">...user='admin'</text>
+  <text x="38" y="192" text-anchor="start" font-size="10.5" font-weight="400" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">   AND pass='</text>
+  <text x="38" y="208" text-anchor="start" font-size="10.5" font-weight="800" fill="#c62828" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">   ' OR '1'='1'</text>
+  <text x="38" y="224" text-anchor="start" font-size="10.5" font-weight="800" fill="#c62828" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">→ το «ʼ» κλείνει το κείμενο</text>
+  <text x="38" y="240" text-anchor="start" font-size="10.5" font-weight="800" fill="#c62828" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">   '1'='1' πάντα αληθές</text>
+  <rect x="32" y="262" width="200" height="62" rx="8" fill="#f7f9fa" stroke="#c62828" stroke-width="1.5"/>
+  <text x="132" y="280" text-anchor="middle" font-size="10.8" font-weight="600" fill="#c62828">Η είσοδος έγινε εντολή:</text>
+  <text x="132" y="295" text-anchor="middle" font-size="10.8" font-weight="600" fill="#c62828">πάντα αληθές → παράκαμψη</text>
+  <rect x="256" y="46" width="224" height="290" rx="12" fill="#ffffff" stroke="#2e7d32" stroke-width="2.5"/>
+  <rect x="256" y="46" width="224" height="28" rx="12" fill="#2e7d32" stroke="#2e7d32" stroke-width="0"/>
+  <text x="368" y="65" text-anchor="middle" font-size="13" font-weight="800" fill="#ffffff">Ασφαλές — παραμετροποιημένο</text>
+  <text x="270" y="100" text-anchor="start" font-size="11.5" font-weight="700" fill="#4a5a65">Είσοδος χρήστη:</text>
+  <rect x="270" y="108" width="196" height="26" rx="6" fill="#f4f6f8" stroke="#7b8a94" stroke-width="1"/>
+  <text x="276" y="125" text-anchor="start" font-size="12" font-weight="700" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">κωδικός:  ' OR '1'='1</text>
+  <text x="270" y="158" text-anchor="start" font-size="11.5" font-weight="700" fill="#4a5a65">Ερώτημα στη βάση:</text>
+  <text x="274" y="176" text-anchor="start" font-size="10.5" font-weight="800" fill="#2e7d32" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">...user = ?</text>
+  <text x="274" y="192" text-anchor="start" font-size="10.5" font-weight="800" fill="#2e7d32" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">   AND pass = ?</text>
+  <text x="274" y="208" text-anchor="start" font-size="10.5" font-weight="400" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace"></text>
+  <text x="274" y="224" text-anchor="start" font-size="10.5" font-weight="400" fill="#0c2636" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">params = [</text>
+  <text x="274" y="240" text-anchor="start" font-size="10.5" font-weight="800" fill="#2e7d32" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace">  "admin", "' OR '1'='1" ]</text>
+  <rect x="268" y="262" width="200" height="62" rx="8" fill="#f7f9fa" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="368" y="280" text-anchor="middle" font-size="10.8" font-weight="600" fill="#2e7d32">Η είσοδος μένει δεδομένο:</text>
+  <text x="368" y="295" text-anchor="middle" font-size="10.8" font-weight="600" fill="#2e7d32">ψάχνεται αυτούσια → αποτυγχάνει</text>
+</svg>
