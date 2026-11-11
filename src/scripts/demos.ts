@@ -34,6 +34,9 @@ const demos: Record<string, () => Promise<{ mount: (root: HTMLElement) => void }
   'sec-frag': () => import('./demos/sec-frag'),
   'sec-tcp': () => import('./demos/sec-tcp'),
   'sec-traffic': () => import('./demos/sec-traffic'),
+  'sec-unix': () => import('./demos/sec-terminal'),
+  'sec-wincmd': () => import('./demos/sec-terminal'),
+  'sec-chmod': () => import('./demos/sec-chmod'),
 };
 
 for (const root of document.querySelectorAll<HTMLElement>('[data-demo]')) {

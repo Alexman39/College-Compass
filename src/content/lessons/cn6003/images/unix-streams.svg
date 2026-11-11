@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 420" width="500" height="420" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Ροές, ανακατευθύνσεις και σωλήνωση</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c62828"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="420" fill="#ffffff"/>
+  <text x="20" y="26" text-anchor="start" font-size="15" font-weight="800" fill="#0c2636">1. Οι τρεις ροές</text>
+  <rect x="200" y="50" width="120" height="46" rx="8" fill="#0d1117" stroke="#0d1117" stroke-width="2"/>
+  <text x="260" y="79" text-anchor="middle" font-size="15" font-weight="700" fill="#d1e0ec" font-family="ui-monospace, Menlo, Consolas, monospace">εντολή</text>
+  <line x1="110" y1="73" x2="196" y2="73" stroke="#2e7d32" stroke-width="2.5" marker-end="url(#a-ok)"/>
+  <text x="102" y="70" text-anchor="end" font-size="13" font-weight="700" fill="#2e7d32">είσοδος</text>
+  <text x="102" y="86" text-anchor="end" font-size="12" font-weight="400" fill="#4a5a65">πληκτρολόγιο</text>
+  <line x1="320" y1="63" x2="420" y2="50" stroke="#0c2636" stroke-width="2.5" marker-end="url(#a-ink)"/>
+  <text x="428" y="46" text-anchor="start" font-size="13" font-weight="700" fill="#0c2636">έξοδος</text>
+  <text x="428" y="62" text-anchor="start" font-size="12" font-weight="400" fill="#4a5a65">οθόνη</text>
+  <line x1="320" y1="85" x2="420" y2="104" stroke="#c62828" stroke-width="2.5" marker-end="url(#a-bad)"/>
+  <text x="428" y="104" text-anchor="start" font-size="13" font-weight="700" fill="#c62828">σφάλματα</text>
+  <text x="428" y="120" text-anchor="start" font-size="12" font-weight="400" fill="#4a5a65">οθόνη</text>
+  <text x="20" y="160" text-anchor="start" font-size="15" font-weight="800" fill="#0c2636">2. Ανακατεύθυνση εξόδου σε αρχείο</text>
+  <rect x="40" y="186" width="120" height="46" rx="8" fill="#0d1117" stroke="#0d1117" stroke-width="2"/>
+  <text x="100" y="215" text-anchor="middle" font-size="15" font-weight="700" fill="#d1e0ec" font-family="ui-monospace, Menlo, Consolas, monospace">ls -l</text>
+  <line x1="160" y1="209" x2="268" y2="209" stroke="#0c2636" stroke-width="2.5" marker-end="url(#a-ink)"/>
+  <text x="214" y="200" text-anchor="middle" font-size="15" font-weight="800" fill="#841387" font-family="ui-monospace, Menlo, Consolas, monospace">&gt;  ή  &gt;&gt;</text>
+  <path d="M276 178 h46 l14 14 v50 h-60 z" fill="#ffffff" stroke="#7b8a94" stroke-width="2"/>
+  <text x="306" y="260" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636" font-family="ui-monospace, Menlo, Consolas, monospace">info</text>
+  <text x="356" y="196" text-anchor="start" font-size="13" font-weight="700" fill="#0c2636">&gt;  αντικαθιστά</text>
+  <text x="356" y="216" text-anchor="start" font-size="13" font-weight="700" fill="#0c2636">&gt;&gt; προσθέτει</text>
+  <text x="356" y="234" text-anchor="start" font-size="13" font-weight="400" fill="#4a5a65">    στο τέλος</text>
+  <text x="20" y="300" text-anchor="start" font-size="15" font-weight="800" fill="#0c2636">3. Σωλήνωση: η έξοδος της μίας γίνεται είσοδος της άλλης</text>
+  <rect x="30" y="326" width="120" height="46" rx="8" fill="#0d1117" stroke="#0d1117" stroke-width="2"/>
+  <text x="90" y="355" text-anchor="middle" font-size="15" font-weight="700" fill="#d1e0ec" font-family="ui-monospace, Menlo, Consolas, monospace">who</text>
+  <line x1="150" y1="349" x2="186" y2="349" stroke="#841387" stroke-width="3" marker-end="url(#a-acc)"/>
+  <rect x="190" y="326" width="120" height="46" rx="8" fill="#0d1117" stroke="#0d1117" stroke-width="2"/>
+  <text x="250" y="355" text-anchor="middle" font-size="15" font-weight="700" fill="#d1e0ec" font-family="ui-monospace, Menlo, Consolas, monospace">sort</text>
+  <line x1="310" y1="349" x2="346" y2="349" stroke="#841387" stroke-width="3" marker-end="url(#a-acc)"/>
+  <rect x="350" y="326" width="120" height="46" rx="8" fill="#0d1117" stroke="#0d1117" stroke-width="2"/>
+  <text x="410" y="355" text-anchor="middle" font-size="15" font-weight="700" fill="#d1e0ec" font-family="ui-monospace, Menlo, Consolas, monospace">wc -l</text>
+  <text x="250" y="402" text-anchor="middle" font-size="13" font-weight="400" fill="#4a5a65">who | sort | wc -l : χωρίς προσωρινά αρχεία ανάμεσα στις εντολές.</text>
+</svg>

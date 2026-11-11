@@ -133,3 +133,110 @@ button.sec-cell {
 .sec-steps li {
   overflow-wrap: anywhere;
 }
+
+/* Terminal labs (Week 5): a dark screen in both themes, like a real console. */
+.sec-term {
+  min-height: 12rem;
+  max-height: 24rem;
+  margin: 0;
+  padding: var(--s-3);
+  overflow: auto;
+  border-radius: var(--r-md);
+  background: #0d1117;
+  color: #d1e0ec;
+  font: 13px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.sec-term-cmd {
+  color: #7ee787;
+}
+
+.sec-term-err {
+  color: #ff9b8f;
+}
+
+.sec-term-ok {
+  color: #f2cc60;
+  font-weight: 700;
+}
+
+.sec-term-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  align-items: center;
+}
+
+.ml label.sec-term-prompt {
+  flex: 1 1 16rem;
+  font: 600 14px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.ml .sec-term-prompt input[type='text'] {
+  flex: 1;
+  min-width: 8rem;
+  font: inherit;
+}
+
+/* Missions: a hint revealed on request, and finished missions in the «done» colour. */
+.sec-hint {
+  display: inline-block;
+  margin-left: var(--s-2);
+  overflow-wrap: anywhere;
+}
+
+/* The site font joins «--» into a long dash; permission strings and command
+ * output must stay exact, so no ligatures anywhere in the CN6003 labs. */
+.ml {
+  font-variant-ligatures: none;
+}
+
+.ml label.sec-mono {
+  white-space: nowrap;
+}
+
+.ml label.sec-mono input[type='text'] {
+  width: min(14rem, 50vw);
+}
+
+.sec-steps li.sec-done {
+  color: var(--st-done);
+  font-weight: 700;
+}
+
+.sec-findings {
+  display: grid;
+  gap: var(--s-2);
+  margin: 0;
+  padding: var(--s-3);
+  border: 1px solid var(--divider);
+  border-radius: var(--r-md);
+}
+
+.sec-findings legend {
+  padding: 0 var(--s-2);
+  font-weight: 700;
+}
+
+.ml .sec-findings label {
+  font-weight: 400;
+}
+
+/* chmod calculator */
+.sec-matrix-wrap {
+  overflow-x: auto;
+}
+
+.sec-perm {
+  font: 600 15px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.sec-perm p {
+  margin: 0.2em 0;
+}
+
+.ml .sec-perm-form input[type='text'] {
+  width: 12rem;
+}

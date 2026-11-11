@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 290" width="500" height="290" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Τα δικαιώματα rwx και ο οκταδικός αριθμός</title>
+  <defs><marker id="a-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0c2636"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2e7d32"/></marker><marker id="a-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c62828"/></marker><marker id="a-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#841387"/></marker><marker id="a-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7b8a94"/></marker></defs>
+  <rect width="500" height="290" fill="#ffffff"/>
+  <text x="250" y="30" text-anchor="middle" font-size="18" font-weight="800" fill="#0c2636" font-family="ui-monospace, Menlo, Consolas, monospace">-rwxr-xr--  σημαίνει  chmod 754</text>
+  <text x="110" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="#841387">u: ιδιοκτήτης</text>
+  <rect x="41" y="64" width="42" height="44" rx="6" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="62" y="93" text-anchor="middle" font-size="20" font-weight="800" fill="#841387" font-family="ui-monospace, Menlo, Consolas, monospace">r</text>
+  <text x="62" y="128" text-anchor="middle" font-size="15" font-weight="700" fill="#841387">4</text>
+  <rect x="87" y="64" width="42" height="44" rx="6" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="108" y="93" text-anchor="middle" font-size="20" font-weight="800" fill="#841387" font-family="ui-monospace, Menlo, Consolas, monospace">w</text>
+  <text x="108" y="128" text-anchor="middle" font-size="15" font-weight="700" fill="#841387">2</text>
+  <rect x="133" y="64" width="42" height="44" rx="6" fill="#f3e6f4" stroke="#841387" stroke-width="2"/>
+  <text x="154" y="93" text-anchor="middle" font-size="20" font-weight="800" fill="#841387" font-family="ui-monospace, Menlo, Consolas, monospace">x</text>
+  <text x="154" y="128" text-anchor="middle" font-size="15" font-weight="700" fill="#841387">1</text>
+  <text x="110" y="160" text-anchor="middle" font-size="15" font-weight="700" fill="#841387">4+2+1 = 7</text>
+  <text x="110" y="192" text-anchor="middle" font-size="30" font-weight="800" fill="#841387">7</text>
+  <text x="260" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="#0c2636">g: ομάδα</text>
+  <rect x="191" y="64" width="42" height="44" rx="6" fill="#f3e6f4" stroke="#0c2636" stroke-width="2"/>
+  <text x="212" y="93" text-anchor="middle" font-size="20" font-weight="800" fill="#0c2636" font-family="ui-monospace, Menlo, Consolas, monospace">r</text>
+  <text x="212" y="128" text-anchor="middle" font-size="15" font-weight="700" fill="#0c2636">4</text>
+  <rect x="237" y="64" width="42" height="44" rx="6" fill="#ffffff" stroke="#c9d3d9" stroke-width="2"/>
+  <text x="258" y="93" text-anchor="middle" font-size="20" font-weight="800" fill="#c9d3d9" font-family="ui-monospace, Menlo, Consolas, monospace">-</text>
+  <text x="258" y="128" text-anchor="middle" font-size="15" font-weight="700" fill="#c9d3d9">0</text>
+  <rect x="283" y="64" width="42" height="44" rx="6" fill="#f3e6f4" stroke="#0c2636" stroke-width="2"/>
+  <text x="304" y="93" text-anchor="middle" font-size="20" font-weight="800" fill="#0c2636" font-family="ui-monospace, Menlo, Consolas, monospace">x</text>
+  <text x="304" y="128" text-anchor="middle" font-size="15" font-weight="700" fill="#0c2636">1</text>
+  <text x="260" y="160" text-anchor="middle" font-size="15" font-weight="700" fill="#0c2636">4+1 = 5</text>
+  <text x="260" y="192" text-anchor="middle" font-size="30" font-weight="800" fill="#0c2636">5</text>
+  <text x="410" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="#4a5a65">o: άλλοι</text>
+  <rect x="341" y="64" width="42" height="44" rx="6" fill="#f3e6f4" stroke="#4a5a65" stroke-width="2"/>
+  <text x="362" y="93" text-anchor="middle" font-size="20" font-weight="800" fill="#4a5a65" font-family="ui-monospace, Menlo, Consolas, monospace">r</text>
+  <text x="362" y="128" text-anchor="middle" font-size="15" font-weight="700" fill="#4a5a65">4</text>
+  <rect x="387" y="64" width="42" height="44" rx="6" fill="#ffffff" stroke="#c9d3d9" stroke-width="2"/>
+  <text x="408" y="93" text-anchor="middle" font-size="20" font-weight="800" fill="#c9d3d9" font-family="ui-monospace, Menlo, Consolas, monospace">-</text>
+  <text x="408" y="128" text-anchor="middle" font-size="15" font-weight="700" fill="#c9d3d9">0</text>
+  <rect x="433" y="64" width="42" height="44" rx="6" fill="#ffffff" stroke="#c9d3d9" stroke-width="2"/>
+  <text x="454" y="93" text-anchor="middle" font-size="20" font-weight="800" fill="#c9d3d9" font-family="ui-monospace, Menlo, Consolas, monospace">-</text>
+  <text x="454" y="128" text-anchor="middle" font-size="15" font-weight="700" fill="#c9d3d9">0</text>
+  <text x="410" y="160" text-anchor="middle" font-size="15" font-weight="700" fill="#4a5a65">4 = 4</text>
+  <text x="410" y="192" text-anchor="middle" font-size="30" font-weight="800" fill="#4a5a65">4</text>
+  <text x="250" y="250" text-anchor="middle" font-size="14" font-weight="400" fill="#4a5a65">r = 4, w = 2, x = 1. Κάθε ψηφίο είναι το άθροισμα μιας ομάδας.</text>
+  <text x="250" y="272" text-anchor="middle" font-size="14" font-weight="700" fill="#0c2636">Το ίδιο συμβολικά: chmod u=rwx,g=rx,o=r</text>
+</svg>
